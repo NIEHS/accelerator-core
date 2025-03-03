@@ -6,7 +6,6 @@ on:
     - main
     - develop
     - feature/**
-    - 2-make-dummy-json-doc-and-starter-schema
   pull_request:
     branches:
     - main
