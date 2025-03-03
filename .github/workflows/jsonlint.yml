@@ -24,4 +24,4 @@ jobs:
         extensions: '"json,JSON"'
         environment: '""'
         fix: 'true'
-        working-dir: ./test.json
+        working-dir: ./schema/accel.json
