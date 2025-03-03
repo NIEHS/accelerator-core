@@ -1,0 +1,23 @@
+{
+  "submission": {
+    "submitter_name": null,
+    "submitter_email": null,
+    "submitter_comment": null
+  },
+  "data": {
+
+  },
+  "technical_metadata": {
+      "created": null,
+      "modified": null,
+      "original_source": null,
+      "original_source_link": null,
+      "history":  [
+         {
+          "timestamp": null,
+          "msg": null
+          }
+      ]
+
+  }
+}

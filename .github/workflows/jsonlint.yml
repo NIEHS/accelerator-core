@@ -1,0 +1,28 @@
+---
+name: Jsonlint-CI
+on:
+  push:
+    branches:
+    - main
+    - develop
+    - feature/**
+    - 2-make-dummy-json-doc-and-starter-schema
+  pull_request:
+    branches:
+    - main
+    - develop
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: ixxel/unit-tests-alpine:latest
+    steps:
+    - name: Git clone repo
+      uses: actions/checkout@v2
+    - name: Jsonlint scan
+      uses: ixxeL-actions/jsonlint@main
+      with:
+        extensions: '"json,JSON"'
+        environment: '""'
+        fix: 'true'
+        working-dir: ./schema/accel.json
