@@ -5,6 +5,8 @@ Core libraries and classes for accelerator metadata backbone
 
 This project is the base python package and libraries for the core of the Accellerator Project
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 
 ![System Whiteboard](https://github.com/user-attachments/assets/2a2b07fa-bbed-454c-9050-73eccb7cbf6c)
 
@@ -24,4 +26,4 @@ hooks by running:
 pre-commit install
 ```
 
-This should be the first thing you do when cloning this project
+This should be the first thing you do when cloning this project. More docs on pre-commit are available [here](https://pre-commit.com/)
