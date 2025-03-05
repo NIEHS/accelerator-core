@@ -1,4 +1,4 @@
-setuptools~=65.6.3
+setuptools~=70.0.0
 jsonschema~=4.23.0
 pre-commit~=4.1.0
 black~=25.1.0
