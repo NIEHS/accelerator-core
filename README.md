@@ -6,7 +6,7 @@ Core libraries and classes for accelerator metadata backbone
 This project is the base python package and libraries for the core of the Accellerator Project
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-![status]((https://github.com/github/docs/actions/workflows/main.yml/badge.svg?event=push))
+![status]((https://github.com/NIEHS/accelerator-core/actions/workflows/lint-and-test.yaml/badge.svg?event=push))
 
 ![System Whiteboard](https://github.com/user-attachments/assets/2a2b07fa-bbed-454c-9050-73eccb7cbf6c)
 
