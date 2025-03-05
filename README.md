@@ -12,4 +12,16 @@ The project implements all of the core components (accession, dissemination) and
 
 Each source and disseination target should be developed in a separate accelerator-source-xxx or accelerator-dissemination-xxx repository
 
- 
+
+## Developer Notes
+
+This project uses pre-commit hooks to validate code, run tests, and accomplish other tasks.
+
+Loading the requirements.txt into your dev environment will install pre-commit, then you can set up the pre-commit
+hooks by running:
+
+```
+pre-commit install
+```
+
+This should be the first thing you do when cloning this project
