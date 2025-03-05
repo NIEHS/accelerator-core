@@ -1,12 +1,14 @@
 """
 Utilities related to configuration, resources and environment variables.
 """
+
 import importlib.resources
 from pathlib import Path
 from accelerator_core.utils.logger import setup_logger
 import json
 
-logger = setup_logger('accelerator')
+logger = setup_logger("accelerator")
+
 
 def determine_resource_path(resource_package, resource_name) -> Path:
     """

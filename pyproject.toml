@@ -27,3 +27,6 @@ Repository = "https://github.com/yourusername/accelerator-core"
 
 [tool.setuptools.packages.find]
 where = ["accelerator_core"]
+
+[black]
+include = "accelerator_core"

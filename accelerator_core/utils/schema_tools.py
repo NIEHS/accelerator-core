@@ -6,10 +6,11 @@ from accelerator_core.utils.config import determine_resource_path
 import json
 import jsonschema
 
-logger = setup_logger('accelerator')
+logger = setup_logger("accelerator")
 
-CURRENT_ACCEL_SCHEMA_VERSION = '1.0.0'
-CURRENT_JSON_SCHEMA_VERSION = '2020-12'
+CURRENT_ACCEL_SCHEMA_VERSION = "1.0.0"
+CURRENT_JSON_SCHEMA_VERSION = "2020-12"
+
 
 def read_current_schema(schema_version: str = CURRENT_ACCEL_SCHEMA_VERSION):
     """
@@ -27,7 +28,10 @@ def read_current_schema(schema_version: str = CURRENT_ACCEL_SCHEMA_VERSION):
             d = json.load(json_data)
             return d
 
-def validate_json_against_schema(json_doc, schema_version: str = CURRENT_ACCEL_SCHEMA_VERSION)-> bool:
+
+def validate_json_against_schema(
+    json_doc, schema_version: str = CURRENT_ACCEL_SCHEMA_VERSION
+) -> bool:
     """
     validate the given json (as a json dict)
     :param json_doc: dict with json to validate
