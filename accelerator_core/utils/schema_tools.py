@@ -22,11 +22,8 @@ def read_current_schema(schema_version: str = CURRENT_ACCEL_SCHEMA_VERSION):
     schema_name = f"accel-schema-v{schema_version}.json"
 
     with determine_resource_path(accelerator_core.schema, schema_name) as fspath:
-
         logger.debug(f"resource path:{fspath}")
-
         with open(fspath) as json_data:
-
             d = json.load(json_data)
             return d
 
