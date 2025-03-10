@@ -351,7 +351,7 @@ enableJournal: true
 ## configuration: |-
 ##   # where and how to store data.
 ##   storage:
-##     dbPath: /bitnami/mongodb/data/db
+##     dbPath: /bitnami/mongodb/data/services
 ##     journal:
 ##       enabled: true
 ##     directoryPerDB: false

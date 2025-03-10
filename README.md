@@ -27,3 +27,7 @@ pre-commit install
 ```
 
 This should be the first thing you do when cloning this project. More docs on pre-commit are available [here](https://pre-commit.com/)
+
+## Handy References
+
+* MongoDB Developer Center: https://www.mongodb.com/developer/

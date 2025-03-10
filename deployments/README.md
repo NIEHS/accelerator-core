@@ -37,3 +37,10 @@ To connect to your database from outside the cluster execute the following comma
 
     kubectl port-forward --namespace default svc/my-release-mongodb 27017:27017 &
     mongosh --host 127.0.0.1 --authenticationDatabase admin -p $MONGODB_ROOT_PASSWORD
+
+**Note that the default admin user is 'root'**
+
+
+### Mongo DB Notes
+
+* Compass is the MongoDB GUI: https://www.mongodb.com/products/tools/compass
