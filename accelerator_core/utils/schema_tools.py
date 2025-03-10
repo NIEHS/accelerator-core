@@ -2,7 +2,7 @@ import importlib.resources
 
 from accelerator_core.utils.logger import setup_logger
 import accelerator_core.schema
-from accelerator_core.utils.config import determine_resource_path
+from accelerator_core.utils.resource_utils import determine_resource_path
 import json
 import jsonschema
 
