@@ -28,7 +28,6 @@ To get the root password run:
 
 To connect to your database, create a MongoDB&reg; client container:
 
-    kubectl run --namespace default my-release-mongodb-client --rm --tty -i --restart='Never' --env="MONGODB_ROOT_PASSWORD=$MONGODB_ROOT_PASSWORD" --image docker.io/bitnami/mongodb:8.0.5-debian-12-r0 --command -- bash
 
 Then, run the following command:
     mongosh admin --host "my-release-mongodb" --authenticationDatabase admin -u $MONGODB_ROOT_USER -p $MONGODB_ROOT_PASSWORD
