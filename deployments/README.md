@@ -39,7 +39,6 @@ To connect to your database from outside the cluster execute the following comma
 
 **Note that the default admin user is 'root'**
 
-
 ### Mongo DB Notes
 
 * Compass is the MongoDB GUI: https://www.mongodb.com/products/tools/compass

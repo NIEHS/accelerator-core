@@ -25,12 +25,23 @@ class AcceleratorConfig(object):
         absolute path to the config.properties file
         """
 
-        if config_path is not None:
+        env_path = os.environ.get(config_env, None)
+
+        if env_path:
+            logger.info(
+                f"loading accelerator config from environment variable {config_env} with path {env_path}"
+            )
+            self.properties = properties_file_from_path(env_path)
+        elif config_path is not None:
             logger.info(f"loading accelerator config from {config_path}")
             self.properties = properties_file_from_path(config_path)
         else:
-            logger.info(
-                f"loading accelerator config from environment variable {config_env}"
+            raise Exception(
+                "missing ACCELERATOR_CONFIG env variable or a config_path variable"
             )
-            env_path = os.environ.get(config_env)
-            self.properties = properties_file_from_path(env_path)
+
+        # see if ACCEL_MONGODB_PASSWORD is in env variables and replace the property with the env
+        # variable.
+
+        if os.environ.get("ACCEL_MONGODB_PASSWORD"):
+            self.properties["mongo.password"] = os.environ.get("ACCEL_MONGODB_PASSWORD")
