@@ -45,19 +45,8 @@ class AccessionMongo(Accession):
         if not valid:
             raise Exception("Invalid document provided")
 
-        mongo_client = initialize_mongo_client(self.accelerator_config)
-        db = mongo_client.get_database(
-            self.accelerator_config.properties["mongo.db.name"]
-        )
-
-        if temp_doc:
-            coll_name = self.accelerator_config.properties["mongo.temp.collection"]
-        else:
-            coll_name = self.accelerator_config.properties["mongo.aip.collection"]
-
-        coll = db[coll_name]
-
-        logger.info(f"target collection is {coll_name} in {db}")
+        db = self.connect_to_db()
+        coll = self.build_column_reference(db, temp_doc)
 
         id = coll.insert_one(acel_document).inserted_id
 
@@ -69,7 +58,13 @@ class AccessionMongo(Accession):
         Remove the doc from the AIP store, this is not for temporary docs
         :param document_id: unique id for the document
         """
-        pass
+        logger.info(f"decommision({document_id})")
+
+        db = self.connect_to_db()
+        coll = self.build_column_reference(db, False)
+
+        coll.delete_one({"_id": document_id})
+        logger.info(f"decommission({document_id}) success")
 
     def delete_temp_document(self, document_id):
         """
@@ -85,3 +80,18 @@ class AccessionMongo(Accession):
         :param temp_doc: bool indicates whether the document is temporary or not
         :return: dict with the document structure
         """
+
+    def connect_to_db(self):
+        mongo_client = initialize_mongo_client(self.accelerator_config)
+        db = mongo_client.get_database(
+            self.accelerator_config.properties["mongo.db.name"]
+        )
+        return db
+
+    def build_column_reference(self, db, temp_doc: bool = False):
+        if temp_doc:
+            coll_name = self.accelerator_config.properties["mongo.temp.collection"]
+        else:
+            coll_name = self.accelerator_config.properties["mongo.aip.collection"]
+
+        return db[coll_name]
