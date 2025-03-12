@@ -31,6 +31,14 @@ class TestAccessionMongo(unittest.TestCase):
             valid = accession.validate(d)
             self.assertTrue(valid)
 
+    def test_ingest(self):
+        json_path = determine_resource_path(accelerator_core.schema, "accel.json")
+        with open(json_path) as json_data:
+            d = json.load(json_data)
+            accession = AccessionMongo(self.__class__._accelerator_config)
+            id = accession.ingest(d)
+            self.assertIsNotNone(id)
+
 
 if __name__ == "__main__":
     unittest.main()
