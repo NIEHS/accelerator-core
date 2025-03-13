@@ -33,3 +33,5 @@ This should be the first thing you do when cloning this project. More docs on pr
 * MongoDB Developer Center: https://www.mongodb.com/developer/
 * PyMongo: https://www.mongodb.com/docs/languages/python/pymongo-driver/current/
 * Mongo DB Commands: https://www.mongodb.com/docs/manual/reference/command/
+* Mongo Airflow Hook: https://www.mongodb.com/developer/products/mongodb/mongodb-apache-airflow/
+* Mongo w Airflow: https://www.mongodb.com/developer/products/mongodb/mongodb-apache-airflow/

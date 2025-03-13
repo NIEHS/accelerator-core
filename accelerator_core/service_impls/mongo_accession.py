@@ -2,6 +2,9 @@
 Accession support concrete implementation for Mongo data store
 """
 
+from bson import ObjectId
+
+from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.services.accession import Accession
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.mongo_tools import initialize_mongo_client
@@ -17,8 +20,16 @@ class AccessionMongo(Accession):
     Accession module based on Mongo persistence
     """
 
-    def __init__(self, acclerator_config: AcceleratorConfig):
+    def __init__(
+        self, acclerator_config: AcceleratorConfig, accel_db_context: AccelDbContext
+    ):
+        """
+        Initialize the Accession sservice
+        :param acclerator_config: AcceleratorConfig with general configuration
+        :param accel_db_context: AccelDbContext that holds the db connection
+        """
         Accession.__init__(self, acclerator_config)
+        self.accel_db_context = accel_db_context
 
     def validate(
         self, json_dict: dict, schema_version: str = CURRENT_ACCEL_SCHEMA_VERSION
@@ -63,9 +74,6 @@ class AccessionMongo(Accession):
         db = self.connect_to_db()
         coll = self.build_column_reference(db, False)
 
-        coll.delete_one({"_id": document_id})
-        logger.info(f"decommission({document_id}) success")
-
     def delete_temp_document(self, document_id):
         """
         Remove a document from the temp collection
@@ -81,12 +89,15 @@ class AccessionMongo(Accession):
         :return: dict with the document structure
         """
 
+        logger.info(f"find_by_id({document_id}) is temp doc? {temp_doc}")
+
+        db = self.connect_to_db()
+        coll = self.build_column_reference(db, False)
+        doc = coll.find_one({"_id": ObjectId(document_id)})
+        return doc
+
     def connect_to_db(self):
-        mongo_client = initialize_mongo_client(self.accelerator_config)
-        db = mongo_client.get_database(
-            self.accelerator_config.properties["mongo.db.name"]
-        )
-        return db
+        return self.accel_db_context.db
 
     def build_column_reference(self, db, temp_doc: bool = False):
         if temp_doc:
