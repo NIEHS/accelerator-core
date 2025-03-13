@@ -57,6 +57,30 @@ class TestAccessionMongo(unittest.TestCase):
             self.assertIsNotNone(actual)
             self.assertIsInstance(actual, dict)
 
+    def test_decommission(self):
+        json_path = determine_resource_path(accelerator_core.schema, "accel.json")
+        with open(json_path) as json_data:
+            d = json.load(json_data)
+            accession = AccessionMongo(
+                self.__class__._accelerator_config, self.__class__._accel_db_context
+            )
+            id = accession.ingest(d)
+            accession.decommission(id)
+            actual = accession.find_by_id(id)
+            self.assertIsNone(actual)
+
+    def test_delete_temp_document(self):
+        json_path = determine_resource_path(accelerator_core.schema, "accel.json")
+        with open(json_path) as json_data:
+            d = json.load(json_data)
+            accession = AccessionMongo(
+                self.__class__._accelerator_config, self.__class__._accel_db_context
+            )
+            id = accession.ingest(d, temp_doc=True)
+            accession.delete_temp_document(id)
+            actual = accession.find_by_id(id)
+            self.assertIsNone(actual)
+
 
 if __name__ == "__main__":
     unittest.main()
