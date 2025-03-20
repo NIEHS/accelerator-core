@@ -7,10 +7,8 @@ from bson import ObjectId
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.services.accession import Accession
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
-from accelerator_core.utils.mongo_tools import initialize_mongo_client
-from accelerator_core.utils.schema_tools import CURRENT_ACCEL_SCHEMA_VERSION
 from accelerator_core.utils.logger import setup_logger
-from accelerator_core.utils.schema_tools import validate_json_against_schema
+from accelerator_core.utils.schema_tools import CURRENT_ACCEL_SCHEMA_VERSION
 
 logger = setup_logger("accelerator")
 
@@ -69,17 +67,24 @@ class AccessionMongo(Accession):
         Remove the doc from the AIP store, this is not for temporary docs
         :param document_id: unique id for the document
         """
-        logger.info(f"decommision({document_id})")
+        logger.info(f"decommission({document_id})")
 
         db = self.connect_to_db()
         coll = self.build_column_reference(db, False)
+        delete_result = coll.delete_one({"_id": ObjectId(document_id)})
+        logger.info(f"deleted id {delete_result}")
 
     def delete_temp_document(self, document_id):
         """
         Remove a document from the temp collection
         :param document_id:
         """
-        pass
+        logger.info(f"delete_temp_document({document_id})")
+
+        db = self.connect_to_db()
+        coll = self.build_column_reference(db, True)
+        delete_result = coll.delete_one({"_id": ObjectId(document_id)})
+        logger.info(f"deleted id {delete_result}")
 
     def find_by_id(self, document_id, temp_doc: bool = False) -> dict:
         """
