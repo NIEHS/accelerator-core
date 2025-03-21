@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+jsonschema = "~=4.23.0"
+pre-commit = "~=4.1.0"
+black = "~=25.1.0"
+pytest = "~=8.3.5"
+coverage = "~=7.6.12"
+pymongo = "~=4.11.2"
+pyyaml = "~=6.0.2"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"
