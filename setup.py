@@ -4,12 +4,11 @@ setup(
     name="accelerator-core",
     version="0.1.0",
     description="Core libraries for the accelerator metadata backbone",
-    author="Your Name",
-    author_email="your.email@example.com",
+    author="Mike Conway",
+    author_email="mike.conway@nih.gov",
     url="https://github.com/yourusername/accelerator-core",
     packages=find_packages(),
-    install_requires=[
-    ],
+    install_requires=[],
     license="BSD 3-Clause",
     classifiers=[
         "Programming Language :: Python :: 3",
