@@ -30,7 +30,7 @@ class TypeMatrix:
         self.collection = collection
         self.temp_collection = temp_collection
 
-    def resolve_schema(self, version: str = None) -> str:
+    def resolve_schema_version(self, version: str = None) -> str:
         """
         give the fully parsed schema name
         :param version: optional version, otherwise defaulting to the default_schema_version
