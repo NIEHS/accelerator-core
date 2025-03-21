@@ -5,7 +5,7 @@ Accession support concrete implementation for Mongo data store
 from bson import ObjectId
 
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
-from accelerator_core.services.accel_source_ingest import IngestSourceDescriptor
+from accelerator_core.workflow.accel_source_ingest import IngestSourceDescriptor
 from accelerator_core.services.accession import Accession
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
@@ -57,7 +57,7 @@ class AccessionMongo(Accession):
 
         db = self.connect_to_db()
         coll = self.build_collection_reference(
-            db, ingest_source_descriptor.type, temp_doc
+            db, ingest_source_descriptor.ingest_type, temp_doc
         )
 
         id = coll.insert_one(accel_document).inserted_id
@@ -65,7 +65,11 @@ class AccessionMongo(Accession):
         logger.info(f"inserted id {id}")
         return id
 
-    def decommission(self, document_type, document_id):
+    def decommission(
+        self,
+        document_id: str,
+        document_type: str,
+    ):
         """
         Remove a document from the temp collection
         :param document_id: unique id for the document
@@ -86,10 +90,11 @@ class AccessionMongo(Accession):
         )  # TODO:think of a trash can model
         logger.info(f"deleted id {delete_result}")
 
-    def delete_temp_document(self, document_type: str, document_id: str):
+    def delete_temp_document(self, document_id: str, document_type: str):
         """
         Remove a document from the temp collection
-        :param document_id:
+        :param document_id: unique id for the document
+        :param document_type: the type of document to be decommissioned, per the type matrix
         """
         logger.info(f"delete_temp_document({document_id})")
 
@@ -137,8 +142,8 @@ class AccessionMongo(Accession):
             raise Exception(f"unknown type {document_type}")
 
         if temp_doc:
-            coll_name = type_matrix_info.collection
-        else:
             coll_name = type_matrix_info.temp_collection
+        else:
+            coll_name = type_matrix_info.collection
 
         return db[coll_name]

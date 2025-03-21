@@ -1,11 +1,7 @@
-import accelerator_core.utils.accelerator_config
-from accelerator_core.services.accel_source_ingest import IngestSourceDescriptor
+from accelerator_core.workflow.accel_source_ingest import IngestSourceDescriptor
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
-from accelerator_core.utils.schema_tools import (
-    CURRENT_ACCEL_SCHEMA_VERSION,
-    validate_json_against_schema,
-)
+from accelerator_core.utils.schema_tools import SchemaTools
 
 logger = setup_logger("accelerator")
 
@@ -30,9 +26,11 @@ class Accession:
         """Validate JSON output from Crosswalk."""
         logger.info(f"validate, based on schema {ingest_source_descriptor}")
 
-        valid = validate_json_against_schema(
+        schema_tools = SchemaTools(self.accelerator_config)
+
+        valid = schema_tools.validate_json_against_schema(
             json_dict,
-            ingest_source_descriptor.type,
+            ingest_source_descriptor.ingest_type,
             ingest_source_descriptor.schema_version,
         )
         return valid
@@ -80,3 +78,4 @@ class Accession:
         :param temp_doc: bool indicates whether the document is temporary or not
         :return: dict with the document structure
         """
+        pass
