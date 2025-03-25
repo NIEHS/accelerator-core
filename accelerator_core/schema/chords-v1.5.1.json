@@ -1,0 +1,114 @@
+{
+  "submission": {
+    "submitter_name": null,
+    "submitter_email": null,
+    "submitter_comment": null
+  },
+  "data": {
+    "program": {
+      "program_name": null,
+      "preferred_label": null
+    },
+    "project": {
+      "project_code": null,
+      "project_name": null,
+      "project_short_name": null,
+      "project_sponsor": [],
+      "project_sponsor_other": [],
+      "project_sponsor_type": [],
+      "project_sponsor_type_other": []
+    },
+    "resource": {
+      "resource_name": null,
+      "resource_version": null,
+      "resource_short_name": null,
+      "resource_type": null,
+      "resource_url": null,
+      "resource_description": null,
+      "resource_domain": [],
+      "resource_domain_other": [],
+      "resource_keywords": [],
+      "resource_access_type": null,
+      "resource_reference": [
+        {
+          "resource_reference_text": null,
+          "resource_reference_link": null
+        }
+      ],
+      "resource_use_agreement": [
+        {
+          "resource_use_agreement_text": null,
+          "resource_use_agreement_link": null
+        }
+      ],
+      "publication": [
+        {
+          "citation": null,
+          "citation_link": null
+        }
+      ],
+      "is_static": false,
+      "comments": null
+    },
+    "data_resource": {
+      "exposure_media": [],
+      "measures": [],
+      "measures_other": [],
+      "measurement_method": null,
+      "measurement_method_other": null,
+      "time_extent_start": null,
+      "time_extent_end": null,
+      "time_available_comment": null,
+      "data_formats": [],
+      "data_location": [
+        {
+          "data_location_text": null,
+          "data_location_link": null
+        }
+      ]
+    },
+    "temporal_data": {
+      "temporal_resolution": [],
+      "temporal_resolution_other": [],
+      "temporal_resolution_all_available": [],
+      "temporal_resolution_comment": null
+    },
+    "population_data": {
+      "individual_level": false,
+      "population_studies": [],
+      "population_studies_other": [],
+      "linkable_encounters": false,
+      "biospecimens_from_humans": false,
+      "biospecimens_type": []
+    },
+    "geospatial_data": {
+      "spatial_resolution": [],
+      "spatial_resolution_other": [],
+      "spatial_resolution_all_available": [],
+      "spatial_resolution_comment": null,
+      "spatial_coverage": [],
+      "spatial_coverage_other": [],
+      "spatial_bounding_box": [],
+      "geometry_type": [],
+      "geometry_source": [],
+      "geometry_source_other": [],
+      "model_methods": [],
+      "model_methods_other": [],
+      "exposure_media": [],
+      "geographic_feature": [],
+      "geographic_feature_other": []
+    }
+  },
+  "technical_metadata": {
+    "created": null,
+    "modified": null,
+    "original_source": null,
+    "original_source_link": null,
+    "history": [
+      {
+        "timestamp": null,
+        "msg": null
+      }
+    ]
+  }
+}

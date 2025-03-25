@@ -1,9 +1,9 @@
 types:
-- name: pcor
-  schema: pcor
-  collection: pcor
-  temp_collection: pcor_temp
-  default_version: v1.0.0
+- name: chords
+  schema: chords
+  collection: chords
+  temp_collection: chords_temp
+  default_version: v1.5.1
 - name: accelerator
   schema: accel
   collection: accelerator

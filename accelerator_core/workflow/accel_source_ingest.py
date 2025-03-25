@@ -20,16 +20,18 @@ class IngestSourceDescriptor:
         self.ingest_link = None
         self.ingest_format = None
         self.batch = False
+        self.source_metadata_reference_link = None
 
 
 class IngestResult:
 
     def __init__(self, ingest_source_descriptor: IngestSourceDescriptor):
         self.ingest_source_descriptor = ingest_source_descriptor
+        self.source_document_detail = None
         self.ingest_successful = True
         self.payload_inline = True
-        self.payload = []
-        self.payload_path = []
+        self.payload = None
+        self.payload_path = None
 
 
 class AccelIngestComponent:
@@ -46,7 +48,7 @@ class AccelIngestComponent:
         """
         self.ingest_source_descriptor = ingest_source_descriptor
 
-    def ingest(self, additional_parameters: dict) -> IngestResult:
+    def ingest(self, additional_parameters: dict) -> [IngestResult]:
         """
         primary method for subclasses to implement, this is the actual ingest, which means accessing the target
         data source and returning a result that includes provenance and technical metadata, along with a payload that

@@ -10,11 +10,10 @@ class Crosswalk:
     """Abstract superclass for mapping raw data to a structured JSON format."""
 
     @abstractmethod
-    def transform(self, ingest_result: IngestResult) -> dict:
+    def transform(self, ingest_result: IngestResult) -> IngestResult:
         """Convert raw data into a standardized format.
-        :param ingest_result: The ingest result.
-
-        TODO: decide whether to make crosswalks a single doc task? How to handle more than one
-        document during ingest - MC
+            :param ingest_result: The ingest result.
+        `   :return revised IngestResult with the crosswalked document in payload
+            document during ingest - MC
         """
         pass

@@ -37,8 +37,7 @@ class Accession:
 
     def ingest(
         self,
-        accel_document: dict,
-        ingest_source_descriptor: IngestSourceDescriptor,
+        ingest_result: IngestResult,
         check_duplicates: bool = True,
         temp_doc: bool = False,
     ) -> str:
