@@ -1,6 +1,6 @@
 types:
-- name: chords
-  schema: chords
+- name: chords-geo
+  schema: chords-geoexposure
   collection: chords
   temp_collection: chords_temp
   default_version: v1.5.1

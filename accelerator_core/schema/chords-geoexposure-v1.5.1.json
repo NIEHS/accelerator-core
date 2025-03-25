@@ -7,7 +7,7 @@
   "data": {
     "program": {
       "program_name": null,
-      "preferred_label": null
+      "program_unique_id": null
     },
     "project": {
       "project_code": null,
@@ -16,7 +16,8 @@
       "project_sponsor": [],
       "project_sponsor_other": [],
       "project_sponsor_type": [],
-      "project_sponsor_type_other": []
+      "project_sponsor_type_other": [],
+      "project_url": null
     },
     "resource": {
       "resource_name": null,
@@ -28,7 +29,7 @@
       "resource_domain": [],
       "resource_domain_other": [],
       "resource_keywords": [],
-      "resource_access_type": null,
+      "resource_access_type": [],
       "resource_reference": [
         {
           "resource_reference_text": null,
@@ -48,17 +49,15 @@
         }
       ],
       "is_static": false,
+      "payment_required": false,
       "comments": null
     },
     "data_resource": {
+      "has_api": false,
       "exposure_media": [],
       "measures": [],
       "measures_other": [],
-      "measurement_method": null,
-      "measurement_method_other": null,
-      "time_extent_start": null,
-      "time_extent_end": null,
-      "time_available_comment": null,
+      "update_frequency": [],
       "data_formats": [],
       "data_location": [
         {
@@ -68,35 +67,17 @@
       ]
     },
     "temporal_data": {
-      "temporal_resolution": [],
-      "temporal_resolution_other": [],
-      "temporal_resolution_all_available": [],
-      "temporal_resolution_comment": null
-    },
-    "population_data": {
-      "individual_level": false,
-      "population_studies": [],
-      "population_studies_other": [],
-      "linkable_encounters": false,
-      "biospecimens_from_humans": false,
-      "biospecimens_type": []
+      "time_extent_start_yyyy": 0,
+      "time_extent_end_yyyy": 0,
+      "time_available_comment": null,
+      "temporal_resolution": []
     },
     "geospatial_data": {
       "spatial_resolution": [],
-      "spatial_resolution_other": [],
-      "spatial_resolution_all_available": [],
-      "spatial_resolution_comment": null,
       "spatial_coverage": [],
-      "spatial_coverage_other": [],
       "spatial_bounding_box": [],
       "geometry_type": [],
-      "geometry_source": [],
-      "geometry_source_other": [],
-      "model_methods": [],
-      "model_methods_other": [],
-      "exposure_media": [],
-      "geographic_feature": [],
-      "geographic_feature_other": []
+      "geometry_source": []
     }
   },
   "technical_metadata": {

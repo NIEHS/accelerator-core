@@ -1,0 +1,935 @@
+{
+    "$schema": "http://json-schema.org/2020-12/schema#",
+    "$id": "http://www.niehs.nih.gov/schemas/chords-geoexposure-schema-v1.5.1.json",
+    "type": "object",
+    "default": {},
+    "title": "CHORDS Geoexposure ",
+    "required": [
+        "submission",
+        "data",
+        "technical_metadata"
+    ],
+    "properties": {
+        "submission": {
+            "type": "object",
+            "default": {},
+            "title": "The submission Schema",
+            "required": [
+                "submitter_name",
+                "submitter_email",
+                "submitter_comment"
+            ],
+            "properties": {
+                "submitter_name": {
+                    "type": "string",
+                    "default": null,
+                    "title": "The submitter_name Schema",
+                    "examples": [
+                        null
+                    ]
+                },
+                "submitter_email": {
+                    "type": "string",
+                    "default": null,
+                    "title": "The submitter_email Schema",
+                    "examples": [
+                        null
+                    ]
+                },
+                "submitter_comment": {
+                    "type": "string",
+                    "default": null,
+                    "title": "The submitter_comment Schema",
+                    "examples": [
+                        null
+                    ]
+                }
+            },
+            "examples": [{
+                "submitter_name": null,
+                "submitter_email": null,
+                "submitter_comment": null
+            }]
+        },
+        "data": {
+            "type": "object",
+            "default": {},
+            "title": "The data Schema",
+            "required": [
+                "program",
+                "project",
+                "resource",
+                "data_resource",
+                "temporal_data",
+                "geospatial_data"
+            ],
+            "properties": {
+                "program": {
+                    "type": "object",
+                    "default": {},
+                    "title": "The program Schema",
+                    "required": [
+                        "program_name",
+                        "program_unique_id"
+                    ],
+                    "properties": {
+                        "program_name": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The program_name Schema",
+                            "examples": [
+                                null
+                            ]
+                        },
+                        "program_unique_id": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The program_unique_id Schema",
+                            "examples": [
+                                null
+                            ]
+                        }
+                    },
+                    "examples": [{
+                        "program_name": null,
+                        "program_unique_id": null
+                    }]
+                },
+                "project": {
+                    "type": "object",
+                    "default": {},
+                    "title": "The project Schema",
+                    "required": [
+                        "project_code",
+                        "project_name"
+
+                    ],
+                    "properties": {
+                        "project_code": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The project_code Schema",
+                            "examples": [
+                                null
+                            ]
+                        },
+                        "project_name": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The project_name Schema",
+                            "examples": [
+                                null
+                            ]
+                        },
+                        "project_short_name": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The project_short_name Schema",
+                            "examples": [
+                                null
+                            ]
+                        },
+                        "project_sponsor": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The project_sponsor Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "project_sponsor_other": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The project_sponsor_other Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "project_sponsor_type": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The project_sponsor_type Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "project_sponsor_type_other": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The project_sponsor_type_other Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "project_url": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The project_url Schema",
+                            "examples": [
+                                null
+                            ]
+                        }
+                    },
+                    "examples": [{
+                        "project_code": null,
+                        "project_name": null,
+                        "project_short_name": null,
+                        "project_sponsor": [],
+                        "project_sponsor_other": [],
+                        "project_sponsor_type": [],
+                        "project_sponsor_type_other": [],
+                        "project_url": null
+                    }]
+                },
+                "resource": {
+                    "type": "object",
+                    "default": {},
+                    "title": "The resource Schema",
+                    "required": [
+                        "resource_name"
+                    ],
+                    "properties": {
+                        "resource_name": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The resource_name Schema",
+                            "examples": [
+                                null
+                            ]
+                        },
+                        "resource_version": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The resource_version Schema",
+                            "examples": [
+                                null
+                            ]
+                        },
+                        "resource_short_name": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The resource_short_name Schema",
+                            "examples": [
+                                null
+                            ]
+                        },
+                        "resource_type": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The resource_type Schema",
+                            "examples": [
+                                null
+                            ]
+                        },
+                        "resource_url": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The resource_url Schema",
+                            "examples": [
+                                null
+                            ]
+                        },
+                        "resource_description": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The resource_description Schema",
+                            "examples": [
+                                null
+                            ]
+                        },
+                        "resource_domain": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The resource_domain Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "resource_domain_other": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The resource_domain_other Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "resource_keywords": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The resource_keywords Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "resource_access_type": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The resource_access_type Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "resource_reference": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The resource_reference Schema",
+                            "items": {
+                                "type": "object",
+                                "default": {},
+                                "title": "A Schema",
+                                "required": [
+
+                                ],
+                                "properties": {
+                                    "resource_reference_text": {
+                                        "type": "string",
+                                        "default": null,
+                                        "title": "The resource_reference_text Schema",
+                                        "examples": [
+                                            null
+                                        ]
+                                    },
+                                    "resource_reference_link": {
+                                        "type": "string",
+                                        "default": null,
+                                        "title": "The resource_reference_link Schema",
+                                        "examples": [
+                                            null
+                                        ]
+                                    }
+                                },
+                                "examples": [{
+                                    "resource_reference_text": null,
+                                    "resource_reference_link": null
+                                }]
+                            },
+                            "examples": [
+                                [{
+                                    "resource_reference_text": null,
+                                    "resource_reference_link": null
+                                }]
+                            ]
+                        },
+                        "resource_use_agreement": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The resource_use_agreement Schema",
+                            "items": {
+                                "type": "object",
+                                "default": {},
+                                "title": "A Schema",
+                                "required": [
+
+                                ],
+                                "properties": {
+                                    "resource_use_agreement_text": {
+                                        "type": "string",
+                                        "default": null,
+                                        "title": "The resource_use_agreement_text Schema",
+                                        "examples": [
+                                            null
+                                        ]
+                                    },
+                                    "resource_use_agreement_link": {
+                                        "type": "string",
+                                        "default": null,
+                                        "title": "The resource_use_agreement_link Schema",
+                                        "examples": [
+                                            null
+                                        ]
+                                    }
+                                },
+                                "examples": [{
+                                    "resource_use_agreement_text": null,
+                                    "resource_use_agreement_link": null
+                                }]
+                            },
+                            "examples": [
+                                [{
+                                    "resource_use_agreement_text": null,
+                                    "resource_use_agreement_link": null
+                                }]
+                            ]
+                        },
+                        "publication": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The publication Schema",
+                            "items": {
+                                "type": "object",
+                                "default": {},
+                                "title": "A Schema",
+                                "required": [
+                                    "citation",
+                                    "citation_link"
+                                ],
+                                "properties": {
+                                    "citation": {
+                                        "type": "string",
+                                        "default": null,
+                                        "title": "The citation Schema",
+                                        "examples": [
+                                            null
+                                        ]
+                                    },
+                                    "citation_link": {
+                                        "type": "string",
+                                        "default": null,
+                                        "title": "The citation_link Schema",
+                                        "examples": [
+                                            null
+                                        ]
+                                    }
+                                },
+                                "examples": [{
+                                    "citation": null,
+                                    "citation_link": null
+                                }]
+                            },
+                            "examples": [
+                                [{
+                                    "citation": null,
+                                    "citation_link": null
+                                }]
+                            ]
+                        },
+                        "is_static": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "The is_static Schema",
+                            "examples": [
+                                false
+                            ]
+                        },
+                        "payment_required": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "The payment_required Schema",
+                            "examples": [
+                                false
+                            ]
+                        },
+                        "comments": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The comments Schema",
+                            "examples": [
+                                null
+                            ]
+                        }
+                    },
+                    "examples": [{
+                        "resource_name": null,
+                        "resource_version": null,
+                        "resource_short_name": null,
+                        "resource_type": null,
+                        "resource_url": null,
+                        "resource_description": null,
+                        "resource_domain": [],
+                        "resource_domain_other": [],
+                        "resource_keywords": [],
+                        "resource_access_type": [],
+                        "resource_reference": [{
+                            "resource_reference_text": null,
+                            "resource_reference_link": null
+                        }],
+                        "resource_use_agreement": [{
+                            "resource_use_agreement_text": null,
+                            "resource_use_agreement_link": null
+                        }],
+                        "publication": [{
+                            "citation": null,
+                            "citation_link": null
+                        }],
+                        "is_static": false,
+                        "payment_required": false,
+                        "comments": null
+                    }]
+                },
+                "data_resource": {
+                    "type": "object",
+                    "default": {},
+                    "title": "The data_resource Schema",
+                    "required": [
+
+                    ],
+                    "properties": {
+                        "has_api": {
+                            "type": "boolean",
+                            "default": false,
+                            "title": "The has_api Schema",
+                            "examples": [
+                                false
+                            ]
+                        },
+                        "exposure_media": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The exposure_media Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "measures": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The measures Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "measures_other": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The measures_other Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "update_frequency": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The update_frequency Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "data_formats": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The data_formats Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "data_location": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The data_location Schema",
+                            "items": {
+                                "type": "object",
+                                "default": {},
+                                "title": "A Schema",
+                                "required": [
+                                    "data_location_text",
+                                    "data_location_link"
+                                ],
+                                "properties": {
+                                    "data_location_text": {
+                                        "type": "string",
+                                        "default": null,
+                                        "title": "The data_location_text Schema",
+                                        "examples": [
+                                            null
+                                        ]
+                                    },
+                                    "data_location_link": {
+                                        "type": "string",
+                                        "default": null,
+                                        "title": "The data_location_link Schema",
+                                        "examples": [
+                                            null
+                                        ]
+                                    }
+                                },
+                                "examples": [{
+                                    "data_location_text": null,
+                                    "data_location_link": null
+                                }]
+                            },
+                            "examples": [
+                                [{
+                                    "data_location_text": null,
+                                    "data_location_link": null
+                                }]
+                            ]
+                        }
+                    },
+                    "examples": [{
+                        "has_api": false,
+                        "exposure_media": [],
+                        "measures": [],
+                        "measures_other": [],
+                        "update_frequency": [],
+                        "data_formats": [],
+                        "data_location": [{
+                            "data_location_text": null,
+                            "data_location_link": null
+                        }]
+                    }]
+                },
+                "temporal_data": {
+                    "type": "object",
+                    "default": {},
+                    "title": "The temporal_data Schema",
+                    "required": [
+
+                    ],
+                    "properties": {
+                        "time_extent_start_yyyy": {
+                            "type": "integer",
+                            "default": 0,
+                            "title": "The time_extent_start_yyyy Schema",
+                            "examples": [
+                                0
+                            ]
+                        },
+                        "time_extent_end_yyyy": {
+                            "type": "integer",
+                            "default": 0,
+                            "title": "The time_extent_end_yyyy Schema",
+                            "examples": [
+                                0
+                            ]
+                        },
+                        "time_available_comment": {
+                            "type": "string",
+                            "default": null,
+                            "title": "The time_available_comment Schema",
+                            "examples": [
+                                null
+                            ]
+                        },
+                        "temporal_resolution": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The temporal_resolution Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        }
+                    },
+                    "examples": [{
+                        "time_extent_start_yyyy": 0,
+                        "time_extent_end_yyyy": 0,
+                        "time_available_comment": null,
+                        "temporal_resolution": []
+                    }]
+                },
+                "geospatial_data": {
+                    "type": "object",
+                    "default": {},
+                    "title": "The geospatial_data Schema",
+                    "required": [
+
+                    ],
+                    "properties": {
+                        "spatial_resolution": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The spatial_resolution Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "spatial_coverage": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The spatial_coverage Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "spatial_bounding_box": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The spatial_bounding_box Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "geometry_type": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The geometry_type Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        },
+                        "geometry_source": {
+                            "type": "array",
+                            "default": [],
+                            "title": "The geometry_source Schema",
+                            "items": {},
+                            "examples": [
+                                []
+                            ]
+                        }
+                    },
+                    "examples": [{
+                        "spatial_resolution": [],
+                        "spatial_coverage": [],
+                        "spatial_bounding_box": [],
+                        "geometry_type": [],
+                        "geometry_source": []
+                    }]
+                }
+            },
+            "examples": [{
+                "program": {
+                    "program_name": null,
+                    "program_unique_id": null
+                },
+                "project": {
+                    "project_code": null,
+                    "project_name": null,
+                    "project_short_name": null,
+                    "project_sponsor": [],
+                    "project_sponsor_other": [],
+                    "project_sponsor_type": [],
+                    "project_sponsor_type_other": [],
+                    "project_url": null
+                },
+                "resource": {
+                    "resource_name": null,
+                    "resource_version": null,
+                    "resource_short_name": null,
+                    "resource_type": null,
+                    "resource_url": null,
+                    "resource_description": null,
+                    "resource_domain": [],
+                    "resource_domain_other": [],
+                    "resource_keywords": [],
+                    "resource_access_type": [],
+                    "resource_reference": [{
+                        "resource_reference_text": null,
+                        "resource_reference_link": null
+                    }],
+                    "resource_use_agreement": [{
+                        "resource_use_agreement_text": null,
+                        "resource_use_agreement_link": null
+                    }],
+                    "publication": [{
+                        "citation": null,
+                        "citation_link": null
+                    }],
+                    "is_static": false,
+                    "payment_required": false,
+                    "comments": null
+                },
+                "data_resource": {
+                    "has_api": false,
+                    "exposure_media": [],
+                    "measures": [],
+                    "measures_other": [],
+                    "update_frequency": [],
+                    "data_formats": [],
+                    "data_location": [{
+                        "data_location_text": null,
+                        "data_location_link": null
+                    }]
+                },
+                "temporal_data": {
+                    "time_extent_start_yyyy": 0,
+                    "time_extent_end_yyyy": 0,
+                    "time_available_comment": null,
+                    "temporal_resolution": []
+                },
+                "geospatial_data": {
+                    "spatial_resolution": [],
+                    "spatial_coverage": [],
+                    "spatial_bounding_box": [],
+                    "geometry_type": [],
+                    "geometry_source": []
+                }
+            }]
+        },
+        "technical_metadata": {
+            "type": "object",
+            "default": {},
+            "title": "The technical_metadata Schema",
+            "required": [
+
+            ],
+            "properties": {
+                "created": {
+                    "type": "string",
+                    "default": null,
+                    "title": "The created Schema",
+                    "examples": [
+                        null
+                    ]
+                },
+                "modified": {
+                    "type": "string",
+                    "default": null,
+                    "title": "The modified Schema",
+                    "examples": [
+                        null
+                    ]
+                },
+                "original_source": {
+                    "type": "string",
+                    "default": null,
+                    "title": "The original_source Schema",
+                    "examples": [
+                        null
+                    ]
+                },
+                "original_source_link": {
+                    "type": "string",
+                    "default": null,
+                    "title": "The original_source_link Schema",
+                    "examples": [
+                        null
+                    ]
+                },
+                "history": {
+                    "type": "array",
+                    "default": [],
+                    "title": "The history Schema",
+                    "items": {
+                        "type": "object",
+                        "default": {},
+                        "title": "A Schema",
+                        "required": [
+                            "timestamp",
+                            "msg"
+                        ],
+                        "properties": {
+                            "timestamp": {
+                                "type": "string",
+                                "default": null,
+                                "title": "The timestamp Schema",
+                                "examples": [
+                                    null
+                                ]
+                            },
+                            "msg": {
+                                "type": "string",
+                                "default": null,
+                                "title": "The msg Schema",
+                                "examples": [
+                                    null
+                                ]
+                            }
+                        },
+                        "examples": [{
+                            "timestamp": null,
+                            "msg": null
+                        }]
+                    },
+                    "examples": [
+                        [{
+                            "timestamp": null,
+                            "msg": null
+                        }]
+                    ]
+                }
+            },
+            "examples": [{
+                "created": null,
+                "modified": null,
+                "original_source": null,
+                "original_source_link": null,
+                "history": [{
+                    "timestamp": null,
+                    "msg": null
+                }]
+            }]
+        }
+    },
+    "examples": [{
+        "submission": {
+            "submitter_name": null,
+            "submitter_email": null,
+            "submitter_comment": null
+        },
+        "data": {
+            "program": {
+                "program_name": null,
+                "program_unique_id": null
+            },
+            "project": {
+                "project_code": null,
+                "project_name": null,
+                "project_short_name": null,
+                "project_sponsor": [],
+                "project_sponsor_other": [],
+                "project_sponsor_type": [],
+                "project_sponsor_type_other": [],
+                "project_url": null
+            },
+            "resource": {
+                "resource_name": null,
+                "resource_version": null,
+                "resource_short_name": null,
+                "resource_type": null,
+                "resource_url": null,
+                "resource_description": null,
+                "resource_domain": [],
+                "resource_domain_other": [],
+                "resource_keywords": [],
+                "resource_access_type": [],
+                "resource_reference": [{
+                    "resource_reference_text": null,
+                    "resource_reference_link": null
+                }],
+                "resource_use_agreement": [{
+                    "resource_use_agreement_text": null,
+                    "resource_use_agreement_link": null
+                }],
+                "publication": [{
+                    "citation": null,
+                    "citation_link": null
+                }],
+                "is_static": false,
+                "payment_required": false,
+                "comments": null
+            },
+            "data_resource": {
+                "has_api": false,
+                "exposure_media": [],
+                "measures": [],
+                "measures_other": [],
+                "update_frequency": [],
+                "data_formats": [],
+                "data_location": [{
+                    "data_location_text": null,
+                    "data_location_link": null
+                }]
+            },
+            "temporal_data": {
+                "time_extent_start_yyyy": 0,
+                "time_extent_end_yyyy": 0,
+                "time_available_comment": null,
+                "temporal_resolution": []
+            },
+            "geospatial_data": {
+                "spatial_resolution": [],
+                "spatial_coverage": [],
+                "spatial_bounding_box": [],
+                "geometry_type": [],
+                "geometry_source": []
+            }
+        },
+        "technical_metadata": {
+            "created": null,
+            "modified": null,
+            "original_source": null,
+            "original_source_link": null,
+            "history": [{
+                "timestamp": null,
+                "msg": null
+            }]
+        }
+    }]
+}
