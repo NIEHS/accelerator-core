@@ -15,7 +15,6 @@ class IngestSourceDescriptor:
         self.submitter_email = None
         self.submit_date = None
         self.ingest_type = None
-        self.type = None
         self.schema_version = None
         self.ingest_identifier = None
         self.ingest_link = None

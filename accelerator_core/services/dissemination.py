@@ -1,11 +1,14 @@
+from accelerator_core.utils.accelerator_config import AcceleratorConfig
+
+
 class Dissemination:
     """Retrieves data from the database and transforms it into a JSON document for endpoint systems."""
 
-    def __init__(self, record_id: str):
-        """Initialize Dissemination with a record ID."""
-        self.record_id = record_id
+    def __init__(self, accelerator_config: AcceleratorConfig):
+        """Initialize Accession with validated data."""
+        self.accelerator_config = accelerator_config
 
-    def fetch_data(self) -> dict:
+    def disseminate(self) -> dict:
         """Retrieve data from the database."""
         pass
 
