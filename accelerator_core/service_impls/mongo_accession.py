@@ -5,7 +5,10 @@ Accession support concrete implementation for Mongo data store
 from bson import ObjectId
 
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
-from accelerator_core.workflow.accel_source_ingest import IngestSourceDescriptor
+from accelerator_core.workflow.accel_source_ingest import (
+    IngestSourceDescriptor,
+    IngestResult,
+)
 from accelerator_core.services.accession import Accession
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
@@ -36,31 +39,39 @@ class AccessionMongo(Accession):
 
     def ingest(
         self,
-        accel_document: dict,
-        ingest_source_descriptor: IngestSourceDescriptor,
+        ingest_result: IngestResult,
         check_duplicates: bool = True,
         temp_doc: bool = False,
     ) -> str:
         """
         Ingest the given document
-        :param accel_document: dict which is the document structure
-        :param ingest_source_descriptor: ingest source descriptor describing the type, schema,
-        and other configuration
+        :param ingest_result: ingest source descriptor describing the type, schema,
+        and other configuration along with a payload (either in-line or a path to a document)
         :param check_duplicates: bool indicates whether pre-checks for duplicate data run
         :param temp_doc: bool indicates whether the document is temporary or not
         :return: str with id of the ingested document
         """
         logger.info("ingest()")
-        valid = self.validate(accel_document, ingest_source_descriptor)
+
+        if not ingest_result.payload_inline:
+            raise Exception("unsupported operation - payload is not inline")
+
+        if len(ingest_result.payload) != 1:
+            raise Exception(
+                "unsupported operation - payload is missing or has multiple elements"
+            )
+
+        doc = ingest_result.payload[0]
+        valid = self.validate(doc, ingest_result.ingest_source_descriptor)
         if not valid:
             raise Exception("Invalid document provided")
 
         db = self.connect_to_db()
         coll = self.build_collection_reference(
-            db, ingest_source_descriptor.ingest_type, temp_doc
+            db, ingest_result.ingest_source_descriptor.ingest_type, temp_doc
         )
 
-        id = coll.insert_one(accel_document).inserted_id
+        id = coll.insert_one(doc).inserted_id
 
         logger.info(f"inserted id {id}")
         return id

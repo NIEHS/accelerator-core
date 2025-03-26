@@ -1,4 +1,7 @@
-from accelerator_core.workflow.accel_source_ingest import IngestSourceDescriptor
+from accelerator_core.workflow.accel_source_ingest import (
+    IngestSourceDescriptor,
+    IngestResult,
+)
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
 from accelerator_core.utils.schema_tools import SchemaTools
@@ -43,9 +46,8 @@ class Accession:
     ) -> str:
         """
         Ingest the given document
-        :param accel_document: dict which is the document structure
-        :param ingest_source_descriptor: ingest source descriptor describing the type, schema,
-        and other configuration
+        :param ingest_result: IngestResult instance to ingest, this should be a single document, with
+        either an inline document, or a path reference to a temporary location
         :param check_duplicates: bool indicates whether pre-checks for duplicate data run
         :param temp_doc: bool indicates whether the document is temporary or not
         :return: str with id of the ingested document

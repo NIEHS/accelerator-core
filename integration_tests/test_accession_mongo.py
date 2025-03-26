@@ -7,7 +7,10 @@ from accelerator_core.service_impls.mongo_accession import AccessionMongo
 from accelerator_core.utils import resource_utils, mongo_tools
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.resource_utils import determine_resource_path
-from accelerator_core.workflow.accel_source_ingest import IngestSourceDescriptor
+from accelerator_core.workflow.accel_source_ingest import (
+    IngestSourceDescriptor,
+    IngestResult,
+)
 
 
 class TestAccessionMongo(unittest.TestCase):
@@ -53,15 +56,19 @@ class TestAccessionMongo(unittest.TestCase):
         ingest_source_descriptor.ingest_type = "accelerator"
         ingest_source_descriptor.schema_version = "v1.0.0"
 
+        ingest_result = IngestResult(ingest_source_descriptor)
+
         json_path = determine_resource_path(accelerator_core.schema, "accel.json")
         with open(json_path) as json_data:
             d = json.load(json_data)
+            ingest_result.payload.append(d)
+            ingest_result.payload_inline = True
+
             accession = AccessionMongo(
                 self.__class__._accelerator_config, self.__class__._accel_db_context
             )
-            id = accession.ingest(
-                d, ingest_source_descriptor, check_duplicates=False, temp_doc=False
-            )
+
+            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
             self.assertIsNotNone(id)
 
             # now look up the doc in the expected collection
@@ -72,15 +79,21 @@ class TestAccessionMongo(unittest.TestCase):
     def test_find_by_id(self):
         json_path = determine_resource_path(accelerator_core.schema, "accel.json")
         with open(json_path) as json_data:
-            d = json.load(json_data)
-            accession = AccessionMongo(
-                self.__class__._accelerator_config, self.__class__._accel_db_context
-            )
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
             ingest_source_descriptor.schema_version = "v1.0.0"
 
-            id = accession.ingest(d, ingest_source_descriptor)
+            ingest_result = IngestResult(ingest_source_descriptor)
+
+            d = json.load(json_data)
+            ingest_result.payload.append(d)
+            ingest_result.payload_inline = True
+
+            accession = AccessionMongo(
+                self.__class__._accelerator_config, self.__class__._accel_db_context
+            )
+
+            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
             actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
             self.assertIsNotNone(actual)
             self.assertIsInstance(actual, dict)
@@ -88,15 +101,21 @@ class TestAccessionMongo(unittest.TestCase):
     def test_decommission(self):
         json_path = determine_resource_path(accelerator_core.schema, "accel.json")
         with open(json_path) as json_data:
-            d = json.load(json_data)
-            accession = AccessionMongo(
-                self.__class__._accelerator_config, self.__class__._accel_db_context
-            )
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
             ingest_source_descriptor.schema_version = "v1.0.0"
 
-            id = accession.ingest(d, ingest_source_descriptor)
+            ingest_result = IngestResult(ingest_source_descriptor)
+
+            d = json.load(json_data)
+            ingest_result.payload.append(d)
+            ingest_result.payload_inline = True
+
+            accession = AccessionMongo(
+                self.__class__._accelerator_config, self.__class__._accel_db_context
+            )
+
+            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
             accession.decommission(id, ingest_source_descriptor.ingest_type)
             actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
             self.assertIsNone(actual)
@@ -104,15 +123,21 @@ class TestAccessionMongo(unittest.TestCase):
     def test_delete_temp_document(self):
         json_path = determine_resource_path(accelerator_core.schema, "accel.json")
         with open(json_path) as json_data:
-            d = json.load(json_data)
-            accession = AccessionMongo(
-                self.__class__._accelerator_config, self.__class__._accel_db_context
-            )
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
             ingest_source_descriptor.schema_version = "v1.0.0"
 
-            id = accession.ingest(d, ingest_source_descriptor, temp_doc=True)
+            ingest_result = IngestResult(ingest_source_descriptor)
+
+            d = json.load(json_data)
+            ingest_result.payload.append(d)
+            ingest_result.payload_inline = True
+
+            accession = AccessionMongo(
+                self.__class__._accelerator_config, self.__class__._accel_db_context
+            )
+
+            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=True)
             accession.delete_temp_document(id, ingest_source_descriptor.ingest_type)
             actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
             self.assertIsNone(actual)
