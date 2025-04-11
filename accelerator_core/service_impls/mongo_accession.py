@@ -5,6 +5,7 @@ Accession support concrete implementation for Mongo data store
 from bson import ObjectId
 
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
+from accelerator_core.utils.schema_tools import SchemaValidationResult
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestResult,
@@ -34,7 +35,7 @@ class AccessionMongo(Accession):
 
     def validate(
         self, json_dict: dict, ingest_source_descriptor: IngestSourceDescriptor
-    ) -> bool:
+    ) -> SchemaValidationResult:
         return super().validate(json_dict, ingest_source_descriptor)
 
     def ingest(
@@ -62,9 +63,9 @@ class AccessionMongo(Accession):
             )
 
         doc = ingest_result.payload[0]
-        valid = self.validate(doc, ingest_result.ingest_source_descriptor)
-        if not valid:
-            raise Exception("Invalid document provided")
+        result = self.validate(doc, ingest_result.ingest_source_descriptor)
+        if not result.valid:
+            raise Exception(f"Invalid document provided {result.error_message}")
 
         db = self.connect_to_db()
         coll = self.build_collection_reference(

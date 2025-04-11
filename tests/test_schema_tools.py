@@ -36,8 +36,8 @@ class TestSchemaTools(unittest.TestCase):
             d = json.load(json_data)
 
             schema_tools = SchemaTools(self.config)
-            actual = schema_tools.validate_json_against_schema(d, "accelerator")
-            self.assertTrue(actual, "Did not validate json against schema")
+            result = schema_tools.validate_json_against_schema(d, "accelerator")
+            self.assertTrue(result.valid, "Did not validate json against schema")
 
 
 if __name__ == "__main__":

@@ -66,7 +66,7 @@ class Dissemination:
         """
         Disseminate an individual document, identified by its type (parent collection) and its id
         :param document_id: str with unique document id
-        :param dissemination_specification: DisseminationSpecification that describes the type, version, and
+        :param dissemination_request: DisseminationRequest that describes the type, version, and
         other information
         :return: DisseminationResult with the resulting information.
         """
@@ -76,6 +76,7 @@ class Dissemination:
     ) -> DisseminationResult:
         """
         Apply the given filter to create a set of documents to be disseminated to a target
-        :param document_filter: DisseminationFilter that will select documents to disseminate
+        :param filter: DisseminationFilter that will select documents to disseminate
+        :param dissemination_request: DisseminationRequest that describes the type, version, and other information
         :return: array of documents as json
         """

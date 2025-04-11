@@ -4,7 +4,7 @@ from accelerator_core.workflow.accel_source_ingest import (
 )
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
-from accelerator_core.utils.schema_tools import SchemaTools
+from accelerator_core.utils.schema_tools import SchemaTools, SchemaValidationResult
 
 logger = setup_logger("accelerator")
 
@@ -18,7 +18,7 @@ class Accession:
 
     def validate(
         self, json_dict: dict, ingest_source_descriptor: IngestSourceDescriptor
-    ) -> bool:
+    ) -> SchemaValidationResult:
         """
         Validate the given json structure against the Accelerator schema
         :param json_dict: dict with json contents to validate

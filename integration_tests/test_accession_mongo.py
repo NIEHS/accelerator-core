@@ -48,8 +48,8 @@ class TestAccessionMongo(unittest.TestCase):
             accession = AccessionMongo(
                 self.__class__._accelerator_config, self.__class__._accel_db_context
             )
-            valid = accession.validate(d, ingest_source_descriptor)
-            self.assertTrue(valid)
+            result = accession.validate(d, ingest_source_descriptor)
+            self.assertTrue(result.valid)
 
     def test_ingest(self):
         ingest_source_descriptor = IngestSourceDescriptor()

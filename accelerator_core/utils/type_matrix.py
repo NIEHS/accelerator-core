@@ -42,7 +42,7 @@ class TypeMatrix:
         else:
             resolved_version = version
 
-        return f"{self.schema}-{resolved_version}.json"
+        return f"{self.schema}-v{resolved_version}.json"
 
 
 def parse_type_matrix(type_matrix_path: Path) -> [TypeMatrix]:
