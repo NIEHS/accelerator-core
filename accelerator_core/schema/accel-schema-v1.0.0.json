@@ -20,7 +20,8 @@
       },
       "required": [
         "data",
-        "submission"
+        "submission",
+        "technical_metadata"
       ],
       "title": "Accelerator"
     },
@@ -63,15 +64,21 @@
       "properties": {
         "exposure_media": {
           "type": "array",
-          "items": {}
+          "items": {
+            "type": "string"
+          }
         },
         "measures": {
           "type": "array",
-          "items": {}
+          "items": {
+            "type": "string"
+          }
         },
         "measures_other": {
           "type": "array",
-          "items": {}
+          "items": {
+            "type": "string"
+          }
         },
         "measurement_method": {
           "type": [
@@ -105,7 +112,9 @@
         },
         "data_formats": {
           "type": "array",
-          "items": {}
+          "items": {
+            "type": "string"
+          }
         },
         "data_location": {
           "type": "array",
@@ -115,7 +124,6 @@
         }
       },
       "required": [
-
       ],
       "title": "DataResource"
     },
@@ -151,11 +159,15 @@
         },
         "population_studies": {
           "type": "array",
-          "items": {}
+          "items": {
+            "type": "string"
+          }
         },
         "population_studies_other": {
           "type": "array",
-          "items": {}
+          "items": {
+            "type": "string"
+          }
         },
         "linkable_encounters": {
           "type": "boolean"
@@ -165,13 +177,107 @@
         },
         "biospecimens_type": {
           "type": "array",
-          "items": {}
+          "items": {
+            "type": "string"
+          }
         }
       },
       "required": [
-
       ],
       "title": "PopulationData"
+    },
+    "GeospatialData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "spatial_resolution": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "spatial_resolution_other": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "spatial_resolution_all_available": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "spatial_resolution_comment": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "spatial_coverage": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "spatial_coverage_other": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "spatial_bounding_box": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "geometry_type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "geometry_source": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "geometry_source_other": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "model_methods": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "model_methods_other": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "geographic_feature": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "geographic_feature_other": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+      ],
+      "title": "GeospatialData"
     },
     "Program": {
       "type": "object",
@@ -218,7 +324,7 @@
             "string"
           ]
         },
-         "project_url": {
+        "project_url": {
           "type": [
             "null",
             "string"
@@ -226,7 +332,9 @@
         },
         "project_sponsor": {
           "type": "array",
-          "items": {}
+          "items": {
+            "type": "string"
+          }
         },
         "project_sponsor_other": {
           "type": "array",
@@ -335,7 +443,6 @@
         }
       },
       "required": [
-
       ],
       "title": "Resource"
     },
@@ -344,10 +451,16 @@
       "additionalProperties": false,
       "properties": {
         "citation": {
-          "type": ["null", "string"]
+          "type": [
+            "null",
+            "string"
+          ]
         },
         "citation_link": {
-          "type": ["null", "string"]
+          "type": [
+            "null",
+            "string"
+          ]
         }
       },
       "required": [
@@ -408,15 +521,21 @@
       "properties": {
         "temporal_resolution": {
           "type": "array",
-          "items": {}
+          "items": {
+            "type": "string"
+          }
         },
         "temporal_resolution_other": {
           "type": "array",
-          "items": {}
+          "items": {
+            "type": "string"
+          }
         },
         "temporal_resolution_all_available": {
           "type": "array",
-          "items": {}
+          "items": {
+            "type": "string"
+          }
         },
         "temporal_resolution_comment": {
           "type": [
@@ -426,7 +545,6 @@
         }
       },
       "required": [
-
       ],
       "title": "TemporalData"
     },
@@ -492,8 +610,7 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/History"
-          },
-          "minItems": 0
+          }
         }
       },
       "required": [

@@ -1,3 +1,4 @@
+import json
 import os
 
 from jinja2 import Environment, FileSystemLoader
@@ -203,4 +204,6 @@ def build_accel_from_model(
         population_data=population,
     )
 
-    return rendered
+    data = json.loads(rendered)
+
+    return data

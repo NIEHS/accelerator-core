@@ -122,5 +122,7 @@ class TestAccelModel(unittest.TestCase):
         )
 
         schema_tools = SchemaTools(self.config)
-        result = schema_tools.validate_json_against_schema(rendered, "accel", "1.0.0")
+        result = schema_tools.validate_json_against_schema(
+            rendered, "accelerator", "1.0.0"
+        )
         self.assertTrue(result.valid)
