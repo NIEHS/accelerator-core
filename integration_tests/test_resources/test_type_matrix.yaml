@@ -3,7 +3,7 @@ types:
   schema: pcor
   collection: pcor
   temp_collection: pcor_temp
-  default_version: v1.0.0
+  default_version: 1.0.0
 - name: accelerator
   schema: accel-schema
   collection: accelerator

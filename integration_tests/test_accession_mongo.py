@@ -39,7 +39,7 @@ class TestAccessionMongo(unittest.TestCase):
 
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
-        ingest_source_descriptor.schema_version = "v1.0.0"
+        ingest_source_descriptor.schema_version = "1.0.0"
 
         json_path = determine_resource_path(accelerator_core.schema, "accel.json")
 
@@ -54,7 +54,7 @@ class TestAccessionMongo(unittest.TestCase):
     def test_ingest(self):
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
-        ingest_source_descriptor.schema_version = "v1.0.0"
+        ingest_source_descriptor.schema_version = "1.0.0"
 
         ingest_result = IngestResult(ingest_source_descriptor)
 
@@ -81,7 +81,7 @@ class TestAccessionMongo(unittest.TestCase):
         with open(json_path) as json_data:
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
-            ingest_source_descriptor.schema_version = "v1.0.0"
+            ingest_source_descriptor.schema_version = "1.0.0"
 
             ingest_result = IngestResult(ingest_source_descriptor)
 
@@ -103,7 +103,7 @@ class TestAccessionMongo(unittest.TestCase):
         with open(json_path) as json_data:
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
-            ingest_source_descriptor.schema_version = "v1.0.0"
+            ingest_source_descriptor.schema_version = "1.0.0"
 
             ingest_result = IngestResult(ingest_source_descriptor)
 
@@ -125,7 +125,7 @@ class TestAccessionMongo(unittest.TestCase):
         with open(json_path) as json_data:
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
-            ingest_source_descriptor.schema_version = "v1.0.0"
+            ingest_source_descriptor.schema_version = "1.0.0"
 
             ingest_result = IngestResult(ingest_source_descriptor)
 
