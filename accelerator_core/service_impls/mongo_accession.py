@@ -8,7 +8,7 @@ from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.utils.schema_tools import SchemaValidationResult
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
-    IngestResult,
+    IngestPayload,
 )
 from accelerator_core.services.accession import Accession
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
@@ -40,7 +40,7 @@ class AccessionMongo(Accession):
 
     def ingest(
         self,
-        ingest_result: IngestResult,
+        ingest_result: IngestPayload,
         check_duplicates: bool = True,
         temp_doc: bool = False,
     ) -> str:

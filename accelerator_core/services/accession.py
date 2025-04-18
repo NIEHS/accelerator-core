@@ -1,6 +1,6 @@
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
-    IngestResult,
+    IngestPayload,
 )
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
@@ -40,7 +40,7 @@ class Accession:
 
     def ingest(
         self,
-        ingest_result: IngestResult,
+        ingest_result: IngestPayload,
         check_duplicates: bool = True,
         temp_doc: bool = False,
     ) -> str:
