@@ -15,12 +15,13 @@ class AccelDisseminationComponent:
 
     def disseminate(
         self, dissemination_request: DisseminationPayload, additional_parameters: dict
-    ):
+    ) -> DisseminationPayload:
         """
-        primary method for subclasses to implement, this is the actual ingest, which means accessing the target
-        data source and returning a result that includes provenance and technical metadata, along with a payload that
-        is either the serialized result or a path or locator that can be used to extract the result.
-        :param additional_parameters: dict of individual parameters that can be fed to this method per implementation
-        :return: IngestResult that wraps payload(s) with additional metadata
+        absract method to be implemented per dissemination target. This takes a DisseminationPayload with
+        inline data or path to temporary data and should handle data dissemination to some target. It will return
+        a structure that can be used downstream to update the technical metadata log about the dissemination
+        :param dissemination_request: DisseminationPayload with the dissemination data
+        :param additional_parameters: dict with additional parameters unique to a target
+        :return: DisseminationPayload with results and additional logging on success/failure of a dissemination
         """
         pass
