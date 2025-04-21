@@ -16,6 +16,10 @@ from accelerator_core.utils.logger import setup_logger
 
 logger = setup_logger("accelerator")
 
+"""
+TODO: delegate calls to accel_database_utils - mc
+"""
+
 
 class AccessionMongo(Accession):
     """
