@@ -49,11 +49,8 @@ class DisseminationPayload:
         self.dissemination_request = dissemination_request
         self.dissemination_successful = True
         self.payload_inline = True
-        self.payload = None
-        self.payload_path = None
-        self.dissemination_log = (
-            []
-        )  # log of TechnicalMetadataHistory that should be reflected in accel
+        self.payload = []
+        self.payload_path = []
 
 
 class Dissemination:

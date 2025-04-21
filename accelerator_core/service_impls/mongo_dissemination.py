@@ -2,6 +2,8 @@
 Dissemination support concrete implementation for Mongo data store
 """
 
+from io import UnsupportedOperation
+
 from bson import ObjectId
 from pipenv.patched.safety.formatter import NOT_IMPLEMENTED
 
@@ -42,3 +44,52 @@ class DisseminationMongo(Dissemination):
         """
         Dissemination.__init__(self, accelerator_config)
         self.accel_db_context = accel_db_context
+        self.accel_database_utils = AccelDatabaseUtils(
+            accelerator_config, accel_db_context
+        )
+
+    def disseminate_by_id(
+        self, document_id: str, dissemination_request: DisseminationDescriptor
+    ) -> DisseminationPayload:
+        """
+        Disseminate an individual document, identified by its type (parent collection) and its id
+        :param document_id: str with unique document id
+        :param dissemination_request: DisseminationDescriptor that describes the type, version, and
+        other information
+        :return: DisseminationPayload with the resulting information
+        """
+
+        logger.info(f"Disseminating document {document_id}")
+        doc = self.accel_database_utils.find_by_id(
+            document_id,
+            dissemination_request.ingest_type,
+            dissemination_request.temp_collection,
+        )
+        event = create_timestamped_log(
+            f"Disseminating document {document_id} of type { dissemination_request.ingest_type} to target: {dissemination_request.dissemination_type}"
+        )
+        self.accel_database_utils.log_document_events(
+            document_id,
+            dissemination_request.ingest_type,
+            dissemination_request.temp_collection,
+            event,
+        )
+        dissemination_payload = DisseminationPayload(dissemination_request)
+        dissemination_payload.payload = [doc]
+        dissemination_payload.payload_inline = True
+        dissemination_payload.dissemination_successful = True
+        return dissemination_payload
+
+    def disseminate_by_filter(
+        self,
+        filter: DisseminationFilter,
+        dissemination_request: DisseminationDescriptor,
+    ) -> [DisseminationPayload]:
+        """
+        Apply the given filter to create a set of documents to be disseminated to a target
+        :param filter: DisseminationFilter that will select documents to disseminate. The internal meaning
+        of the filter is dependent on the particular implementation
+        :param dissemination_request: DisseminationRequest that describes the type, version, and other information
+        :return: array of documents as DisseminationPayload
+        """
+        raise UnsupportedOperation("dissemination by filter not yet supported")

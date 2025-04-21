@@ -4,6 +4,7 @@ General methods to interact with the mongo database
 
 from bson import ObjectId
 
+from accelerator_core.schema.models.base_model import TechnicalMetadataHistory
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
@@ -79,3 +80,21 @@ class AccelDatabaseUtils:
             coll_name = type_matrix_info.collection
 
         return db[coll_name]
+
+    def log_document_event(
+        self,
+        document_id: str,
+        document_type: str,
+        temp_doc: bool,
+        event: TechnicalMetadataHistory,
+    ):
+        """
+
+        :param document_id:
+        :param document_type:
+        :param temp_doc:
+        :param events:
+        :return:
+        """
+        logger.info(f"logging events for document: {document_id}")
+        logger.debug(f"event: {event}")
