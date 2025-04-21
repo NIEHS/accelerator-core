@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 class SubmissionInfoModel:
     """
     Represents administrative information about a data source (source, curator info and email)
@@ -27,6 +30,12 @@ class TechnicalMetadataHistory:
     History log entry for technical metadata
     """
 
-    def __init__(self):
-        self.timestamp = ""
-        self.msg = ""
+    def __init__(self, timestamp: str, message: str):
+        self.timestamp = timestamp
+        self.msg = message
+
+
+def create_timestamped_log(message: str) -> TechnicalMetadataHistory:
+    now = datetime.now()
+    iso_string = now.isoformat()
+    return TechnicalMetadataHistory(iso_string, message)
