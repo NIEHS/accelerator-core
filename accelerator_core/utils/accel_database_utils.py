@@ -6,6 +6,7 @@ from bson import ObjectId
 
 from accelerator_core.schema.models.base_model import TechnicalMetadataHistory
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
+from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
 
@@ -47,14 +48,18 @@ class AccelDatabaseUtils:
         :param document_type type of document per type matrix
         :param temp_doc: bool indicates whether the document is temporary or not
         :return: dict with the document structure
+        :throws AccelDocumentNotFoundException: if the document is not found
         """
 
         logger.info(f"find_by_id({document_id}) is temp doc? {temp_doc}")
 
         db = self.connect_to_db()
-        coll = self.build_collection_reference(db, document_type, temp_doc=False)
+        coll = self.build_collection_reference(document_type, temp_doc=False)
         doc = coll.find_one({"_id": ObjectId(document_id)})
-        return doc  # TODO: test not found? - mc
+        if not doc:
+            raise AccelDocumentNotFoundException(document_id, document_type, temp_doc)
+
+        return doc
 
     def connect_to_db(self):
         return self.accel_db_context.db

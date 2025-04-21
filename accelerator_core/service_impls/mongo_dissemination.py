@@ -63,12 +63,13 @@ class DisseminationMongo(Dissemination):
         doc = self.accel_database_utils.find_by_id(
             document_id,
             dissemination_request.ingest_type,
-            dissemination_request.temp_collection,
+            temp_doc=dissemination_request.temp_collection,
         )
+
         event = create_timestamped_log(
             f"Disseminating document {document_id} of type { dissemination_request.ingest_type} to target: {dissemination_request.dissemination_type}"
         )
-        self.accel_database_utils.log_document_events(
+        self.accel_database_utils.log_document_event(
             document_id,
             dissemination_request.ingest_type,
             dissemination_request.temp_collection,
