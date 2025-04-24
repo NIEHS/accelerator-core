@@ -9,7 +9,7 @@ from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.resource_utils import determine_resource_path
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
-    IngestResult,
+    IngestPayload,
 )
 
 
@@ -56,7 +56,7 @@ class TestAccessionMongo(unittest.TestCase):
         ingest_source_descriptor.ingest_type = "accelerator"
         ingest_source_descriptor.schema_version = "1.0.0"
 
-        ingest_result = IngestResult(ingest_source_descriptor)
+        ingest_result = IngestPayload(ingest_source_descriptor)
 
         json_path = determine_resource_path(accelerator_core.schema, "accel.json")
         with open(json_path) as json_data:
@@ -83,7 +83,7 @@ class TestAccessionMongo(unittest.TestCase):
             ingest_source_descriptor.ingest_type = "accelerator"
             ingest_source_descriptor.schema_version = "1.0.0"
 
-            ingest_result = IngestResult(ingest_source_descriptor)
+            ingest_result = IngestPayload(ingest_source_descriptor)
 
             d = json.load(json_data)
             ingest_result.payload.append(d)
@@ -105,7 +105,7 @@ class TestAccessionMongo(unittest.TestCase):
             ingest_source_descriptor.ingest_type = "accelerator"
             ingest_source_descriptor.schema_version = "1.0.0"
 
-            ingest_result = IngestResult(ingest_source_descriptor)
+            ingest_result = IngestPayload(ingest_source_descriptor)
 
             d = json.load(json_data)
             ingest_result.payload.append(d)
@@ -127,7 +127,7 @@ class TestAccessionMongo(unittest.TestCase):
             ingest_source_descriptor.ingest_type = "accelerator"
             ingest_source_descriptor.schema_version = "1.0.0"
 
-            ingest_result = IngestResult(ingest_source_descriptor)
+            ingest_result = IngestPayload(ingest_source_descriptor)
 
             d = json.load(json_data)
             ingest_result.payload.append(d)
