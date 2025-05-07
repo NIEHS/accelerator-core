@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 
 from jinja2 import Environment, FileSystemLoader
@@ -190,6 +191,38 @@ def build_accel_from_model(
 
     template_processor = AccelTemplateProcessor()
     template = template_processor.retrieve_template("accel", version)
+
+    if submission is None:
+        logging.error("No submission info provided")
+        raise Exception("No submission info provided")
+
+    if technical is None:
+        logging.error("No technical info provided")
+        raise Exception("No technical info provided")
+
+    if program is None:
+        logging.error("No program info provided")
+        raise Exception("No program info provided")
+
+    if project is None:
+        logging.error("No project info provided")
+        raise Exception("No project info provided")
+
+    if resource is None:
+        logging.error("No resource info provided")
+        raise Exception("No resource info provided")
+
+    if data_resource is None:
+        data_resource = AccelDataResourceModel()
+
+    if temporal is None:
+        temporal = AccelTemporalDataModel()
+
+    if population is None:
+        population = AccelPopulationDataModel()
+
+    if geospatial is None:
+        geospatial = AccelGeospatialDataModel()
 
     rendered = template.render(
         version="1.0.0",
