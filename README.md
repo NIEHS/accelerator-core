@@ -35,3 +35,6 @@ This should be the first thing you do when cloning this project. More docs on pr
 * Mongo DB Commands: https://www.mongodb.com/docs/manual/reference/command/
 * Mongo Airflow Hook: https://www.mongodb.com/developer/products/mongodb/mongodb-apache-airflow/
 * Mongo w Airflow: https://www.mongodb.com/developer/products/mongodb/mongodb-apache-airflow/
+* Custom operators (may add for our accel core stuff) - https://airflow.apache.org/docs/apache-airflow/stable/howto/custom-operator.html#custom-operator
+* Managing python and other dependencies - https://airflow.apache.org/docs/apache-airflow/2.10.5/tutorial/taskflow.html#using-the-taskflow-api-with-complex-conflicting-python-dependencies
+  * https://airflow.apache.org/docs/apache-airflow/2.10.5/tutorial/taskflow.html#using-the-taskflow-api-with-complex-conflicting-python-dependencies
