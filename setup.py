@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="accelerator-core",
+    name="accelerator_core",
     version="0.1.0",
     description="Core libraries for the accelerator metadata backbone",
     author="Mike Conway",
