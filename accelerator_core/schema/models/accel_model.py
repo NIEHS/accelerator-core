@@ -163,16 +163,17 @@ class AccelGeospatialDataModel:
 
 def build_accel_from_model(
     version: str,
-    submission: SubmissionInfoModel,
-    technical: TechnicalMetadataModel,
-    program: AccelPublicationModel,
-    project: AccelProjectModel,
-    resource: AccelResourceReferenceModel,
-    data_resource: AccelDataResourceModel,
-    temporal: AccelTemporalDataModel,
-    population: AccelPopulationDataModel,
-    geospatial: AccelGeospatialDataModel,
-):
+    submission: SubmissionInfoModel = SubmissionInfoModel(),
+    technical: TechnicalMetadataModel = TechnicalMetadataModel,
+    program: AccelPublicationModel = AccelPublicationModel(),
+    project: AccelProjectModel = AccelProjectModel(),
+    resource: AccelResourceReferenceModel = AccelResourceReferenceModel(),
+    data_resource: AccelDataResourceModel = AccelDataResourceModel(),
+    temporal: AccelTemporalDataModel = AccelTemporalDataModel(),
+    population: AccelPopulationDataModel = AccelPopulationDataModel(),
+    geospatial: AccelGeospatialDataModel  = AccelGeospatialDataModel()
+) -> dict:
+
     """
     Build the json representation of the accelerator model, rendered via a template. Provide the components below,
     a component can be assigned 'None' except for submission and technical and default 'no values' will be generated
@@ -186,7 +187,7 @@ def build_accel_from_model(
     :param temporal: AccelTemporalDataModel
     :param population: AccelPopulationDataModel
     :param geospatial: AccelGeospatialDataModel
-    :return: json document rendered as a template
+    :return: json document rendered as a dict
     """
 
     template_processor = AccelTemplateProcessor()
