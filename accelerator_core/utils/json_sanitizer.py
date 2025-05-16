@@ -19,6 +19,13 @@ class JSONSanitizer:
         return JSONSanitizer._sanitize(parsed_data)
 
     @staticmethod
+    def sanitize_json_object(obj: Union[Dict, list]) -> Union[Dict, list]:
+        # Assume obj is already a Python dict or list
+        if not isinstance(obj, (dict, list)):
+            raise TypeError("Input must be a dict or list.")
+        return JSONSanitizer._sanitize(obj)
+
+    @staticmethod
     def _preprocess_python_style_json(json_str: str) -> str:
         # Replace None → ""
         json_str = re.sub(r'(:\s*)None\b', r'\1""', json_str)
