@@ -1,0 +1,48 @@
+{
+  "id": "b5wa-ze9s",
+  "name": "CDT_INDIVIDUAL_LINEAGES_BY_WEEK_LOCAL_PIVOTED",
+  "attribution": None,
+  "attributionLink": None,
+  "category": None,
+  "createdAt": "2024-12-06T21:39:48+0000",
+  "dataUpdatedAt": "2025-05-08T17:07:21+0000",
+  "dataUri": "https://data.cdc.gov/resource/b5wa-ze9s",
+  "description": None,
+  "domain": "data.cdc.gov",
+  "externalId": None,
+  "hideFromCatalog": False,
+  "hideFromDataJson": False,
+  "license": None,
+  "metadataUpdatedAt": "2025-05-08T17:07:20+0000",
+  "provenance": "OFFICIAL",
+  "updatedAt": "2025-05-08T17:07:20+0000",
+  "webUri": "https://data.cdc.gov/d/b5wa-ze9s",
+  "approvals": [
+    {
+      "reviewedAt": 1736886211,
+      "reviewedAutomatically": True,
+      "state": "approved",
+      "submissionId": 6869640,
+      "submissionObject": "public_audience_request",
+      "submissionOutcome": "change_audience",
+      "submittedAt": 1736886211,
+      "targetAudience": "public",
+      "workflowId": 2100,
+      "submissionDetails": {
+        "permissionType": "READ"
+      },
+      "submissionOutcomeApplication": {
+        "endedAt": 1736886211,
+        "failureCount": 0,
+        "startedAt": 1736886211,
+        "status": "success"
+      },
+      "submitter": {
+        "id": "xebt-tjnw",
+        "displayName": "EMMA BAUBLY"
+      }
+    }
+  ],
+  "customFields": None,
+  "tags": None
+}
