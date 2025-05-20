@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 
 from airflow.models import Variable
 
@@ -123,4 +124,25 @@ class XcomUtils():
             json.dump(json_value, fp)
 
         return temp_file_path
+
+
+    def retrieve_dict_from_temp_file(self, temp_file_path:str) -> dict:
+        """
+        Retrieve the dictionary of xcom values from a temp file
+        """
+
+        json_dict = json.load(open(temp_file_path))
+        return json_dict
+
+    def clear_temp_data_for_run(self, runid:str):
+        """
+        Clear the temp directory for this run
+        """
+        temp_files_location = self.get_tempfiles_location()
+        if temp_files_location.endswith("/"):
+            temp_files_location = temp_files_location[:-1]
+
+        dirpath = f"{self.xcom_properties.temp_files_location}/{runid}"
+        shutil.rmtree(dirpath)
+
 
