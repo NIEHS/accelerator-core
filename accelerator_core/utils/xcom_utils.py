@@ -125,7 +125,6 @@ class XcomUtils():
 
         return temp_file_path
 
-
     def retrieve_dict_from_temp_file(self, temp_file_path:str) -> dict:
         """
         Retrieve the dictionary of xcom values from a temp file
