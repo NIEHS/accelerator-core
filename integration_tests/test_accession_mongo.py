@@ -5,7 +5,7 @@ import accelerator_core
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.service_impls.mongo_accession import AccessionMongo
 from accelerator_core.utils import resource_utils, mongo_tools
-from accelerator_core.utils.accelerator_config import AcceleratorConfig
+from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
 from accelerator_core.utils.resource_utils import determine_resource_path
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
@@ -23,9 +23,8 @@ class TestAccessionMongo(unittest.TestCase):
         matrix_path = resource_utils.determine_test_resource_path(
             "test_type_matrix.yaml", "tests"
         )
-        config = AcceleratorConfig(
-            config_path=test_path.as_posix(), type_matrix_path=matrix_path.as_posix()
-        )
+
+        config = config_from_file(test_path)
 
         accel_db_context = AccelDbContext(config)
         cls._accel_db_context = accel_db_context

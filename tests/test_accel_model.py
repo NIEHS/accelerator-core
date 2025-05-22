@@ -21,7 +21,7 @@ from accelerator_core.schema.models.base_model import (
     TechnicalMetadataModel,
 )
 from accelerator_core.utils import resource_utils
-from accelerator_core.utils.accelerator_config import AcceleratorConfig
+from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
 from accelerator_core.utils.schema_tools import SchemaTools
 from accelerator_core.schema.models.accel_model import build_accel_from_model
 
@@ -35,9 +35,9 @@ class TestAccelModel(unittest.TestCase):
         matrix_path = resource_utils.determine_test_resource_path(
             "test_type_matrix.yaml", "tests"
         )
-        self.config = AcceleratorConfig(
-            config_path=test_path.as_posix(), type_matrix_path=matrix_path.as_posix()
-        )
+
+        config = config_from_file(test_path)
+
 
     def test_build_and_validate_accel(self):
 

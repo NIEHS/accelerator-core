@@ -1,7 +1,7 @@
 import unittest
 
 from accelerator_core.utils import resource_utils, mongo_tools
-from accelerator_core.utils.accelerator_config import AcceleratorConfig
+from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
 
 
 class TestMongoTools(unittest.TestCase):
@@ -13,9 +13,7 @@ class TestMongoTools(unittest.TestCase):
         matrix_path = resource_utils.determine_test_resource_path(
             "test_type_matrix.yaml", "tests"
         )
-        self.config = AcceleratorConfig(
-            config_path=test_path.as_posix(), type_matrix_path=matrix_path.as_posix()
-        )
+        self.config = config_from_file(test_path.as_posix())
 
     def test_build_connectionString(self):
         test_path = resource_utils.determine_test_resource_path(

@@ -15,5 +15,5 @@ class AccelDbContext(object):
         self.accelerator_config = accelerator_config
         self.mongo_client = initialize_mongo_client(self.accelerator_config)
         self.db = self.mongo_client.get_database(
-            self.accelerator_config.properties["mongo.db.name"]
+            self.accelerator_config.params["mongo.db.name"]
         )

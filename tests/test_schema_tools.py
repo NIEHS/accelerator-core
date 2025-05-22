@@ -4,7 +4,7 @@ from shlex import shlex
 
 import accelerator_core
 from accelerator_core.utils import resource_utils
-from accelerator_core.utils.accelerator_config import AcceleratorConfig
+from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
 from accelerator_core.utils.resource_utils import determine_resource_path
 from accelerator_core.utils.schema_tools import SchemaTools
 
@@ -18,9 +18,7 @@ class TestSchemaTools(unittest.TestCase):
         matrix_path = resource_utils.determine_test_resource_path(
             "test_type_matrix.yaml", "tests"
         )
-        self.config = AcceleratorConfig(
-            config_path=test_path.as_posix(), type_matrix_path=matrix_path.as_posix()
-        )
+        self.config = config_from_file(test_path.as_posix())
 
     def test_read_current_schema(self):
 

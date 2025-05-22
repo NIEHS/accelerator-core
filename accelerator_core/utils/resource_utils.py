@@ -11,7 +11,7 @@ import json
 logger = setup_logger("accelerator")
 
 
-def determine_resource_path(resource_package, resource_name) -> Path:
+def determine_resource_path(resource_package:str, resource_name:str) -> Path:
     """
     Given a package and resource name, get the given program resource
     :param resource_package: package where resources are located

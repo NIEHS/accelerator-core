@@ -8,7 +8,7 @@ from accelerator_core.service_impls.mongo_dissemination import DisseminationMong
 from accelerator_core.services.dissemination import DisseminationDescriptor
 from accelerator_core.utils import resource_utils, mongo_tools
 from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
-from accelerator_core.utils.accelerator_config import AcceleratorConfig
+from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
 from accelerator_core.utils.resource_utils import (
     determine_resource_path,
     determine_test_resource_path,
@@ -29,9 +29,8 @@ class TestDisseminationMongo(unittest.TestCase):
         matrix_path = resource_utils.determine_test_resource_path(
             "test_type_matrix.yaml", "tests"
         )
-        config = AcceleratorConfig(
-            config_path=test_path.as_posix(), type_matrix_path=matrix_path.as_posix()
-        )
+
+        config = config_from_file(test_path)
 
         accel_db_context = AccelDbContext(config)
         cls._accel_db_context = accel_db_context

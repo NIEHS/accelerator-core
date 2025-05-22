@@ -25,7 +25,7 @@ def build_connection_string(accel_config: AcceleratorConfig) -> str:
 
     """
 
-    return f'mongodb://{accel_config.properties["mongo.user"]}:{accel_config.properties["mongo.password"]}@{accel_config.properties["mongo.host"]}:{accel_config.properties["mongo.port"]}/'
+    return f'mongodb://{accel_config.params["mongo.user"]}:{accel_config.params["mongo.password"]}@{accel_config.params["mongo.host"]}:{accel_config.params["mongo.port"]}/'
 
 
 def initialize_mongo_client(accel_config: AcceleratorConfig) -> MongoClient:

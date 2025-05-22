@@ -72,7 +72,7 @@ class SchemaTools:
         type = self.accelerator_config.find_type_matrix_info_for_type(schema_type)
         json_schema = type.resolve_schema_version(schema_version)
 
-        with determine_resource_path(accelerator_core.schema, json_schema) as fspath:
+        with determine_resource_path("accelerator_core.schema", json_schema) as fspath:
             logger.debug(f"resource path:{fspath}")
             with open(fspath) as json_data:
                 d = json.load(json_data)
