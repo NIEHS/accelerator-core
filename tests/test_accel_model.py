@@ -36,7 +36,7 @@ class TestAccelModel(unittest.TestCase):
             "test_type_matrix.yaml", "tests"
         )
 
-        config = config_from_file(test_path)
+        self.config = config_from_file(test_path)
 
 
     def test_build_and_validate_accel(self):
