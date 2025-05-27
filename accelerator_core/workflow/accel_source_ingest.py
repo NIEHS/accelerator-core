@@ -1,6 +1,8 @@
 """
 Superclass for an ingest component
 """
+from accelerator_core.utils.xcom_utils import XcomProperties
+
 
 class IngestSourceDescriptor:
     """
@@ -50,7 +52,6 @@ class IngestPayload:
 
     def __init__(self, ingest_source_descriptor: IngestSourceDescriptor):
         self.ingest_source_descriptor = ingest_source_descriptor
-        self.source_document_detail = None
         self.ingest_successful = True
         self.payload_inline = True
         self.payload = []
@@ -80,13 +81,15 @@ class AccelIngestComponent:
     Abstract parent class for ingest components, this accesses a target
     """
 
-    def __init__(self, ingest_source_descriptor: IngestSourceDescriptor):
+    def __init__(self, ingest_source_descriptor: IngestSourceDescriptor, xcom_properties: XcomProperties):
         """
         Describes the type of ingest, the submitter, the source and other provenance information.
         Subclasses may introduce other configuration, including secrets and parameters for accessing the
         target source
         :param ingest_source_descriptor: IngestSourceDescriptor with submission information
+        :param xcom_properties: XcomProperties with information about data handling
         """
+        super().__init__(xcom_properties)
         self.ingest_source_descriptor = ingest_source_descriptor
 
     def ingest(self, additional_parameters: dict) -> IngestPayload:
@@ -107,30 +110,5 @@ class AccelIngestComponent:
         :param identifier: identifier from the accel record that allows re-access on the target site
         :param additional_parameters: dict of individual parameters that can be fed to this method per implementation
         :return: IngestPayload that wraps payload(s) with additional metadata
-        """
-        pass
-
-    def report_individual(self, ingest_result: IngestPayload):
-        """
-        report an individual sub-result. (WIP).
-        TODO: based on in-mem or by temp file, preserve the result for a single object
-
-        This method will:
-        * understand how to report the result
-        * understand the location to which to write any temp data to pass along
-        * keep track of the overall results in IngestResult for close-out
-
-        :param ingest_result: IngestPayload that wraps payload(s). This is passed into this method
-        so that the result can be shared across multiple results
-        :return: None
-        """
-        pass
-
-    def close_out(self, ingest_result: IngestPayload):
-        """
-        Close out an ingest when all individual reports are done, do any cleanup
-        TODO: consider writing out a manifest if this is a bulk action
-        :param ingest_result: IngestPayload that wraps payload(s). This is passed into this method as a shared object
-        :return: None
         """
         pass
