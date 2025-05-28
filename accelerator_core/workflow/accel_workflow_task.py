@@ -2,7 +2,7 @@ import logging
 
 from accelerator_core.utils.logger import setup_logger
 from accelerator_core.utils.xcom_utils import XcomProperties, XcomUtils, XcomPropsResolver
-from accelerator_core.workflow.accel_source_ingest import IngestPayload
+from accelerator_core.workflow.accel_data_models import IngestPayload
 
 logger = setup_logger(__name__)
 
@@ -12,15 +12,15 @@ class AcceleratorWorkflowTask():
     methods for dealing with context
     """
 
-    def __init__(self, xcomPropertiesResolver:XcomPropsResolver):
+    def __init__(self, xcom_properties_resolver:XcomPropsResolver):
         """
-        @param: xcomPropertiesResolver XcomPropertiesResolver that can access
+        @param: xcom_properties_resolver XcomPropertiesResolver that can access
         handling configuration
         """
-        self.xcomPropertiesResolver = xcomPropertiesResolver
-        self.xcomUtils = XcomUtils(xcomPropertiesResolver)
+        self.xcom_properties_resolver = xcom_properties_resolver
+        self.xcomUtils = XcomUtils(xcom_properties_resolver)
 
-    def report_individual(self, ingest_result: IngestPayload, run_id:str, item_id:str):
+    def report_individual(self, ingest_result: IngestPayload, run_id:str, item_id:str, item:dict):
         """
         report an individual sub-result.
 
@@ -29,21 +29,24 @@ class AcceleratorWorkflowTask():
         * understand the location to which to write any temp data to pass along
         * keep track of the overall results in IngestResult for close-out
 
-        :param ingest_result: IngestPayload that wraps payload(s). This is passed into this method
-        so that the result can be shared across multiple results
-        :return: IngestPayload with the result, either in-line or as a temporary file
+        @param: ingest_result IngestPayload that will receive the new item
+        @param: run_id string that identifies the workflow run
+        @param: item_id string that identifies the item to report
+        @param: item dict that contains information about the item to report
+        @return: None (IngestPayload will have the item appended in the correct fashion)
+
         """
 
-        if not ingest_result.payload_inline:
-            return ingest_result # already in a temp file
-
-        if not self.xcomProperties.temp_files_supported:
-            return ingest_result
+        if ingest_result.payload_inline:
+            logger.debug("appending the item inline")
+            ingest_result.payload.append(item)
+            return
 
         logger.info("processing individual result via temp file")
-        stored_path = self.xcomUtils.store_dict_in_temp_file(item_id, ingest_result.payload[0],run_id)
+        stored_path = self.xcomUtils.store_dict_in_temp_file(item_id,item,run_id)
         logger.info(f"stored path: {stored_path}")
-        
+        ingest_result.payload_path.append(stored_path)
+
 
 
 
