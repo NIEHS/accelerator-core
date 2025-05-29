@@ -6,6 +6,7 @@ from bson import ObjectId
 
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.utils.schema_tools import SchemaValidationResult
+from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,
@@ -27,14 +28,19 @@ class AccessionMongo(Accession):
     """
 
     def __init__(
-        self, accelerator_config: AcceleratorConfig, accel_db_context: AccelDbContext
+        self,
+        accelerator_config: AcceleratorConfig,
+        accel_db_context: AccelDbContext,
+        xcom_properties_resolver: XcomPropsResolver,
     ):
         """
         Initialize the Accession sservice
         :param accelerator_config: AcceleratorConfig with general configuration
         :param accel_db_context: AccelDbContext that holds the db connection
+        :param xcom_properties_resolver: XcomPropertiesResolver injects utilities for
+        resolving payload
         """
-        Accession.__init__(self, accelerator_config)
+        super().__init__(accelerator_config, xcom_properties_resolver)
         self.accel_db_context = accel_db_context
 
     def validate(

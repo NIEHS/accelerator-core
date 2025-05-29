@@ -18,6 +18,7 @@ from accelerator_core.services.dissemination import (
 from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
 from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
 from accelerator_core.utils.schema_tools import SchemaValidationResult
+from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,
@@ -35,14 +36,17 @@ class DisseminationMongo(Dissemination):
     """
 
     def __init__(
-        self, accelerator_config: AcceleratorConfig, accel_db_context: AccelDbContext
+        self,
+        accelerator_config: AcceleratorConfig,
+        xcom_properties_resolver: XcomPropsResolver,
+        accel_db_context: AccelDbContext,
     ):
         """
         Initialize the Accession sservice
         :param accelerator_config: AcceleratorConfig with general configuration
         :param accel_db_context: AccelDbContext that holds the db connection
         """
-        Dissemination.__init__(self, accelerator_config)
+        super().__init__(accelerator_config, xcom_properties_resolver)
         self.accel_db_context = accel_db_context
         self.accel_database_utils = AccelDatabaseUtils(
             accelerator_config, accel_db_context

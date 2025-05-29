@@ -5,8 +5,12 @@ import accelerator_core
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.service_impls.mongo_accession import AccessionMongo
 from accelerator_core.utils import resource_utils, mongo_tools
-from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
+from accelerator_core.utils.accelerator_config import (
+    AcceleratorConfig,
+    config_from_file,
+)
 from accelerator_core.utils.resource_utils import determine_resource_path
+from accelerator_core.utils.xcom_utils import DirectXcomPropsResolver
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,
@@ -44,9 +48,16 @@ class TestAccessionMongo(unittest.TestCase):
 
         with open(json_path) as json_data:
             d = json.load(json_data)
-            accession = AccessionMongo(
-                self.__class__._accelerator_config, self.__class__._accel_db_context
+            xcom_props_resolver = DirectXcomPropsResolver(
+                temp_files_supported=False, temp_files_location=""
             )
+
+            accession = AccessionMongo(
+                self.__class__._accelerator_config,
+                self.__class__._accel_db_context,
+                xcom_props_resolver,
+            )
+
             result = accession.validate(d, ingest_source_descriptor)
             self.assertTrue(result.valid)
 
@@ -63,8 +74,14 @@ class TestAccessionMongo(unittest.TestCase):
             ingest_result.payload.append(d)
             ingest_result.payload_inline = True
 
+            xcom_props_resolver = DirectXcomPropsResolver(
+                temp_files_supported=False, temp_files_location=""
+            )
+
             accession = AccessionMongo(
-                self.__class__._accelerator_config, self.__class__._accel_db_context
+                self.__class__._accelerator_config,
+                self.__class__._accel_db_context,
+                xcom_props_resolver,
             )
 
             id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
@@ -88,8 +105,14 @@ class TestAccessionMongo(unittest.TestCase):
             ingest_result.payload.append(d)
             ingest_result.payload_inline = True
 
+            xcom_props_resolver = DirectXcomPropsResolver(
+                temp_files_supported=False, temp_files_location=""
+            )
+
             accession = AccessionMongo(
-                self.__class__._accelerator_config, self.__class__._accel_db_context
+                self.__class__._accelerator_config,
+                self.__class__._accel_db_context,
+                xcom_props_resolver,
             )
 
             id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
@@ -110,8 +133,14 @@ class TestAccessionMongo(unittest.TestCase):
             ingest_result.payload.append(d)
             ingest_result.payload_inline = True
 
+            xcom_props_resolver = DirectXcomPropsResolver(
+                temp_files_supported=False, temp_files_location=""
+            )
+
             accession = AccessionMongo(
-                self.__class__._accelerator_config, self.__class__._accel_db_context
+                self.__class__._accelerator_config,
+                self.__class__._accel_db_context,
+                xcom_props_resolver,
             )
 
             id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
@@ -132,8 +161,14 @@ class TestAccessionMongo(unittest.TestCase):
             ingest_result.payload.append(d)
             ingest_result.payload_inline = True
 
+            xcom_props_resolver = DirectXcomPropsResolver(
+                temp_files_supported=False, temp_files_location=""
+            )
+
             accession = AccessionMongo(
-                self.__class__._accelerator_config, self.__class__._accel_db_context
+                self.__class__._accelerator_config,
+                self.__class__._accel_db_context,
+                xcom_props_resolver,
             )
 
             id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=True)

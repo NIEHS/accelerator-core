@@ -8,11 +8,15 @@ from accelerator_core.service_impls.mongo_dissemination import DisseminationMong
 from accelerator_core.services.dissemination import DisseminationDescriptor
 from accelerator_core.utils import resource_utils, mongo_tools
 from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
-from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
+from accelerator_core.utils.accelerator_config import (
+    AcceleratorConfig,
+    config_from_file,
+)
 from accelerator_core.utils.resource_utils import (
     determine_resource_path,
     determine_test_resource_path,
 )
+from accelerator_core.utils.xcom_utils import DirectXcomPropsResolver
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,
@@ -53,8 +57,14 @@ class TestDisseminationMongo(unittest.TestCase):
             ingest_result.payload.append(d)
             ingest_result.payload_inline = True
 
+            xcom_props_resolver = DirectXcomPropsResolver(
+                temp_files_supported=False, temp_files_location=""
+            )
+
             accession = AccessionMongo(
-                self.__class__._accelerator_config, self.__class__._accel_db_context
+                self.__class__._accelerator_config,
+                self.__class__._accel_db_context,
+                xcom_props_resolver,
             )
 
             id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
@@ -70,8 +80,11 @@ class TestDisseminationMongo(unittest.TestCase):
             dissemination_request.inline_results = True
 
             dissemination = DisseminationMongo(
-                self.__class__._accelerator_config, self.__class__._accel_db_context
+                self.__class__._accelerator_config,
+                xcom_props_resolver,
+                self.__class__._accel_db_context,
             )
+
             dissemination_payload = dissemination.disseminate_by_id(
                 id, dissemination_request
             )
@@ -88,8 +101,15 @@ class TestDisseminationMongo(unittest.TestCase):
         dissemination_request.schema_version = "1.0.0"
         dissemination_request.inline_results = True
 
-        dissemination = DisseminationMongo(
-            self.__class__._accelerator_config, self.__class__._accel_db_context
+        xcom_props_resolver = DirectXcomPropsResolver(
+            temp_files_supported=False, temp_files_location=""
         )
+
+        dissemination = DisseminationMongo(
+            self.__class__._accelerator_config,
+            xcom_props_resolver,
+            self.__class__._accel_db_context,
+        )
+
         with self.assertRaises(AccelDocumentNotFoundException) as context:
             dissemination.disseminate_by_id(id, dissemination_request)

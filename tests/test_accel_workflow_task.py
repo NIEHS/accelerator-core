@@ -13,7 +13,7 @@ from accelerator_core.workflow.accel_workflow_task import AcceleratorWorkflowTas
 class TestAcceleratorWorkflowTask(unittest.TestCase):
     def test_serialize_inline(self):
         temp_dirs_path = "test_resources/temp_dirs"
-        runid = "test_serialize_file"
+        runid = "test_serialize_inline"
         file_key = "mykey"
         path = os.path.join(temp_dirs_path, runid)
 
@@ -26,14 +26,14 @@ class TestAcceleratorWorkflowTask(unittest.TestCase):
         )
 
         ingestSourceDescriptor = IngestSourceDescriptor()
-        ingestPayload = IngestPayload(ingestSourceDescriptor)
-        ingestPayload.payload_inline = True
+        inline_ingest_payload = IngestPayload(ingestSourceDescriptor)
+        inline_ingest_payload.payload_inline = True
 
         task = AcceleratorWorkflowTask(xcom_props_resolver)
-        task.report_individual(ingestPayload, runid, file_key, my_vals)
+        task.report_individual(inline_ingest_payload, runid, file_key, my_vals)
 
-        self.assertTrue(len(ingestPayload.payload) == 1)
-        self.assertTrue(len(ingestPayload.payload_path) == 0)
+        self.assertTrue(len(inline_ingest_payload.payload) == 1)
+        self.assertTrue(len(inline_ingest_payload.payload_path) == 0)
 
     def test_serialize_file(self):
         temp_dirs_path = "test_resources/temp_dirs"
@@ -50,14 +50,14 @@ class TestAcceleratorWorkflowTask(unittest.TestCase):
         )
 
         ingestSourceDescriptor = IngestSourceDescriptor()
-        ingestPayload = IngestPayload(ingestSourceDescriptor)
-        ingestPayload.payload_inline = False
+        serialized_ingest_payload = IngestPayload(ingestSourceDescriptor)
+        serialized_ingest_payload.payload_inline = False
 
         task = AcceleratorWorkflowTask(xcom_props_resolver)
-        task.report_individual(ingestPayload, runid, file_key, my_vals)
+        task.report_individual(serialized_ingest_payload, runid, file_key, my_vals)
 
-        self.assertTrue(len(ingestPayload.payload) == 0)
-        self.assertTrue(len(ingestPayload.payload_path) == 1)
+        self.assertTrue(len(serialized_ingest_payload.payload) == 0)
+        self.assertTrue(len(serialized_ingest_payload.payload_path) == 1)
 
     def test_payload_resolve(self):
         temp_dirs_path = "test_resources/temp_dirs"
@@ -74,13 +74,13 @@ class TestAcceleratorWorkflowTask(unittest.TestCase):
         )
 
         ingestSourceDescriptor = IngestSourceDescriptor()
-        ingestPayload = IngestPayload(ingestSourceDescriptor)
-        ingestPayload.payload_inline = False
+        ingest_payload = IngestPayload(ingestSourceDescriptor)
+        ingest_payload.payload_inline = False
 
         task = AcceleratorWorkflowTask(xcom_props_resolver)
-        task.report_individual(ingestPayload, runid, file_key, my_vals)
+        task.report_individual(ingest_payload, runid, file_key, my_vals)
 
-        actual = task.payload_resolve(ingestPayload, 0)
+        actual = task.payload_resolve(ingest_payload, 0)
         self.assertTrue(actual == my_vals)
 
 

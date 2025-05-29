@@ -5,7 +5,10 @@ dissemination.
 
 """
 
+from accelerator_core.payload import Payload
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
+from accelerator_core.utils.xcom_utils import XcomPropsResolver
+from accelerator_core.workflow.accel_workflow_task import AcceleratorWorkflowTask
 
 
 class DisseminationFilter:
@@ -40,26 +43,30 @@ class DisseminationDescriptor:
         self.dissemination_version = None  # x.x.x version information for dissemination
 
 
-class DisseminationPayload:
+class DisseminationPayload(Payload):
     """
     Response from a dissemination request
     """
 
     def __init__(self, dissemination_request: DisseminationDescriptor):
+        super().__init__(payload=[], payload_path=[], payload_inline=True)
         self.dissemination_request = dissemination_request
         self.dissemination_successful = True
-        self.payload_inline = True
-        self.payload = []
-        self.payload_path = []
 
 
-class Dissemination:
+class Dissemination(AcceleratorWorkflowTask):
     """
     Service abstract superclass for disseminating a document from the doc store to an endpoint
     """
 
-    def __init__(self, accelerator_config: AcceleratorConfig):
+    def __init__(
+        self,
+        accelerator_config: AcceleratorConfig,
+        xcom_properties_resolver: XcomPropsResolver,
+    ):
         """Initialize Accession with validated data."""
+        super().__init__(xcom_properties_resolver)
+
         self.accelerator_config = accelerator_config
 
     def disseminate_by_id(
