@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
+from accelerator_core.workflow.accel_data_models import DisseminationPayload
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,
@@ -20,7 +21,9 @@ class DisseminationCrosswalk(AcceleratorWorkflowTask):
         super().__init__(xcom_props_resolver)
 
     @abstractmethod
-    def transform(self, ingest_result: IngestPayload) -> IngestPayload:
+    def transform(
+        self, disseminationResult: DisseminationPayload
+    ) -> DisseminationPayload:
         """Convert raw data into a standardized format.
         :param ingest_result: The ingest result.
         :return revised IngestResult with the crosswalked document in payload

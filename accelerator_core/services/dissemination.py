@@ -11,19 +11,9 @@ from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_data_models import (
     DisseminationDescriptor,
     DisseminationFilter,
+    DisseminationPayload,
 )
 from accelerator_core.workflow.accel_workflow_task import AcceleratorWorkflowTask
-
-
-class DisseminationPayload(Payload):
-    """
-    Response from a dissemination request
-    """
-
-    def __init__(self, dissemination_request: DisseminationDescriptor):
-        super().__init__(payload=[], payload_path=[], payload_inline=True)
-        self.dissemination_request = dissemination_request
-        self.dissemination_successful = True
 
 
 class Dissemination(AcceleratorWorkflowTask):
