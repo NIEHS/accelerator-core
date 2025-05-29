@@ -5,7 +5,6 @@ import accelerator_core
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.service_impls.mongo_accession import AccessionMongo
 from accelerator_core.service_impls.mongo_dissemination import DisseminationMongo
-from accelerator_core.services.dissemination import DisseminationDescriptor
 from accelerator_core.utils import resource_utils, mongo_tools
 from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
 from accelerator_core.utils.accelerator_config import (
@@ -17,6 +16,7 @@ from accelerator_core.utils.resource_utils import (
     determine_test_resource_path,
 )
 from accelerator_core.utils.xcom_utils import DirectXcomPropsResolver
+from accelerator_core.workflow.accel_data_models import DisseminationDescriptor
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,

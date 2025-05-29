@@ -8,39 +8,11 @@ dissemination.
 from accelerator_core.payload import Payload
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
+from accelerator_core.workflow.accel_data_models import (
+    DisseminationDescriptor,
+    DisseminationFilter,
+)
 from accelerator_core.workflow.accel_workflow_task import AcceleratorWorkflowTask
-
-
-class DisseminationFilter:
-    """
-    Filter for objects in the Accel data store to be passed along for dissemination
-    """
-
-    def filter(self, filter_terms: dict):
-        """
-        Filter requests (that will be targeted to a chosen collection based on the context) to deliver for
-        dissemination
-        :param filter_terms: dict with filtering terms
-        """
-
-
-class DisseminationDescriptor:
-    """
-    Describes metadata about adata dissemination, this includes provenance information as well as technical metadata
-    that can be used in downstream processing.
-    """
-
-    def __init__(self):
-        self.submitter_name = None
-        self.submitter_email = None
-        self.submit_date = None
-        self.ingest_type = None  # matches type in type matrix
-        self.temp_collection = False  # is this in the temp collection
-        self.inline_results = (
-            True  # request the data be passed inline in the DisseminationResult
-        )
-        self.dissemination_type = None  # identifier for the target type
-        self.dissemination_version = None  # x.x.x version information for dissemination
 
 
 class DisseminationPayload(Payload):

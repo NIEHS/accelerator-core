@@ -81,3 +81,97 @@ class IngestPayload(Payload):
         ingest_source_descriptor.payload = input_dict["payload"]
         ingest_source_descriptor.payload_path = input_dict["payload_path"]
         return ingest_source_descriptor
+
+
+class DisseminationFilter:
+    """
+    Filter for objects in the Accel data store to be passed along for dissemination
+    """
+
+    def filter(self, filter_terms: dict):
+        """
+        Filter requests (that will be targeted to a chosen collection based on the context) to deliver for
+        dissemination
+        :param filter_terms: dict with filtering terms
+        """
+
+
+class DisseminationDescriptor:
+    """
+    Describes metadata about a data dissemination, this includes provenance information as well as technical metadata
+    that can be used in downstream processing.
+    """
+
+    def __init__(self):
+        self.submitter_name = None
+        self.submitter_email = None
+        self.submit_date = None
+        self.ingest_type = None  # matches type in type matrix
+        self.temp_collection = False  # is this in the temp collection
+        self.dissemination_type = None  # identifier for the target type
+        self.dissemination_version = None  # x.x.x version information for dissemination
+
+    def to_dict(self) -> dict:
+        """
+        Convert this struct to a dict.
+        :return: dict that serializes the descriptor
+        """
+
+        serialized = {
+            "submitter_name": self.submitter_name,
+            "submitter_email": self.submitter_email,
+            "submit_date": self.submit_date,
+            "ingest_type": self.ingest_type,
+            "temp_collection": self.temp_collection,
+            "dissemination_type": self.dissemination_type,
+            "dissemination_version": self.dissemination_version,
+        }
+
+        return serialized
+
+    def from_dict(self, input_dict: dict):
+
+        dissemination_descriptor = DisseminationDescriptor()
+        dissemination_descriptor.submitter_name = input_dict["submitter_name"]
+        dissemination_descriptor.submitter_email = input_dict["submitter_email"]
+        dissemination_descriptor.submit_date = input_dict["submit_date"]
+        dissemination_descriptor.ingest_type = input_dict["ingest_type"]
+        dissemination_descriptor.temp_collection = input_dict["temp_collection"]
+        dissemination_descriptor.dissemination_type = input_dict["dissemination_type"]
+        dissemination_descriptor.dissemination_version = input_dict[
+            "dissemination_version"
+        ]
+        return dissemination_descriptor
+
+
+class DisseminationPayload(Payload):
+
+    def __init__(self, dissemination_descriptor: DisseminationDescriptor):
+        super().__init__(payload=[], payload_path=[], payload_inline=True)
+        self.dissemination_descriptor = dissemination_descriptor
+        self.dissemination_successful = True
+
+    def to_dict(self) -> dict:
+        serialized = {
+            "dissemination_descriptor": self.dissemination_descriptor.to_dict(),
+            "payload_inline": self.payload_inline,
+            "payload_path": [self.payload_path],
+            "payload": [self.payload],
+            "dissemination_successful": self.dissemination_successful,
+        }
+
+        return serialized
+
+    @staticmethod
+    def from_dict(input_dict: dict):
+        dissemination_payload = DisseminationPayload()
+        dissemination_payload.dissemination_descriptor = (
+            DisseminationDescriptor.from_dict(input_dict["dissemination_descriptor"])
+        )
+        dissemination_payload.payload_inline = input_dict["payload_inline"]
+        dissemination_payload.payload_path = input_dict["payload_path"]
+        dissemination_payload.payload = input_dict["payload"]
+        dissemination_payload.dissemination_successful = input_dict[
+            "dissemination_successful"
+        ]
+        return dissemination_payload
