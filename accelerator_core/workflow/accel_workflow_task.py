@@ -1,18 +1,23 @@
 import logging
 
 from accelerator_core.utils.logger import setup_logger
-from accelerator_core.utils.xcom_utils import XcomProperties, XcomUtils, XcomPropsResolver
+from accelerator_core.utils.xcom_utils import (
+    XcomProperties,
+    XcomUtils,
+    XcomPropsResolver,
+)
 from accelerator_core.workflow.accel_data_models import IngestPayload
 
 logger = setup_logger(__name__)
 
-class AcceleratorWorkflowTask():
+
+class AcceleratorWorkflowTask:
     """
     Parent class for a workflow task that reads or writes accel data to xcom, also includes helpful
     methods for dealing with context
     """
 
-    def __init__(self, xcom_properties_resolver:XcomPropsResolver):
+    def __init__(self, xcom_properties_resolver: XcomPropsResolver):
         """
         @param: xcom_properties_resolver XcomPropertiesResolver that can access
         handling configuration
@@ -20,7 +25,9 @@ class AcceleratorWorkflowTask():
         self.xcom_properties_resolver = xcom_properties_resolver
         self.xcomUtils = XcomUtils(xcom_properties_resolver)
 
-    def report_individual(self, ingest_result: IngestPayload, run_id:str, item_id:str, item:dict):
+    def report_individual(
+        self, ingest_result: IngestPayload, run_id: str, item_id: str, item: dict
+    ):
         """
         report an individual sub-result.
 
@@ -43,14 +50,30 @@ class AcceleratorWorkflowTask():
             return
 
         logger.info("processing individual result via temp file")
-        stored_path = self.xcomUtils.store_dict_in_temp_file(item_id,item,run_id)
+        stored_path = self.xcomUtils.store_dict_in_temp_file(item_id, item, run_id)
         logger.info(f"stored path: {stored_path}")
         ingest_result.payload_path.append(stored_path)
 
+    def payload_resolve(self, payload: IngestPayload, index: int) -> dict:
+        """
+        Callback function that will yield a payload that has been resolved (meaning
+        the values in the payload have been marshaled from xcom into a dict). This handles
+        cases where the payload was stored in a temporary location.
+        :param payload: IngestPayload
+        :param index: index of the payload to resolve
+        :return: dict with the resolved payload data
+        """
 
+        if payload.payload_inline:
+            if index < len(payload.payload):
+                logger.debug("inline payload returned")
+                return payload.payload[index]
+            else:
+                raise Exception("payload index out of range")
 
-
-
-
-
-
+        if index < len(payload.payload_path):
+            mypath = payload.payload_path[index]
+            logger.info(f"payload path returned, resolving {mypath}")
+            return self.xcomUtils.retrieve_dict_from_temp_file(mypath)
+        else:
+            raise Exception("payload path index out of range")

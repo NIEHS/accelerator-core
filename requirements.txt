@@ -7,3 +7,4 @@ coverage~=7.6.12
 pymongo~=4.11.2
 PyYAML~=6.0.2
 pipenv~=2024.4.1
+apache-airflow~=2.11.0
