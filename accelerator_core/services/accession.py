@@ -32,6 +32,7 @@ class Accession(AcceleratorWorkflowTask):
         :param ingest_source_descriptor: ingest source descriptor describing the type, schema,
         and other configuration
         :return: bool is True if valid
+
         """
         """Validate JSON output from Crosswalk."""
         logger.info(f"validate, based on schema {ingest_source_descriptor}")
