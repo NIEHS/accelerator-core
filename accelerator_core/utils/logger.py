@@ -4,6 +4,7 @@ import logging
 def setup_logger(name: str):
     """Setup and return a logger instance."""
     logger = logging.getLogger(name)
+
     logger.setLevel(logging.INFO)
     if not logger.hasHandlers():
         ch = logging.StreamHandler()

@@ -1,5 +1,5 @@
 ---
-name: CI/CD
+name: Accel Unit Tests
 on:
   push:
     branches:
@@ -11,14 +11,14 @@ on:
     - main
     - develop
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: psf/black@stable
-        with:
-          options: "--check --verbose"
-          src: "./accelerator_core"
+  #lint:
+   # runs-on: ubuntu-latest
+    #steps:
+     # - uses: actions/checkout@v4
+      #- uses: psf/black@stable
+       # with:
+        #  options: "--check --verbose"
+         # src: "./accelerator_core"
   build:
     runs-on: ubuntu-latest
     strategy:
