@@ -47,6 +47,7 @@ class AccelIntermediateResourceModel:
         self.resource_type = ""
         self.resource_url = ""
         self.description = ""
+        self.domain = []
         self.domain_other = []
         self.keywords = []
         self.access_type = ""

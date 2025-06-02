@@ -54,6 +54,17 @@ class AcceleratorWorkflowTask:
         logger.info(f"stored path: {stored_path}")
         ingest_result.payload_path.append(stored_path)
 
+    def get_payload_length(self, payload: IngestPayload) -> int:
+        """
+        Get the number of elements in a payload whether inline or via temp file
+        @param: payload IngestPayload that will receive the new item
+        @return: int with the lenght of the payload
+        """
+        if payload.payload_inline:
+            return len(payload.payload)
+        else:
+            return len(payload.payload_path)
+
     def payload_resolve(self, payload: IngestPayload, index: int) -> dict:
         """
         Callback function that will yield a payload that has been resolved (meaning

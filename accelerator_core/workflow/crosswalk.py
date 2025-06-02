@@ -8,6 +8,26 @@ from accelerator_core.workflow.accel_source_ingest import (
 from accelerator_core.workflow.accel_workflow_task import AcceleratorWorkflowTask
 
 
+from accelerator_core.schema.models.accel_model import (
+    AccelProgramModel,
+    AccelProjectModel,
+    AccelIntermediateResourceModel,
+    AccelResourceReferenceModel,
+    AccelResourceUseAgreementModel,
+    AccelPublicationModel,
+    AccelDataResourceModel,
+    AccelDataLocationModel,
+    AccelGeospatialDataModel,
+    AccelTemporalDataModel,
+    AccelPopulationDataModel, build_accel_from_model,
+)
+
+from accelerator_core.schema.models.base_model import (
+    SubmissionInfoModel,
+    TechnicalMetadataModel, create_timestamped_log,
+)
+
+
 class Crosswalk(AcceleratorWorkflowTask):
     """Abstract superclass for mapping raw data to a structured JSON format."""
 

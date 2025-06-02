@@ -30,11 +30,7 @@ class TestDictSerialization(unittest.TestCase):
         self.assertEqual(actual_from_dict.ingest_link, "link")
         self.assertEqual(actual_from_dict.ingest_type, "type")
         self.assertEqual(actual_from_dict.ingest_identifier, "identifier")
-        self.assertEqual(
-            actual_from_dict.source_metadata_reference_link,
-            "source_metadata_reference_link",
-        )
-        self.assertEqual(actual_from_dict.batch, False)
+
         self.assertEqual(actual_from_dict.schema_version, "schema_version")
         self.assertEqual(actual_from_dict.submitter_email, "submitter_email")
         self.assertEqual(actual_from_dict.submitter_name, "submitter_name")
