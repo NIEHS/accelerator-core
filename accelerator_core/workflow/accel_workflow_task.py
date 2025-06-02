@@ -26,7 +26,7 @@ class AcceleratorWorkflowTask:
         self.xcomUtils = XcomUtils(xcom_properties_resolver)
 
     def report_individual(
-        self, ingest_result: IngestPayload, run_id: str, item_id: str, item: dict
+        self, ingest_result: IngestPayload, item_id: str, item: dict
     ):
         """
         report an individual sub-result.
@@ -36,21 +36,31 @@ class AcceleratorWorkflowTask:
         * understand the location to which to write any temp data to pass along
         * keep track of the overall results in IngestResult for close-out
 
-        @param: ingest_result IngestPayload that will receive the new item
-        @param: run_id string that identifies the workflow run
+        @param: ingest_result IngestPayload that will receive the new item, NB that the run_id should
+            be provided in the IngestSourceDescriptor that is part of the payload
         @param: item_id string that identifies the item to report
         @param: item dict that contains information about the item to report
         @return: None (IngestPayload will have the item appended in the correct fashion)
 
         """
 
+        if not ingest_result.ingest_source_descriptor.ingest_identifier:
+            raise Exception("no ingest_identifier (run_id) provided in source descriptor")
+
+        if not item_id:
+            raise Exception("no item_id provided")
+
+        ingest_result.ingest_source_descriptor.ingest_item_id = item_id
+
         if ingest_result.payload_inline:
             logger.debug("appending the item inline")
             ingest_result.payload.append(item)
             return
 
+
         logger.info("processing individual result via temp file")
-        stored_path = self.xcomUtils.store_dict_in_temp_file(item_id, item, run_id)
+        stored_path = self.xcomUtils.store_dict_in_temp_file(item_id, item,
+                                                             ingest_result.ingest_source_descriptor.ingest_identifier)
         logger.info(f"stored path: {stored_path}")
         ingest_result.payload_path.append(stored_path)
 

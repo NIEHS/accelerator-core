@@ -29,6 +29,10 @@ class AccelIngestComponent(AcceleratorWorkflowTask):
         is either the serialized result or a path or locator that can be used to extract the result.
         :param additional_parameters: dict of individual parameters that can be fed to this method per implementation
         :return: IngestPayload that wraps payload(s) with additional metadata
+
+        Note that the IngestSourceDescriptor has an ingest_identifier that should be set to the run_id of the workflow
+        or other representation of the process that is calling this task
+
         """
         pass
 
@@ -39,5 +43,12 @@ class AccelIngestComponent(AcceleratorWorkflowTask):
         :param identifier: identifier from the accel record that allows re-access on the target site
         :param additional_parameters: dict of individual parameters that can be fed to this method per implementation
         :return: IngestPayload that wraps payload(s) with additional metadata
+
+        Note that the IngestSourceDescriptor has an ingest_identifier that should be set to the run_id of the workflow
+        or other representation of the process that is calling this task. The resulting ingestPayload will carry
+        that source descriptor and, if using the 'report' methods provided, will ingest the individual item identifier
+        into each item produced
+
+
         """
         pass
