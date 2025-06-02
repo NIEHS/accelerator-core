@@ -11,13 +11,15 @@ class IngestSourceDescriptor:
     def __init__(self):
         self.submitter_name = None
         self.submitter_email = None
-        self.submit_date = None # date this ingest identifier runs, should be the launch timestamp of the whole process
-        self.ingest_type = None # maps to ingest type of type matrix
-        self.schema_version = None # version of the specific type
-        self.ingest_identifier = None # run id of the ingest process
-        self.ingest_item_id = None # unique id if this is an individual item, blank for a batch
-        self.ingest_link = None # link to the ingest source
-        self.ingest_format = None # reserved
+        self.submit_date = None  # date this ingest identifier runs, should be the launch timestamp of the whole process
+        self.ingest_type = None  # maps to ingest type of type matrix
+        self.schema_version = None  # version of the specific type
+        self.ingest_identifier = None  # run id of the ingest process
+        self.ingest_item_id = (
+            None  # unique id if this is an individual item, blank for a batch
+        )
+        self.ingest_link = None  # link to the ingest source
+        self.ingest_format = None  # reserved
 
     def to_dict(self) -> dict:
         serialized = {
@@ -68,15 +70,15 @@ class IngestPayload(Payload):
 
     @staticmethod
     def from_dict(input_dict: dict):
-        ingest_source_descriptor = IngestSourceDescriptor()
-        ingest_source_descriptor.ingest_source_descriptor = input_dict[
-            "ingest_source_descriptor"
-        ]
-        ingest_source_descriptor.ingest_successful = input_dict["ingest_successful"]
-        ingest_source_descriptor.payload_inline = input_dict["payload_inline"]
-        ingest_source_descriptor.payload = input_dict["payload"]
-        ingest_source_descriptor.payload_path = input_dict["payload_path"]
-        return ingest_source_descriptor
+        ingest_source_descriptor = IngestSourceDescriptor.from_dict(
+            input_dict["ingest_source_descriptor"]
+        )
+        ingest_payload = IngestPayload(ingest_source_descriptor)
+        ingest_payload.ingest_successful = input_dict["ingest_successful"]
+        ingest_payload.payload_inline = input_dict["payload_inline"]
+        ingest_payload.payload = input_dict["payload"]
+        ingest_payload.payload_path = input_dict["payload_path"]
+        return ingest_payload
 
 
 class DisseminationFilter:
