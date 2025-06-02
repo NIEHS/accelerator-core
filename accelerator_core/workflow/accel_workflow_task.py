@@ -25,9 +25,7 @@ class AcceleratorWorkflowTask:
         self.xcom_properties_resolver = xcom_properties_resolver
         self.xcomUtils = XcomUtils(xcom_properties_resolver)
 
-    def report_individual(
-        self, ingest_result: IngestPayload, item_id: str, item: dict
-    ):
+    def report_individual(self, ingest_result: IngestPayload, item_id: str, item: dict):
         """
         report an individual sub-result.
 
@@ -45,24 +43,28 @@ class AcceleratorWorkflowTask:
         """
 
         if not ingest_result.ingest_source_descriptor.ingest_identifier:
-            raise Exception("no ingest_identifier (run_id) provided in source descriptor")
+            raise Exception(
+                "no ingest_identifier (run_id) provided in source descriptor"
+            )
 
         if not item_id:
             raise Exception("no item_id provided")
 
         ingest_result.ingest_source_descriptor.ingest_item_id = item_id
 
-        if ingest_result.payload_inline:
+        if not ingest_result.ingest_source_descriptor.use_tempfiles:
             logger.debug("appending the item inline")
             ingest_result.payload.append(item)
+            ingest_result.payload_inline = True
             return
 
-
         logger.info("processing individual result via temp file")
-        stored_path = self.xcomUtils.store_dict_in_temp_file(item_id, item,
-                                                             ingest_result.ingest_source_descriptor.ingest_identifier)
+        stored_path = self.xcomUtils.store_dict_in_temp_file(
+            item_id, item, ingest_result.ingest_source_descriptor.ingest_identifier
+        )
         logger.info(f"stored path: {stored_path}")
         ingest_result.payload_path.append(stored_path)
+        ingest_result.payload_inline = True
 
     def get_payload_length(self, payload: IngestPayload) -> int:
         """

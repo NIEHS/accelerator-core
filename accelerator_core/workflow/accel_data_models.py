@@ -20,6 +20,7 @@ class IngestSourceDescriptor:
         )
         self.ingest_link = None  # link to the ingest source
         self.ingest_format = None  # reserved
+        self.use_tempfiles = False
 
     def to_dict(self) -> dict:
         serialized = {
@@ -32,6 +33,7 @@ class IngestSourceDescriptor:
             "ingest_identifier": self.ingest_identifier,
             "ingest_link": self.ingest_link,
             "ingest_format": self.ingest_format,
+            "use_tempfiles": self.use_tempfiles,
         }
         return serialized
 
@@ -47,6 +49,7 @@ class IngestSourceDescriptor:
         ingest_source_descriptor.ingest_link = input_dict["ingest_link"]
         ingest_source_descriptor.ingest_item_id = input_dict["ingest_item_id"]
         ingest_source_descriptor.ingest_format = input_dict["ingest_format"]
+        ingest_source_descriptor.use_tempfiles = input_dict["use_tempfiles"]
 
         return ingest_source_descriptor
 
