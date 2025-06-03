@@ -38,7 +38,7 @@ class AcceleratorWorkflowTask:
         :param index: index of the payload to resolve
         :return: dict with the resolved payload data
         """
-
+        logger.info(f"payload resolve for payload {payload}")
         if payload.payload_inline:
             if index < len(payload.payload):
                 logger.debug("inline payload returned")
@@ -69,6 +69,7 @@ class AcceleratorWorkflowTask:
         @return: None (IngestPayload will have the item appended in the correct fashion)
 
         """
+        logger.info("report individual for item %s", item_id)
 
         if not ingest_result.ingest_source_descriptor.ingest_identifier:
             raise Exception(
@@ -81,7 +82,7 @@ class AcceleratorWorkflowTask:
         ingest_result.ingest_source_descriptor.ingest_item_id = item_id
 
         if not ingest_result.ingest_source_descriptor.use_tempfiles:
-            logger.debug("appending the item inline")
+            logger.info("appending the item inline")
             ingest_result.payload.append(item)
             ingest_result.payload_inline = True
             return
