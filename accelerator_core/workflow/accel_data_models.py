@@ -1,4 +1,5 @@
 from accelerator_core.payload import Payload
+from accelerator_core.utils.data_utils import sanitize_boolean
 
 
 class IngestSourceDescriptor:
@@ -49,7 +50,9 @@ class IngestSourceDescriptor:
         ingest_source_descriptor.ingest_link = input_dict["ingest_link"]
         ingest_source_descriptor.ingest_item_id = input_dict["ingest_item_id"]
         ingest_source_descriptor.ingest_format = input_dict["ingest_format"]
-        ingest_source_descriptor.use_tempfiles = input_dict["use_tempfiles"]
+        ingest_source_descriptor.use_tempfiles = sanitize_boolean(
+            input_dict["use_tempfiles"]
+        )
 
         return ingest_source_descriptor
 
@@ -77,8 +80,10 @@ class IngestPayload(Payload):
             input_dict["ingest_source_descriptor"]
         )
         ingest_payload = IngestPayload(ingest_source_descriptor)
-        ingest_payload.ingest_successful = input_dict["ingest_successful"]
-        ingest_payload.payload_inline = input_dict["payload_inline"]
+        ingest_payload.ingest_successful = sanitize_boolean(
+            input_dict["ingest_successful"]
+        )
+        ingest_payload.payload_inline = sanitize_boolean(input_dict["payload_inline"])
         ingest_payload.payload = input_dict["payload"]
         ingest_payload.payload_path = input_dict["payload_path"]
         return ingest_payload
@@ -157,7 +162,9 @@ class DisseminationDescriptor:
         dissemination_descriptor.dissemination_item_id = input_dict[
             "dissemination_item_id"
         ]
-        dissemination_descriptor.use_tempfiles = input_dict["use_tempfiles"]
+        dissemination_descriptor.use_tempfiles = sanitize_boolean(
+            input_dict["use_tempfiles"]
+        )
         return dissemination_descriptor
 
 
@@ -185,10 +192,12 @@ class DisseminationPayload(Payload):
         dissemination_payload.dissemination_descriptor = (
             DisseminationDescriptor.from_dict(input_dict["dissemination_descriptor"])
         )
-        dissemination_payload.payload_inline = input_dict["payload_inline"]
+        dissemination_payload.payload_inline = sanitize_boolean(
+            input_dict["payload_inline"]
+        )
         dissemination_payload.payload_path = input_dict["payload_path"]
         dissemination_payload.payload = input_dict["payload"]
-        dissemination_payload.dissemination_successful = input_dict[
-            "dissemination_successful"
-        ]
+        dissemination_payload.dissemination_successful = sanitize_boolean(
+            input_dict["dissemination_successful"]
+        )
         return dissemination_payload
