@@ -22,12 +22,12 @@ class DisseminationCrosswalk(AcceleratorWorkflowTask):
 
     @abstractmethod
     def transform(
-        self, disseminationResult: DisseminationPayload
+        self, dissemination_payload: DisseminationPayload
     ) -> DisseminationPayload:
         """Convert raw data into a standardized format.
         :param ingest_result: The ingest result.
-        :return revised IngestResult with the crosswalked document in payload
-        document during ingest - MC
+        :return revised DisseminationPayload with the crosswalked document in payload
+
         """
 
         pass

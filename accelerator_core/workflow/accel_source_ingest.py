@@ -1,9 +1,16 @@
 """
 Superclass for an ingest component
 """
+
+from accelerator_core.utils.logger import setup_logger
 from accelerator_core.utils.xcom_utils import XcomProperties, XcomPropsResolver
-from accelerator_core.workflow.accel_data_models import IngestSourceDescriptor, IngestPayload
+from accelerator_core.workflow.accel_data_models import (
+    IngestSourceDescriptor,
+    IngestPayload,
+)
 from accelerator_core.workflow.accel_workflow_task import AcceleratorWorkflowTask
+
+logger = setup_logger("accelerator")
 
 
 class AccelIngestComponent(AcceleratorWorkflowTask):
@@ -11,7 +18,11 @@ class AccelIngestComponent(AcceleratorWorkflowTask):
     Abstract parent class for ingest components, this accesses a target
     """
 
-    def __init__(self, ingest_source_descriptor: IngestSourceDescriptor, xcom_props_resolver:XcomPropsResolver):
+    def __init__(
+        self,
+        ingest_source_descriptor: IngestSourceDescriptor,
+        xcom_props_resolver: XcomPropsResolver,
+    ):
         """
         Describes the type of ingest, the submitter, the source and other provenance information.
         Subclasses may introduce other configuration, including secrets and parameters for accessing the

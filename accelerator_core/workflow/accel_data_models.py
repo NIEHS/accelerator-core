@@ -111,6 +111,12 @@ class DisseminationDescriptor:
         self.temp_collection = False  # is this in the temp collection
         self.dissemination_type = None  # identifier for the target type
         self.dissemination_version = None  # x.x.x version information for dissemination
+        self.dissemination_identifier = None  # run id of the dissemination process
+        self.dissemination_item_id = (
+            None  # unique id if this is an individual item, blank for a batch
+        )
+        self.use_tempfiles = False
+        self.ingest_identifier = None
 
     def to_dict(self) -> dict:
         """
@@ -126,6 +132,9 @@ class DisseminationDescriptor:
             "temp_collection": self.temp_collection,
             "dissemination_type": self.dissemination_type,
             "dissemination_version": self.dissemination_version,
+            "dissemination_identifier": self.dissemination_identifier,
+            "dissemination_item_id": self.dissemination_item_id,
+            "use_tempfiles": self.use_tempfiles,
         }
 
         return serialized
@@ -142,6 +151,13 @@ class DisseminationDescriptor:
         dissemination_descriptor.dissemination_version = input_dict[
             "dissemination_version"
         ]
+        dissemination_descriptor.dissemination_identifier = input_dict[
+            "dissemination_identifier"
+        ]
+        dissemination_descriptor.dissemination_item_id = input_dict[
+            "dissemination_item_id"
+        ]
+        dissemination_descriptor.use_tempfiles = input_dict["use_tempfiles"]
         return dissemination_descriptor
 
 
