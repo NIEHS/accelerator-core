@@ -93,7 +93,7 @@ class AcceleratorWorkflowTask:
         )
         logger.info(f"stored path: {stored_path}")
         ingest_result.payload_path.append(stored_path)
-        ingest_result.payload_inline = True
+        ingest_result.payload_inline = False
 
     def get_payload_length(self, payload: Payload) -> int:
         """

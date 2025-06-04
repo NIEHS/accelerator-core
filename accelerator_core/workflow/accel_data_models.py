@@ -120,6 +120,7 @@ class DisseminationDescriptor:
         self.dissemination_item_id = (
             None  # unique id if this is an individual item, blank for a batch
         )
+
         self.use_tempfiles = False
         self.ingest_identifier = None
 

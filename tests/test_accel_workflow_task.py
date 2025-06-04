@@ -77,6 +77,7 @@ class TestAcceleratorWorkflowTask(unittest.TestCase):
 
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_identifier = "test"
+        ingest_source_descriptor.use_tempfiles = True
         ingest_payload = IngestPayload(ingest_source_descriptor)
         ingest_payload.payload_inline = False
 
@@ -85,6 +86,7 @@ class TestAcceleratorWorkflowTask(unittest.TestCase):
 
         actual = task.payload_resolve(ingest_payload, 0)
         self.assertTrue(actual == my_vals)
+        self.assertFalse(ingest_payload.payload_inline)
 
 
 if __name__ == "__main__":
