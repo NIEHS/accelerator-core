@@ -50,13 +50,13 @@ class AccessionMongo(Accession):
 
     def ingest(
         self,
-        ingest_result: IngestPayload,
+        ingest_payload: IngestPayload,
         check_duplicates: bool = True,
         temp_doc: bool = False,
     ) -> str:
         """
         Ingest the given document
-        :param ingest_result: ingest source descriptor describing the type, schema,
+        :param ingest_payload: ingest source descriptor describing the type, schema,
         and other configuration along with a payload (either in-line or a path to a document)
         :param check_duplicates: bool indicates whether pre-checks for duplicate data run
         :param temp_doc: bool indicates whether the document is temporary or not
@@ -64,23 +64,24 @@ class AccessionMongo(Accession):
         """
         logger.info("ingest()")
 
-        if not ingest_result.payload_inline:
-            raise Exception("unsupported operation - payload is not inline")
+        payload_length = self.get_payload_length(ingest_payload)
 
-        if len(ingest_result.payload) != 1:
-            raise Exception(
-                "unsupported operation - payload is missing or has multiple elements"
-            )
-
-        doc = ingest_result.payload[0]
-        result = self.validate(doc, ingest_result.ingest_source_descriptor)
-        if not result.valid:
-            raise Exception(f"Invalid document provided {result.error_message}")
+        if payload_length == 0:
+            logger.info("no payload to ingest")
+            return ""
+        elif payload_length > 1:
+            # TODO: refactor to support multiple ingest, will require api change to return payload
+            raise Exception("currently only supports one doc per ingest")
 
         db = self.connect_to_db()
         coll = self.build_collection_reference(
-            db, ingest_result.ingest_source_descriptor.ingest_type, temp_doc
+            db, ingest_payload.ingest_source_descriptor.ingest_type, temp_doc
         )
+
+        doc = self.payload_resolve(ingest_payload, 0)
+        result = self.validate(doc, ingest_payload.ingest_source_descriptor)
+        if not result.valid:
+            raise Exception(f"Invalid document provided {result.error_message}")
 
         id = coll.insert_one(doc).inserted_id
 
