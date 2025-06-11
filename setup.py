@@ -16,6 +16,6 @@ setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.9",
-    package_data={"accelerator_core": ["schema/templates/*.jinja"]},
+    package_data={"accelerator_core": ["schema/templates/*.jinja", "schema/*"]},
     include_package_data=True,
 )
