@@ -8,7 +8,7 @@ setup(
     author_email="mike.conway@nih.gov",
     url="https://github.com/yourusername/accelerator-core",
     packages=find_packages(),
-    install_requires=[],
+    install_requires=[open("requirements.txt").read()],
     license="BSD 3-Clause",
     classifiers=[
         "Programming Language :: Python :: 3",
