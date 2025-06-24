@@ -26,7 +26,7 @@ class TestAcceleratorWorkflowTask(unittest.TestCase):
         )
 
         ingest_source_descriptor = IngestSourceDescriptor()
-        ingest_source_descriptor.ingest_identifier = "test"
+        ingest_source_descriptor.ingest_identifier = "tests"
         inline_ingest_payload = IngestPayload(ingest_source_descriptor)
         inline_ingest_payload.payload_inline = True
 
@@ -51,7 +51,7 @@ class TestAcceleratorWorkflowTask(unittest.TestCase):
         )
 
         ingest_source_descriptor = IngestSourceDescriptor()
-        ingest_source_descriptor.ingest_identifier = "test"
+        ingest_source_descriptor.ingest_identifier = "tests"
         ingest_source_descriptor.use_tempfiles = True
         serialized_ingest_payload = IngestPayload(ingest_source_descriptor)
 
@@ -76,7 +76,7 @@ class TestAcceleratorWorkflowTask(unittest.TestCase):
         )
 
         ingest_source_descriptor = IngestSourceDescriptor()
-        ingest_source_descriptor.ingest_identifier = "test"
+        ingest_source_descriptor.ingest_identifier = "tests"
         ingest_source_descriptor.use_tempfiles = True
         ingest_payload = IngestPayload(ingest_source_descriptor)
         ingest_payload.payload_inline = False

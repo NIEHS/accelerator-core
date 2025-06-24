@@ -73,7 +73,7 @@ class TestDisseminationMongo(unittest.TestCase):
             # now get the dissemination for this item
 
             dissemination_request = DisseminationDescriptor()
-            dissemination_request.dissemination_type = "test"
+            dissemination_request.dissemination_type = "tests"
             dissemination_request.temp_collection = "false"
             dissemination_request.ingest_type = "accelerator"
             dissemination_request.schema_version = "1.0.0"
@@ -95,7 +95,7 @@ class TestDisseminationMongo(unittest.TestCase):
         ingest_source_descriptor = IngestSourceDescriptor()
         id = "95E43738404BEECDF66573B4"
         dissemination_request = DisseminationDescriptor()
-        dissemination_request.dissemination_type = "test"
+        dissemination_request.dissemination_type = "tests"
         dissemination_request.temp_collection = "false"
         dissemination_request.ingest_type = "accelerator"
         dissemination_request.schema_version = "1.0.0"

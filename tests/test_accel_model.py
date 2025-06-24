@@ -21,7 +21,10 @@ from accelerator_core.schema.models.base_model import (
     TechnicalMetadataModel,
 )
 from accelerator_core.utils import resource_utils
-from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
+from accelerator_core.utils.accelerator_config import (
+    AcceleratorConfig,
+    config_from_file,
+)
 from accelerator_core.utils.schema_tools import SchemaTools
 from accelerator_core.schema.models.accel_model import build_accel_from_model
 
@@ -37,7 +40,6 @@ class TestAccelModel(unittest.TestCase):
         )
 
         self.config = config_from_file(test_path)
-
 
     def test_build_and_validate_accel(self):
 
@@ -103,7 +105,7 @@ class TestAccelModel(unittest.TestCase):
         temporal.temporal_resolution_comment = "comment"
 
         technical = TechnicalMetadataModel()
-        technical.original_source = "a test"
+        technical.original_source = "a tests"
 
         population_data = AccelPopulationDataModel()
         population_data.population_studies = ["study1"]

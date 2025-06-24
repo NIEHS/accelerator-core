@@ -1,5 +1,5 @@
 """
-Tools for testing, including tools for test setup and teardown of databases and other utils in test
+Tools for testing, including tools for tests setup and teardown of databases and other utils in tests
 setup and teardown
 """
 
