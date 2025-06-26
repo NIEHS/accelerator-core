@@ -127,14 +127,13 @@ class DisseminationDescriptor:
         self.schema_version = None  # version of the specific ingest_type
         self.temp_collection = False  # is this in the temp collection
         self.dissemination_type = None  # identifier for the target type
+        self.by_filter = False  # true if dissemination by a filter
         self.dissemination_version = None  # x.x.x version information for dissemination
         self.dissemination_identifier = None  # run id of the dissemination process
         self.dissemination_item_id = (
             None  # unique id if this is an individual item, blank for a batch
         )
-        self.dissemination_filter = (
-            None  # will be DisseminationFilter if disseminated by filter
-        )
+        self.dissemination_filter = {}
         self.use_tempfiles = False
         self.ingest_identifier = None
 
@@ -149,12 +148,15 @@ class DisseminationDescriptor:
             "submitter_email": self.submitter_email,
             "submit_date": self.submit_date,
             "ingest_type": self.ingest_type,
+            "schema_version": self.schema_version,
             "temp_collection": self.temp_collection,
             "dissemination_type": self.dissemination_type,
             "dissemination_version": self.dissemination_version,
             "dissemination_identifier": self.dissemination_identifier,
             "dissemination_item_id": self.dissemination_item_id,
             "use_tempfiles": self.use_tempfiles,
+            "by_filter": self.by_filter,
+            "dissemination_filter": self.dissemination_filter.to_dict(),  # TODO: bool handling
         }
 
         return serialized
@@ -166,8 +168,12 @@ class DisseminationDescriptor:
         dissemination_descriptor.submitter_email = input_dict["submitter_email"]
         dissemination_descriptor.submit_date = input_dict["submit_date"]
         dissemination_descriptor.ingest_type = input_dict["ingest_type"]
+        dissemination_descriptor.schema_version = input_dict["schema_version"]
         dissemination_descriptor.temp_collection = input_dict["temp_collection"]
         dissemination_descriptor.dissemination_type = input_dict["dissemination_type"]
+        dissemination_descriptor.by_filter = input_dict[
+            "by_filter"
+        ]  # TODO: bool handling
         dissemination_descriptor.dissemination_version = input_dict[
             "dissemination_version"
         ]
@@ -179,6 +185,9 @@ class DisseminationDescriptor:
         ]
         dissemination_descriptor.use_tempfiles = sanitize_boolean(
             input_dict["use_tempfiles"]
+        )
+        dissemination_descriptor.dissemination_filter = DisseminationFilter.from_dict(
+            input_dict["dissemination_filter"]
         )
         return dissemination_descriptor
 
