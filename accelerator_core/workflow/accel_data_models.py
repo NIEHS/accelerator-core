@@ -100,6 +100,17 @@ class DisseminationFilter:
         dissemination
         :param filter_terms: dict with filtering terms
         """
+        self.filter_terms = filter_terms
+
+    def to_dict(self):
+        serialized = {"filter_terms": self.filter_terms}
+        return serialized
+
+    @staticmethod
+    def from_dict(input_dict: dict):
+        dissemination_filter = DisseminationFilter()
+        filter.filter_terms = input_dict["filter_terms"]
+        return dissemination_filter
 
 
 class DisseminationDescriptor:
@@ -113,6 +124,7 @@ class DisseminationDescriptor:
         self.submitter_email = None
         self.submit_date = None
         self.ingest_type = None  # matches type in type matrix
+        self.schema_version = None  # version of the specific ingest_type
         self.temp_collection = False  # is this in the temp collection
         self.dissemination_type = None  # identifier for the target type
         self.dissemination_version = None  # x.x.x version information for dissemination
@@ -120,7 +132,9 @@ class DisseminationDescriptor:
         self.dissemination_item_id = (
             None  # unique id if this is an individual item, blank for a batch
         )
-
+        self.dissemination_filter = (
+            None  # will be DisseminationFilter if disseminated by filter
+        )
         self.use_tempfiles = False
         self.ingest_identifier = None
 
