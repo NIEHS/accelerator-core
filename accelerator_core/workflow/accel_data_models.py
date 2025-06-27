@@ -156,7 +156,7 @@ class DisseminationDescriptor:
             "dissemination_item_id": self.dissemination_item_id,
             "use_tempfiles": self.use_tempfiles,
             "by_filter": self.by_filter,
-            "dissemination_filter": self.dissemination_filter.to_dict(),  # TODO: bool handling
+            "dissemination_filter": self.dissemination_filter.to_dict(),
         }
 
         return serialized
@@ -171,9 +171,7 @@ class DisseminationDescriptor:
         dissemination_descriptor.schema_version = input_dict["schema_version"]
         dissemination_descriptor.temp_collection = input_dict["temp_collection"]
         dissemination_descriptor.dissemination_type = input_dict["dissemination_type"]
-        dissemination_descriptor.by_filter = input_dict[
-            "by_filter"
-        ]  # TODO: bool handling
+        dissemination_descriptor.by_filter = sanitize_boolean(input_dict["by_filter"])
         dissemination_descriptor.dissemination_version = input_dict[
             "dissemination_version"
         ]
