@@ -17,7 +17,11 @@ setup(
     ],
     python_requires=">=3.9",
     package_data={
-        "accelerator_core": ["schema/templates/*.jinja", "schema/type_matrix.yaml"]
+        "accelerator_core": [
+            "schema/templates/*.jinja",
+            "schema/type_matrix.yaml",
+            "schema/*.json",
+        ]
     },
     include_package_data=True,
 )
