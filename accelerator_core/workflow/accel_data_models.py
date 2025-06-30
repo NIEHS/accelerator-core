@@ -102,16 +102,6 @@ class DisseminationFilter:
         """
         self.filter_terms = filter_terms
 
-    def to_dict(self):
-        serialized = {"filter_terms": self.filter_terms}
-        return serialized
-
-    @staticmethod
-    def from_dict(input_dict: dict):
-        dissemination_filter = DisseminationFilter()
-        filter.filter_terms = input_dict["filter_terms"]
-        return dissemination_filter
-
 
 class DisseminationDescriptor:
     """
@@ -135,7 +125,6 @@ class DisseminationDescriptor:
         )
         self.dissemination_filter = {}
         self.use_tempfiles = False
-        self.ingest_identifier = None
 
     def to_dict(self) -> dict:
         """
@@ -156,7 +145,7 @@ class DisseminationDescriptor:
             "dissemination_item_id": self.dissemination_item_id,
             "use_tempfiles": self.use_tempfiles,
             "by_filter": self.by_filter,
-            "dissemination_filter": self.dissemination_filter.to_dict(),
+            "dissemination_filter": self.dissemination_filter,
         }
 
         return serialized
@@ -184,9 +173,10 @@ class DisseminationDescriptor:
         dissemination_descriptor.use_tempfiles = sanitize_boolean(
             input_dict["use_tempfiles"]
         )
-        dissemination_descriptor.dissemination_filter = DisseminationFilter.from_dict(
-            input_dict["dissemination_filter"]
-        )
+        dissemination_descriptor.dissemination_filter = input_dict[
+            "dissemination_filter"
+        ]
+
         return dissemination_descriptor
 
 
