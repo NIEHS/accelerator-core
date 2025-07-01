@@ -192,8 +192,8 @@ class DisseminationPayload(Payload):
         serialized = {
             "dissemination_descriptor": self.dissemination_descriptor.to_dict(),
             "payload_inline": self.payload_inline,
-            "payload_path": [self.payload_path],
-            "payload": [self.payload],
+            "payload_path": self.payload_path,
+            "payload": self.payload,
             "dissemination_successful": self.dissemination_successful,
         }
 
