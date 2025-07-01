@@ -80,8 +80,7 @@ class DisseminationMongo(Dissemination):
             event,
         )
         dissemination_payload = DisseminationPayload(dissemination_request)
-        dissemination_payload.payload = [doc]
-        dissemination_payload.payload_inline = True
+        self.report_individual_dissemination(dissemination_payload, document_id, doc)
         dissemination_payload.dissemination_successful = True
         return dissemination_payload
 
