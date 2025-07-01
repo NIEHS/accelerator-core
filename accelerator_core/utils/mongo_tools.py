@@ -3,11 +3,14 @@ Tools for testing, including tools for tests setup and teardown of databases and
 setup and teardown
 """
 
+from bson.json_util import CANONICAL_JSON_OPTIONS
 from pymongo import MongoClient
 
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
 from accelerator_core.utils.resource_utils import determine_resource_path
+import json, re
+from bson import json_util
 
 logger = setup_logger("accelerator")
 
@@ -62,3 +65,11 @@ def create_accel_database(mongo_client: MongoClient, db_name: str) -> None:
     db.create_collection(temp_collection)
 
     logger.info("created!")
+
+
+def convert_doc_to_json(doc: dict) -> dict:
+    """
+    Take a dict that is a document from Mongo query and turn it into standard json
+    """
+    docstr = json_util.dumps(doc, json_options=CANONICAL_JSON_OPTIONS)
+    return json.loads(docstr)

@@ -78,6 +78,8 @@ class TestDisseminationMongo(unittest.TestCase):
             dissemination_request.ingest_type = "accelerator"
             dissemination_request.schema_version = "1.0.0"
             dissemination_request.inline_results = True
+            dissemination_request.dissemination_identifier = "test_dissemination"
+            dissemination_request.dissemination_item_id = id
 
             dissemination = DisseminationMongo(
                 self.__class__._accelerator_config,

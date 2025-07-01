@@ -2,6 +2,7 @@
 General methods to interact with the mongo database
 """
 
+import bson
 from bson import ObjectId
 
 from accelerator_core.schema.models.base_model import TechnicalMetadataHistory
@@ -9,6 +10,10 @@ from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
+from bson.json_util import loads
+from bson.json_util import dumps, CANONICAL_JSON_OPTIONS
+
+from accelerator_core.utils.mongo_tools import convert_doc_to_json
 
 logger = setup_logger("accelerator")
 
@@ -59,6 +64,7 @@ class AccelDatabaseUtils:
         if not doc:
             raise AccelDocumentNotFoundException(document_id, document_type, temp_doc)
 
+        doc = convert_doc_to_json(doc)
         return doc
 
     def connect_to_db(self):
