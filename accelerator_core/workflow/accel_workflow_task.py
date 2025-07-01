@@ -149,4 +149,4 @@ class AcceleratorWorkflowTask:
         )
         logger.info(f"stored path: {stored_path}")
         dissemination_payload.payload_path.append(stored_path)
-        dissemination_payload.payload_inline = True
+        dissemination_payload.payload_inline = False

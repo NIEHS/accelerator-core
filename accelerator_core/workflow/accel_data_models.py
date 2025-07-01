@@ -21,7 +21,7 @@ class IngestSourceDescriptor:
         )
         self.ingest_link = None  # link to the ingest source
         self.ingest_format = None  # reserved
-        self.use_tempfiles = False
+        self.use_tempfiles = False  # request temp files versus inline. System behavior for a task will consult this flag
 
     def to_dict(self) -> dict:
         serialized = {
@@ -143,7 +143,7 @@ class DisseminationDescriptor:
             "dissemination_version": self.dissemination_version,
             "dissemination_identifier": self.dissemination_identifier,
             "dissemination_item_id": self.dissemination_item_id,
-            "use_tempfiles": self.use_tempfiles,
+            "use_tempfiles": self.use_tempfiles,  # request temp file xcom if set to true, otherwise use inline
             "by_filter": self.by_filter,
             "dissemination_filter": self.dissemination_filter,
         }
