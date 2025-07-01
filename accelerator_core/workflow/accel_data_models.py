@@ -150,7 +150,8 @@ class DisseminationDescriptor:
 
         return serialized
 
-    def from_dict(self, input_dict: dict):
+    @staticmethod
+    def from_dict(input_dict: dict):
 
         dissemination_descriptor = DisseminationDescriptor()
         dissemination_descriptor.submitter_name = input_dict["submitter_name"]
@@ -200,10 +201,11 @@ class DisseminationPayload(Payload):
 
     @staticmethod
     def from_dict(input_dict: dict):
-        dissemination_payload = DisseminationPayload()
-        dissemination_payload.dissemination_descriptor = (
-            DisseminationDescriptor.from_dict(input_dict["dissemination_descriptor"])
+        dissemination_descriptor = DisseminationDescriptor.from_dict(
+            input_dict["dissemination_descriptor"]
         )
+        dissemination_payload = DisseminationPayload(dissemination_descriptor)
+
         dissemination_payload.payload_inline = sanitize_boolean(
             input_dict["payload_inline"]
         )

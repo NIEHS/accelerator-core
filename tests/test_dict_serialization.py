@@ -1,5 +1,10 @@
 import unittest
 
+from accelerator_core.workflow.accel_data_models import (
+    DisseminationDescriptor,
+    DisseminationPayload,
+)
+
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,
@@ -68,6 +73,44 @@ class TestDictSerialization(unittest.TestCase):
         )
         self.assertEqual(ingest_payload.payload_inline, actual_from_dict.payload_inline)
         self.assertEqual(ingest_payload.payload_path, actual_from_dict.payload_path)
+
+    def test_dissemination_descriptor(self):
+        dissemination_descriptor = DisseminationDescriptor()
+        dissemination_descriptor.dissemination_identifier = "dissemination_identifier"
+        dissemination_descriptor.ingest_type = "type"
+        dissemination_descriptor.schema_version = "schema_version"
+        dissemination_descriptor.submitter_email = "submitter_email"
+        dissemination_descriptor.submitter_name = "submitter_name"
+        dissemination_descriptor.submit_date = "submit_date"
+
+        dictversion = dissemination_descriptor.to_dict()
+        actual = DisseminationDescriptor.from_dict(dictversion)
+        self.assertIsNotNone(actual)
+        self.assertEqual(dissemination_descriptor.ingest_type, actual.ingest_type)
+        self.assertEqual(
+            dissemination_descriptor.dissemination_identifier,
+            actual.dissemination_identifier,
+        )
+        self.assertEqual(dissemination_descriptor.schema_version, actual.schema_version)
+        self.assertEqual(
+            dissemination_descriptor.submitter_email, actual.submitter_email
+        )
+        self.assertEqual(dissemination_descriptor.submitter_name, actual.submitter_name)
+        self.assertEqual(dissemination_descriptor.submit_date, actual.submit_date)
+
+    def test_dissemination_payload(self):
+        dissemination_descriptor = DisseminationDescriptor()
+        dissemination_descriptor.dissemination_identifier = "dissemination_identifier"
+        dissemination_descriptor.ingest_type = "type"
+        dissemination_descriptor.schema_version = "schema_version"
+        dissemination_descriptor.submitter_email = "submitter_email"
+        dissemination_descriptor.submitter_name = "submitter_name"
+        dissemination_descriptor.submit_date = "submit_date"
+
+        dissemination_payload = DisseminationPayload(dissemination_descriptor)
+        dictversion = dissemination_payload.to_dict()
+        actual = DisseminationPayload.from_dict(dictversion)
+        self.assertIsNotNone(actual)
 
 
 if __name__ == "__main__":
