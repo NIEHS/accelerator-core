@@ -126,6 +126,8 @@ class TestAccessionMongo(unittest.TestCase):
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
             ingest_source_descriptor.schema_version = "1.0.0"
+            ingest_source_descriptor.ingest_identifier = "myrunid"
+            ingest_source_descriptor.ingest_item_id = "myitemid"
 
             ingest_result = IngestPayload(ingest_source_descriptor)
 

@@ -38,8 +38,17 @@ class TechnicalMetadataHistory:
         self.timestamp = timestamp
         self.msg = message
 
+    def to_dict(self):
+        val = {}
+        val["timestamp"] = self.timestamp
+        val["msg"] = self.msg
+        return val
+
+
+def get_time_now_iso():
+    now = datetime.now()
+    return now.isoformat()
+
 
 def create_timestamped_log(message: str) -> TechnicalMetadataHistory:
-    now = datetime.now()
-    iso_string = now.isoformat()
-    return TechnicalMetadataHistory(iso_string, message)
+    return TechnicalMetadataHistory(get_time_now_iso(), message)
