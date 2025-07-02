@@ -79,6 +79,7 @@ class DisseminationMongo(Dissemination):
             dissemination_request.temp_collection,
             event,
         )
+
         dissemination_payload = DisseminationPayload(dissemination_request)
         self.report_individual_dissemination(dissemination_payload, document_id, doc)
         dissemination_payload.dissemination_successful = True

@@ -4,6 +4,7 @@ Accession support concrete implementation for Mongo data store
 
 from bson import ObjectId
 
+from accelerator_core.schema.models.base_model import create_timestamped_log
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.utils.schema_tools import SchemaValidationResult
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
@@ -79,9 +80,21 @@ class AccessionMongo(Accession):
         )
 
         doc = self.payload_resolve(ingest_payload, 0)
+
+        # look for technical metadata and add log message
+        history = doc.get("technical_metadata", None)
+        if history:
+            history.append(
+                create_timestamped_log(
+                    f"accession from {ingest_payload.ingest_source_descriptor.ingest_type} with identifier {ingest_payload.ingest_source_descriptor.ingest_item_id} in operation {ingest_payload.ingest_source_descriptor.ingest_identifier}"
+                )
+            )
+
         result = self.validate(doc, ingest_payload.ingest_source_descriptor)
         if not result.valid:
             raise Exception(f"Invalid document provided {result.error_message}")
+
+        # TODO: add check for update versus insert - mcc
 
         id = coll.insert_one(doc).inserted_id
 

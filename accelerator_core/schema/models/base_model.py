@@ -20,8 +20,12 @@ class TechnicalMetadataModel:
     def __init__(self):
         self.created = ""
         self.modified = ""
-        self.original_source = ""
-        self.original_source_link = ""
+        self.original_source = (
+            ""  # unique id for the document, will be a pk in accel, can be a doi
+        )
+        self.original_source_link = (
+            ""  # link to document, if available, will be an index in accel
+        )
         self.history = []
 
 
