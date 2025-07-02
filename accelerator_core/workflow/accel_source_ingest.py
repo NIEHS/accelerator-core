@@ -33,6 +33,24 @@ class AccelIngestComponent(AcceleratorWorkflowTask):
         super().__init__(xcom_props_resolver)
         self.ingest_source_descriptor = ingest_source_descriptor
 
+    def reacquire_supported(self) -> bool:
+        """
+        Informational method that indicates whether this ingest component supports reacquisition
+        """
+        return False
+
+    def reacquire(self, ingest_id, additional_parameters: dict) -> IngestPayload:
+        """
+        PROPOSED
+
+        Method to reacquire an individual document from the original source. This allows the system to
+        validate or update data in accelerator by returning to the original source.
+        :param ingest_id: unique identifier of the item at the source
+        :param additional_parameters: dict of individual parameters that can be fed to this method per implementation
+
+        """
+        pass
+
     def ingest(self, additional_parameters: dict) -> IngestPayload:
         """
         primary method for subclasses to implement, this is the actual ingest, which means accessing the target
