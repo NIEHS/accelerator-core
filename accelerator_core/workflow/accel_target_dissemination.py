@@ -31,4 +31,10 @@ class AccelDisseminationComponent(AcceleratorWorkflowTask):
         :param additional_parameters: dict with additional parameters unique to a target
         :return: DisseminationPayload with results and additional logging on success/failure of a dissemination
         """
+
+        # TODO: check for duplicate
+        # TODO: add update method or flag?
+        # tech metadata should capture the location where this guy was disseminated, should this be a new array of
+        # disseminated location records in tech metadata?
+        # also a status flag? e.g. validated, missing at source
         pass
