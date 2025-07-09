@@ -13,10 +13,12 @@
       "project_code": null,
       "project_name": null,
       "project_short_name": null,
-      "project_sponsor": [],
-      "project_sponsor_other": [],
-      "project_sponsor_type": [],
-      "project_sponsor_type_other": []
+      "project_guid": null // new
+      "project_sponsor": { // new
+        "type": null,
+        "name": null,
+        "other_type": false
+      }
     },
     "resource": {
       "resource_name": null,
@@ -26,8 +28,12 @@
       "resource_url": null,
       "resource:doi": null, // new
       "resource_description": null,
-      "resource_domain": [],
-      "resource_domain_other": [],
+      "resource_domain": [ // new
+        {
+          "name": null,
+          "other_type": null
+        }
+      ],
       "resource_keywords": [],
       "resource_access_type": null,
       "resource_license": { // new
@@ -56,29 +62,61 @@
       "payment_required": false, // new
       "comments": null
     },
+    "personnel": [ // new
+      {
+        "name": null,
+        "affiliation": null,
+        "role": null, // author | contact | primary investigator | depositor
+        "email": null,
+        "identifier": null,
+        "identifier_type": null
+      }
+    ],
     "data_resource": {
       "exposure_media": [],
-      "measures": [],
-      "measures_other": [],
-      "measurement_method": null,
-      "measurement_method_other": null,
+      "measures": [ // new
+        {
+          "name": null,
+          "other_type": false
+        }
+      ],
+      "measurement_method": [ // new
+        {
+          "name": null,
+          "other_type": false
+        }
+      ],
       "time_extent_start": null,
       "time_extent_end": null,
       "time_available_comment": null,
       "update_frequency": null, // new
       "update_frequency_other": null, // new
+      "key_variables": [],
       "data_formats": [],
+      "example_metrics": [],
       "data_location": [
         {
           "data_location_text": null,
           "data_location_link": null
         }
-      ]
+      ],
+      "includes_citizen_collected": false, // new
+      "has_api": false // new
+      "has_visualization_tool": false
+    },
+    "data_usage": { // new
+      "intended_use": null,
+      "strengths": null,
+      "limitations": null,
+      "suggested_audience": null
     },
     "temporal_data": {
-      "temporal_resolution": [],
-      "temporal_resolution_other": [],
-      "temporal_resolution_all_available": [],
+      "temporal_resolution": [ // new
+        {
+          "resolution": null,
+          "other_type": false
+        }
+      ],
       "temporal_resolution_comment": null
     },
     "population_data": {
@@ -90,12 +128,19 @@
       "biospecimens_type": []
     },
     "geospatial_data": {
-      "spatial_resolution": [],
-      "spatial_resolution_other": [],
-      "spatial_resolution_all_available": [],
+      "spatial_resolution": [ // new
+        {
+          "resolution:": null,
+          "other_type": false
+        }
+      ],
       "spatial_resolution_comment": null,
-      "spatial_coverage": [],
-      "spatial_coverage_other": [],
+      "spatial_coverage": [ // new
+        {
+          "coverage": null,
+          "other_type": false
+        }
+      ],
       "spatial_bounding_box": [],
       "geometry_type": [],
       "geometry_source": [],
@@ -109,6 +154,7 @@
   "technical_metadata": {
     "created": null,
     "modified": null,
+    "verified": null, // new
     "original_source_type": null, // new
     "original_source_identifier": null, // new
     "original_source_link": null,
