@@ -4,7 +4,10 @@ from shlex import shlex
 
 import accelerator_core
 from accelerator_core.utils import resource_utils
-from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
+from accelerator_core.utils.accelerator_config import (
+    AcceleratorConfig,
+    config_from_file,
+)
 from accelerator_core.utils.resource_utils import determine_resource_path
 from accelerator_core.utils.schema_tools import SchemaTools
 
@@ -23,18 +26,23 @@ class TestSchemaTools(unittest.TestCase):
     def test_read_current_schema(self):
 
         schema_tools = SchemaTools(self.config)
-        schema_json = schema_tools.read_current_schema("accelerator")
+        schema_json = schema_tools.read_current_schema("accelerator", "1.0.1")
 
         self.assertIsNotNone(schema_json, "did not schema ")
         self.assertIsInstance(schema_json, dict)
 
     def test_validate_schema(self):
-        json_path = determine_resource_path(accelerator_core.schema, "accel.json")
+        json_path = determine_resource_path(
+            accelerator_core.schema,
+            "accel-v1.0.1.json",
+        )
         with open(json_path) as json_data:
             d = json.load(json_data)
 
             schema_tools = SchemaTools(self.config)
-            result = schema_tools.validate_json_against_schema(d, "accelerator")
+            result = schema_tools.validate_json_against_schema(
+                d, "accelerator", "1.0.1"
+            )
             self.assertTrue(result.valid, "Did not validate json against schema")
 
 
