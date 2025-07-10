@@ -1,0 +1,761 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "submission": {
+      "type": "object",
+      "properties": {
+        "submitter_name": {
+          "type": "null"
+        },
+        "submitter_email": {
+          "type": "null"
+        },
+        "submitter_comment": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "submitter_name",
+        "submitter_email",
+        "submitter_comment"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "program": {
+          "type": "object",
+          "properties": {
+            "program_name": {
+              "type": "null"
+            },
+            "preferred_label": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "program_name",
+            "preferred_label"
+          ]
+        },
+        "project": {
+          "type": "object",
+          "properties": {
+            "project_code": {
+              "type": "null"
+            },
+            "project_name": {
+              "type": "null"
+            },
+            "project_short_name": {
+              "type": "null"
+            },
+            "project_guid": {
+              "type": "null"
+            },
+            "project_sponsor": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "null"
+                },
+                "name": {
+                  "type": "null"
+                },
+                "other_type": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "type",
+                "name",
+                "other_type"
+              ]
+            }
+          },
+          "required": [
+            "project_code",
+            "project_name",
+            "project_short_name",
+            "project_guid",
+            "project_sponsor"
+          ]
+        },
+        "resource": {
+          "type": "object",
+          "properties": {
+            "resource_name": {
+              "type": "null"
+            },
+            "resource_version": {
+              "type": "null"
+            },
+            "resource_short_name": {
+              "type": "null"
+            },
+            "resource_type": {
+              "type": "null"
+            },
+            "resource_url": {
+              "type": "null"
+            },
+            "resource:doi": {
+              "type": "null"
+            },
+            "resource_description": {
+              "type": "null"
+            },
+            "resource_domain": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "null"
+                    },
+                    "other_type": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "resource_keywords": {
+              "type": "array",
+              "items": {}
+            },
+            "resource_access_type": {
+              "type": "null"
+            },
+            "resource_license": {
+              "type": "object",
+              "properties": {
+                "license_name": {
+                  "type": "string"
+                },
+                "license_uri": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "license_name",
+                "license_uri"
+              ]
+            },
+            "resource_reference": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "resource_reference_text": {
+                      "type": "null"
+                    },
+                    "resource_reference_link": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "resource_reference_text",
+                    "resource_reference_link"
+                  ]
+                }
+              ]
+            },
+            "resource_use_agreement": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "resource_use_agreement_text": {
+                      "type": "null"
+                    },
+                    "resource_use_agreement_link": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "resource_use_agreement_text",
+                    "resource_use_agreement_link"
+                  ]
+                }
+              ]
+            },
+            "publication": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "citation": {
+                      "type": "null"
+                    },
+                    "citation_link": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "citation",
+                    "citation_link"
+                  ]
+                }
+              ]
+            },
+            "is_static": {
+              "type": "boolean"
+            },
+            "payment_required": {
+              "type": "boolean"
+            },
+            "comments": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "resource_name",
+            "resource_version",
+            "resource_short_name",
+            "resource_type",
+            "resource_url",
+            "resource:doi",
+            "resource_description",
+            "resource_domain",
+            "resource_keywords",
+            "resource_access_type",
+            "resource_license",
+            "resource_reference",
+            "resource_use_agreement",
+            "publication",
+            "is_static",
+            "payment_required",
+            "comments"
+          ]
+        },
+        "personnel": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "null"
+                },
+                "affiliation": {
+                  "type": "null"
+                },
+                "role": {
+                  "type": "null"
+                },
+                "email": {
+                  "type": "null"
+                },
+                "identifier": {
+                  "type": "null"
+                },
+                "identifier_type": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "name",
+                "affiliation",
+                "role",
+                "email",
+                "identifier",
+                "identifier_type"
+              ]
+            }
+          ]
+        },
+        "data_resource": {
+          "type": "object",
+          "properties": {
+            "exposure_media": {
+              "type": "array",
+              "items": {}
+            },
+            "measures": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "null"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "measurement_method": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "null"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "time_extent_start": {
+              "type": "null"
+            },
+            "time_extent_end": {
+              "type": "null"
+            },
+            "time_available_comment": {
+              "type": "null"
+            },
+            "update_frequency": {
+              "type": "null"
+            },
+            "update_frequency_other": {
+              "type": "null"
+            },
+            "key_variables": {
+              "type": "array",
+              "items": {}
+            },
+            "data_formats": {
+              "type": "array",
+              "items": {}
+            },
+            "example_metrics": {
+              "type": "array",
+              "items": {}
+            },
+            "data_location": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "data_location_text": {
+                      "type": "null"
+                    },
+                    "data_location_link": {
+                      "type": "null"
+                    }
+                  },
+                  "required": [
+                    "data_location_text",
+                    "data_location_link"
+                  ]
+                }
+              ]
+            },
+            "includes_citizen_collected": {
+              "type": "boolean"
+            },
+            "has_api": {
+              "type": "boolean"
+            },
+            "has_visualization_tool": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "exposure_media",
+            "measures",
+            "measurement_method",
+            "time_extent_start",
+            "time_extent_end",
+            "time_available_comment",
+            "update_frequency",
+            "update_frequency_other",
+            "key_variables",
+            "data_formats",
+            "example_metrics",
+            "data_location",
+            "includes_citizen_collected",
+            "has_api",
+            "has_visualization_tool"
+          ]
+        },
+        "data_usage": {
+          "type": "object",
+          "properties": {
+            "intended_use": {
+              "type": "null"
+            },
+            "strengths": {
+              "type": "null"
+            },
+            "limitations": {
+              "type": "null"
+            },
+            "suggested_audience": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "intended_use",
+            "strengths",
+            "limitations",
+            "suggested_audience"
+          ]
+        },
+        "temporal_data": {
+          "type": "object",
+          "properties": {
+            "temporal_resolution": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "null"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "temporal_resolution_comment": {
+              "type": "null"
+            }
+          },
+          "required": [
+            "temporal_resolution",
+            "temporal_resolution_comment"
+          ]
+        },
+        "population_data": {
+          "type": "object",
+          "properties": {
+            "individual_level": {
+              "type": "boolean"
+            },
+            "linkable_encounters": {
+              "type": "boolean"
+            },
+            "population_studies": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "null"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "biospecimens_from_humans": {
+              "type": "boolean"
+            },
+            "biospecimens_type": {
+              "type": "array",
+              "items": {}
+            }
+          },
+          "required": [
+            "individual_level",
+            "linkable_encounters",
+            "population_studies",
+            "biospecimens_from_humans",
+            "biospecimens_type"
+          ]
+        },
+        "geospatial_data": {
+          "type": "object",
+          "properties": {
+            "spatial_resolution": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "resolution:": {
+                      "type": "null"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "resolution:",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "spatial_resolution_comment": {
+              "type": "null"
+            },
+            "spatial_coverage": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "coverage": {
+                      "type": "null"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "coverage",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "spatial_bounding_box": {
+              "type": "array",
+              "items": {}
+            },
+            "geometry_type": {
+              "type": "array",
+              "items": {}
+            },
+            "geometry_source": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "null"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "model_methods": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "null"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "geographic_feature": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "null"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "spatial_resolution",
+            "spatial_resolution_comment",
+            "spatial_coverage",
+            "spatial_bounding_box",
+            "geometry_type",
+            "geometry_source",
+            "model_methods",
+            "geographic_feature"
+          ]
+        },
+        "computational_workflow": {
+          "type": "object",
+          "properties": {
+            "tool_type": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "null"
+                },
+                "other_type": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "value",
+                "other_type"
+              ]
+            },
+            "is_open": {
+              "type": "boolean"
+            },
+            "languages": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "null"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "tool_type",
+            "is_open",
+            "languages"
+          ]
+        },
+        "tool_text": {
+          "type": "null"
+        },
+        "tool_link": {
+          "type": "null"
+        },
+        "example_application": {
+          "type": "null"
+        },
+        "example_application_link": {
+          "type": "null"
+        }
+      },
+      "required": [
+        "program",
+        "project",
+        "resource",
+        "personnel",
+        "data_resource",
+        "data_usage",
+        "temporal_data",
+        "population_data",
+        "geospatial_data",
+        "computational_workflow",
+        "tool_text",
+        "tool_link",
+        "example_application",
+        "example_application_link"
+      ]
+    },
+    "technical_metadata": {
+      "type": "object",
+      "properties": {
+        "created": {
+          "type": "null"
+        },
+        "modified": {
+          "type": "null"
+        },
+        "verified": {
+          "type": "null"
+        },
+        "original_source_type": {
+          "type": "null"
+        },
+        "original_source_identifier": {
+          "type": "null"
+        },
+        "original_source_link": {
+          "type": "null"
+        },
+        "history": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "type": "null"
+                },
+                "msg": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "timestamp",
+                "msg"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "created",
+        "modified",
+        "verified",
+        "original_source_type",
+        "original_source_identifier",
+        "original_source_link",
+        "history"
+      ]
+    }
+  },
+  "required": [
+    "submission",
+    "data",
+    "technical_metadata"
+  ]
+}
