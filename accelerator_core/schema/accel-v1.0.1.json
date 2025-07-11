@@ -13,12 +13,14 @@
       "project_code": null,
       "project_name": null,
       "project_short_name": null,
-      "project_guid": null // new
-      "project_sponsor": { // new
-        "type": null,
-        "name": null,
-        "other_type": false
-      }
+      "project_guid": null,
+      "project_sponsor": [
+          {
+          "type": null,
+          "name": null,
+          "other_type": false
+          }
+        ]
     },
     "resource": {
       "resource_name": null,
@@ -26,9 +28,9 @@
       "resource_short_name": null,
       "resource_type": null,
       "resource_url": null,
-      "resource:doi": null, // new
+      "resource:doi": null,
       "resource_description": null,
-      "resource_domain": [ // new
+      "resource_domain": [
         {
           "name": null,
           "other_type": null
@@ -36,7 +38,7 @@
       ],
       "resource_keywords": [],
       "resource_access_type": null,
-      "resource_license": { // new
+      "resource_license": {
         "license_name": "",
         "license_uri": ""
       },
@@ -59,14 +61,14 @@
         }
       ],
       "is_static": false,
-      "payment_required": false, // new
+      "payment_required": false,
       "comments": null
     },
-    "personnel": [ // new
+    "personnel": [
       {
         "name": null,
         "affiliation": null,
-        "role": null, // author | contact | primary investigator | depositor
+        "role": null,
         "email": null,
         "identifier": null,
         "identifier_type": null
@@ -74,13 +76,13 @@
     ],
     "data_resource": {
       "exposure_media": [],
-      "measures": [ // new
+      "measures": [
           {
           "value": null,
           "other_type": false
         }
       ],
-      "measurement_method": [ // new
+      "measurement_method": [
          {
           "value": null,
           "other_type": false
@@ -89,8 +91,8 @@
       "time_extent_start": null,
       "time_extent_end": null,
       "time_available_comment": null,
-      "update_frequency": null, // new
-      "update_frequency_other": null, // new
+      "update_frequency": null,
+      "update_frequency_other": null,
       "key_variables": [],
       "data_formats": [],
       "example_metrics": [],
@@ -100,18 +102,18 @@
           "data_location_link": null
         }
       ],
-      "includes_citizen_collected": false, // new
-      "has_api": false // new
+      "includes_citizen_collected": false,
+      "has_api": false,
       "has_visualization_tool": false
     },
-    "data_usage": { // new
+    "data_usage": {
       "intended_use": null,
       "strengths": null,
       "limitations": null,
       "suggested_audience": null
     },
     "temporal_data": {
-      "temporal_resolution": [ // new
+      "temporal_resolution": [
           {
           "value": null,
           "other_type": false
@@ -121,8 +123,8 @@
     },
     "population_data": {
       "individual_level": false,
-      "linkable_encounters": false, // new
-      "population_studies": [ // new
+      "linkable_encounters": false,
+      "population_studies": [
          {
           "value": null,
           "other_type": false
@@ -132,14 +134,14 @@
       "biospecimens_type": []
     },
     "geospatial_data": {
-      "spatial_resolution": [ // new
+      "spatial_resolution": [
         {
           "resolution:": null,
           "other_type": false
         }
       ],
       "spatial_resolution_comment": null,
-      "spatial_coverage": [ // new
+      "spatial_coverage": [
         {
           "coverage": null,
           "other_type": false
@@ -147,27 +149,27 @@
       ],
       "spatial_bounding_box": [],
       "geometry_type": [],
-      "geometry_source": [ // new
+      "geometry_source": [
            {
           "value": null,
           "other_type": false
         }
       ],
-      "model_methods": [ // new
+      "model_methods": [
         {
           "value": null,
           "other_type": false
         }
 
       ],
-      "geographic_feature": [ // new
+      "geographic_feature": [
         {
           "value": null,
           "other_type": false
         }
       ]
     },
-    "computational_workflow": { // new
+    "computational_workflow": {
       "tool_type": {
           "value": null,
           "other_type": false
@@ -188,9 +190,9 @@
   "technical_metadata": {
     "created": null,
     "modified": null,
-    "verified": null, // new
-    "original_source_type": null, // new
-    "original_source_identifier": null, // new
+    "verified": null,
+    "original_source_type": null,
+    "original_source_identifier": null,
     "original_source_link": null,
     "history": [
       {

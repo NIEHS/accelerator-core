@@ -11,6 +11,17 @@ from accelerator_core.schema.models.base_model import (
 from accelerator_core.schema.templates.template_processor import AccelTemplateProcessor
 
 
+class OtherType:
+    """
+    Value type that indicates whether a value is 'other', meaning it did not originate from
+    the base schema.
+    """
+
+    def __init__(self, value):
+        self.value = value
+        self.other_type = False
+
+
 class AccelProgramModel:
     """
     A program in accelerator
@@ -29,10 +40,18 @@ class AccelProjectModel:
         self.name = ""
         self.short_name = ""
         self.project_sponsor = []
-        self.project_sponsor_other = []
-        self.project_sponsor_type = []
-        self.project_sponsor_type_other = []
         self.project_url = ""
+
+
+class ProjectSponsor:
+    """
+    Project sponsor and type
+    """
+
+    def __init__(self):
+        self.sponsor = ""
+        self.type = ""
+        self.other_type = False
 
 
 class AccelIntermediateResourceModel:
@@ -48,13 +67,15 @@ class AccelIntermediateResourceModel:
         self.resource_url = ""
         self.description = ""
         self.domain = []
-        self.domain_other = []
         self.keywords = []
         self.access_type = ""
         self.resource_reference = []
         self.resource_use_agreement = []
         self.publication = []
         self.is_static = False
+        self.payment_required = False
+        self.license_name = ""
+        self.license_type = ""
 
 
 class AccelDataResourceModel:
@@ -65,14 +86,26 @@ class AccelDataResourceModel:
     def __init__(self):
         self.exposure_media = []
         self.measures = []
-        self.measures_other = []
         self.measurement_method = ""
-        self.measurement_method_other = ""
         self.time_extent_start = ""
         self.time_extent_end = ""
         self.time_available_comment = ""
         self.data_formats = []
         self.data_location = []
+
+
+class AccelPersonnelModel:
+    """
+    Modeling personnel connections to a resource
+    """
+
+    def __init__(self):
+        self.name = ""
+        self.affiliation = ""
+        self.role = ""
+        self.email = ""
+        self.identifier = ""
+        self.identifier_type = ""
 
 
 class AccelResourceReferenceModel:
@@ -122,7 +155,6 @@ class AccelTemporalDataModel:
 
     def __init__(self):
         self.temporal_resolution = []
-        self.temporal_resolution_other = []
         self.temporal_resolution_all_available = []
         self.temporal_resolution_comment = ""
 
@@ -135,7 +167,6 @@ class AccelPopulationDataModel:
     def __init__(self):
         self.individual_level = False
         self.population_studies = []
-        self.population_studies_other = []
         self.linkable_encounters = False
         self.biospecimens_from_humans = False
 
@@ -147,19 +178,14 @@ class AccelGeospatialDataModel:
 
     def __init__(self):
         self.spatial_resolution = []
-        self.spatial_resolution_other = []
         self.spatial_resolution_all_available = []
         self.spatial_resolution_comment = ""
         self.spatial_coverage = []
-        self.spatial_coverage_other = []
         self.spatial_bounding_box = []
         self.geometry_type = []
         self.geometry_source = []
-        self.geometry_source_other = []
         self.model_methods = []
-        self.model_methods_other = []
         self.geographic_feature = []
-        self.geographic_feature_other = []
 
 
 def build_accel_from_model(
@@ -172,9 +198,8 @@ def build_accel_from_model(
     data_resource: AccelDataResourceModel = AccelDataResourceModel(),
     temporal: AccelTemporalDataModel = AccelTemporalDataModel(),
     population: AccelPopulationDataModel = AccelPopulationDataModel(),
-    geospatial: AccelGeospatialDataModel  = AccelGeospatialDataModel()
+    geospatial: AccelGeospatialDataModel = AccelGeospatialDataModel(),
 ) -> dict:
-
     """
     Build the json representation of the accelerator model, rendered via a template. Provide the components below,
     a component can be assigned 'None' except for submission and technical and default 'no values' will be generated

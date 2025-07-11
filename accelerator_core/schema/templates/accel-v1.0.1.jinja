@@ -1,0 +1,302 @@
+{
+"submission": {
+"submitter_name": "{{ submission.submitter_name }}",
+"submitter_email": "{{ submission.submitter_email }}",
+"submitter_comment": {{ submission.submitter_comment }}",
+},
+"data": {
+"program": {
+"program_name": "{{ program.name }}",
+"preferred_label": "{{ program.preferred_label }}"
+},
+"project": {
+"project_code": "{{ project.code }}",
+"project_name": "{{ project.name }}",
+"project_short_name": "{{ project.short_name }}",
+"project_guid": "{{ project_url }}",
+"project_sponsor": [
+{% for entry in project.project_sponsor %}
+
+    {
+    "type": "{{ entry.sponsor }}",
+    "name": "{{ entry.type }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+]
+},
+"resource": {
+"resource_name": "{{ resource.name }}",
+"resource_version": "{{ resource.resource_version }}",
+"resource_short_name": "{{ resource.resource_short_name }}",
+"resource_type": "{{ resource.resource_type }}",
+"resource_url": "{{ resource.resource_url }}",
+"resource:doi": "{{ resource.resource_doi }}",
+"resource_description": "{{ resource.description }}",
+"resource_domain": [
+
+{% for entry in resource.resource_domain %}
+
+    {
+    "name": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+],
+"resource_keywords": [
+
+{% for entry in resource.keywords %}
+
+    "{{ entry }}"
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+],
+"resource_access_type": "{{ resource.access_type }}",
+"resource_license": {
+"license_name": "{{ resource.license_name }}",
+"license_uri": "{{ resource.license_type }}",
+},
+"resource_reference": [
+
+{% for entry in resource.resource_reference %}
+
+    {
+    "resource_reference_text": "{{ entry.resource_reference_text }}",
+    "resource_reference_link": "{{ entry.resource_reference_link }}"
+    }
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+],
+"resource_use_agreement": [
+
+{% for entry in resource.resource_use_agreement %}
+
+    {
+    "resource_use_agreement_text": "{{ entry.resource_use_agreement_text }}",
+    "resource_use_agreement_link": "{{ entry.resource_use_agreement_link }}"
+    }
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+],
+"publication": [
+
+{% for entry in resource.publication %}
+
+    {
+    "citation": "{{ entry.citation }}",
+    "citation_link": "{{ entry.citation_link }}"
+    }
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+],
+
+{% if resource.is_static %}
+    "is_static": true,
+{% else %}
+    "is_static": false,
+{% endif %}
+
+{% if resource.payment_required %}
+    "payment_required": true,
+{% else %}
+    "payment_required": false,
+{% endif %}
+
+},
+"personnel": [
+
+{% for entry in personnel %}
+
+
+    {
+    "name": "{{ entry.name }}",
+    "affiliation": "{{ entry.affiliation }}",
+    "role": "{{ entry.role }}",
+    "email": "{{ entry.email }}",
+    "identifier": "{{ entry.identifier }}",
+    "identifier_type": "{{ entry.identifier_type }}"
+    }
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+],
+"data_resource": {
+"exposure_media": [
+{% for entry in data_resource.exposure_media %}
+
+    "{{ entry }}"
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+],
+"measures": [
+
+{% for entry in data_resource.measures %}
+
+    {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+],
+"measurement_method": [
+{% for entry in data_resource.measurement_method %}
+
+    {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+
+"time_extent_start": "{{ data_resource.time_extent_start }}",
+"time_extent_end": "{{ data_resource.time_extent_end }}",
+"time_available_comment": "{{ data_resource.time_available_comment }}",
+"update_frequency": null,
+"update_frequency_other": null,
+"key_variables": [],
+"data_formats": [],
+"example_metrics": [],
+"data_location": [
+{
+"data_location_text": null,
+"data_location_link": null
+}
+],
+"includes_citizen_collected": false,
+"has_api": false,
+"has_visualization_tool": false
+},
+"data_usage": {
+"intended_use": null,
+"strengths": null,
+"limitations": null,
+"suggested_audience": null
+},
+"temporal_data": {
+"temporal_resolution": [
+{
+"value": null,
+"other_type": false
+}
+],
+"temporal_resolution_comment": null
+},
+"population_data": {
+"individual_level": false,
+"linkable_encounters": false,
+"population_studies": [
+{
+"value": null,
+"other_type": false
+}
+],
+"biospecimens_from_humans": false,
+"biospecimens_type": []
+},
+"geospatial_data": {
+"spatial_resolution": [
+{
+"resolution:": null,
+"other_type": false
+}
+],
+"spatial_resolution_comment": null,
+"spatial_coverage": [
+{
+"coverage": null,
+"other_type": false
+}
+],
+"spatial_bounding_box": [],
+"geometry_type": [],
+"geometry_source": [
+{
+"value": null,
+"other_type": false
+}
+],
+"model_methods": [
+{
+"value": null,
+"other_type": false
+}
+
+],
+"geographic_feature": [
+{
+"value": null,
+"other_type": false
+}
+]
+},
+"computational_workflow": {
+"tool_type": {
+"value": null,
+"other_type": false
+},
+"is_open": false,
+"languages": [
+{
+"value": null,
+"other_type": false
+}
+]
+},
+"tool_text": null,
+"tool_link": null,
+"example_application": null,
+"example_application_link": null
+},
+"technical_metadata": {
+"created": null,
+"modified": null,
+"verified": null,
+"original_source_type": null,
+"original_source_identifier": null,
+"original_source_link": null,
+"history": [
+{
+"timestamp": null,
+"msg": null
+}
+]
+}
+}
