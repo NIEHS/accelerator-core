@@ -90,8 +90,14 @@ class AccelDataResourceModel:
         self.time_extent_start = ""
         self.time_extent_end = ""
         self.time_available_comment = ""
+        self.update_frequency = ""
+        self.key_variables = []
+        self.example_metrics = []
         self.data_formats = []
         self.data_location = []
+        self.includes_citizen_collected = False
+        self.has_api = False
+        self.has_visualization_tool = False
 
 
 class AccelPersonnelModel:
@@ -146,6 +152,18 @@ class AccelDataLocationModel:
     def __init__(self):
         self.data_location_text = ""
         self.data_location_link = ""
+
+
+class AccelDataUsageModel:
+    """
+    Data usage characteristics
+    """
+
+    def __init__(self):
+        self.intended_use = ""
+        self.strengths = ""
+        self.limitations = ""
+        self.suggested_audience = ""
 
 
 class AccelTemporalDataModel:

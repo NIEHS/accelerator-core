@@ -189,27 +189,76 @@
 "time_extent_start": "{{ data_resource.time_extent_start }}",
 "time_extent_end": "{{ data_resource.time_extent_end }}",
 "time_available_comment": "{{ data_resource.time_available_comment }}",
-"update_frequency": null,
-"update_frequency_other": null,
-"key_variables": [],
-"data_formats": [],
-"example_metrics": [],
-"data_location": [
-{
-"data_location_text": null,
-"data_location_link": null
-}
+"update_frequency": "{{ data_resource.update_frequency }}",
+"key_variables": [
+{% for entry in data_resource.key_variables %}
+    "{{ entry }}"
+    {{ "," if not loop.last }}
+{% endfor %}
 ],
-"includes_citizen_collected": false,
-"has_api": false,
-"has_visualization_tool": false
+"data_formats": [
+
+{% for entry in data_resource.data_formats %}
+
+    "{{ entry }}"
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+],
+"example_metrics": [
+
+{% for entry in data_resource.example_metrics %}
+
+    "{{ entry }}"
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+],
+"data_location": [
+
+{% for entry in data_resource.data_location %}
+
+    {
+    "data_location_text": "{{ entry.data_location_text }}",
+    "data_location_link": "{{ entry.data_location_link }}"
+    }
+
+    {{ "," if not loop.last }}
+{% endfor %}
+
+],
+
+{% if data_resource.includes_citizen_collected %}
+    "includes_citizen_collected": true,
+{% else %}
+    "includes_citizen_collected": false,
+{% endif %}
+
+{% if data_resource.has_api %}
+    "has_api": true,
+{% else %}
+    "has_api": false,
+{% endif %}
+
+{% if data_resource.has_visualization_tool %}
+    "has_visualization_tool": true,
+{% else %}
+    "has_visualization_tool": false,
+{% endif %}
+
 },
+
 "data_usage": {
-"intended_use": null,
-"strengths": null,
-"limitations": null,
-"suggested_audience": null
+
+"intended_use": "{{ data_usage.intended_use }}",
+"strengths": "{{ data_usage.strengths }}",
+"limitations": "{{ data_usage.limitations }}",
+"suggested_audience": "{{ data_usage.suggested_audience }}"
+
 },
+
 "temporal_data": {
 "temporal_resolution": [
 {
