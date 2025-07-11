@@ -316,9 +316,7 @@
         {{ "," if not loop.last }}
         {% endfor %}
 
-
     ],
-
 
     {% if population.biospecimens_from_humans %}
         "biospecimens_from_humans": true,
@@ -338,42 +336,124 @@
     ]
 },
 
-
 "geospatial_data": {
-"spatial_resolution": [
-{
-"resolution:": null,
-"other_type": false
-}
-],
-"spatial_resolution_comment": null,
-"spatial_coverage": [
-{
-"coverage": null,
-"other_type": false
-}
-],
-"spatial_bounding_box": [],
-"geometry_type": [],
-"geometry_source": [
-{
-"value": null,
-"other_type": false
-}
-],
-"model_methods": [
-{
-"value": null,
-"other_type": false
-}
 
-],
-"geographic_feature": [
-{
-"value": null,
-"other_type": false
-}
-]
+    "spatial_resolution": [
+
+        {% for entry in geospatial_data.spatial_resolution %}
+
+            {
+                "value": "{{ entry.value }}",
+
+                {% if entry.other_type %}
+                    "other_type": true
+                {% else %}
+                    "other_type": false
+                {% endif %}
+
+            }
+
+        {{ "," if not loop.last }}
+        {% endfor %}
+
+    ],
+    "spatial_resolution_comment": "{{ geospatial_data.spatial_resolution_comment }}",
+    "spatial_coverage": [
+
+        {% for entry in geospatial_data.spatial_coverage %}
+
+            {
+                "value": "{{ entry.value }}",
+
+                {% if entry.other_type %}
+                    "other_type": true
+                {% else %}
+                    "other_type": false
+                {% endif %}
+
+            }
+
+        {{ "," if not loop.last }}
+        {% endfor %}
+
+    ],
+    "spatial_bounding_box": [
+
+          {% for entry in geospatial_data.spatial_bounding_box %}
+
+            "{{ entry }}"
+
+            {{ "," if not loop.last }}
+        {% endfor %}
+
+    ],
+    "geometry_type": [
+
+         {% for entry in geospatial_data.geometry_type %}
+
+            "{{ entry }}"
+
+            {{ "," if not loop.last }}
+        {% endfor %}
+
+    ],
+    "geometry_source": [
+
+     {% for entry in geospatial_data.geometry_source %}
+
+            {
+                "value": "{{ entry.value }}",
+
+                {% if entry.other_type %}
+                    "other_type": true
+                {% else %}
+                    "other_type": false
+                {% endif %}
+
+            }
+
+        {{ "," if not loop.last }}
+        {% endfor %}
+
+    ],
+    "model_methods": [
+
+        {% for entry in geospatial_data.model_methods %}
+
+                {
+                    "value": "{{ entry.value }}",
+
+                    {% if entry.other_type %}
+                        "other_type": true
+                    {% else %}
+                        "other_type": false
+                    {% endif %}
+
+                }
+
+            {{ "," if not loop.last }}
+            {% endfor %}
+
+    ],
+    "geographic_feature": [
+
+            {% for entry in geospatial_data.geographic_feature %}
+
+                {
+                    "value": "{{ entry.value }}",
+
+                    {% if entry.other_type %}
+                        "other_type": true
+                    {% else %}
+                        "other_type": false
+                    {% endif %}
+
+                }
+
+            {{ "," if not loop.last }}
+            {% endfor %}
+
+    ]
 },
 "computational_workflow": {
 "tool_type": {

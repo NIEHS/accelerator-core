@@ -134,15 +134,15 @@
     },
     "geospatial_data": {
       "spatial_resolution": [
-        {
-          "resolution:": null,
+       {
+          "value": null,
           "other_type": false
         }
       ],
       "spatial_resolution_comment": null,
       "spatial_coverage": [
-        {
-          "coverage": null,
+         {
+          "value": null,
           "other_type": false
         }
       ],
