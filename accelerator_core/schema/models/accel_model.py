@@ -187,6 +187,7 @@ class AccelPopulationDataModel:
         self.population_studies = []
         self.linkable_encounters = False
         self.biospecimens_from_humans = False
+        self.biospecimens_type = []
 
 
 class AccelGeospatialDataModel:

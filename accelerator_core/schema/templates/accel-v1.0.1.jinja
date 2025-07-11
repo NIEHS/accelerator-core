@@ -252,34 +252,93 @@
 
 "data_usage": {
 
-"intended_use": "{{ data_usage.intended_use }}",
-"strengths": "{{ data_usage.strengths }}",
-"limitations": "{{ data_usage.limitations }}",
-"suggested_audience": "{{ data_usage.suggested_audience }}"
+    "intended_use": "{{ data_usage.intended_use }}",
+    "strengths": "{{ data_usage.strengths }}",
+    "limitations": "{{ data_usage.limitations }}",
+    "suggested_audience": "{{ data_usage.suggested_audience }}"
 
 },
 
 "temporal_data": {
-"temporal_resolution": [
-{
-"value": null,
-"other_type": false
-}
-],
-"temporal_resolution_comment": null
+
+    "temporal_resolution": [
+
+        {% for entry in temporal_data.temporal_resolution %}
+
+            {
+                "value": "{{ entry.value }}",
+
+                {% if entry.other_type %}
+                    "other_type": true
+                {% else %}
+                    "other_type": false
+                {% endif %}
+
+            }
+
+        {{ "," if not loop.last }}
+        {% endfor %}
+
+    ],
+    "temporal_resolution_comment": "{{ temporal_data.temporal_resolution.comment }}"
+
 },
+
 "population_data": {
-"individual_level": false,
-"linkable_encounters": false,
-"population_studies": [
-{
-"value": null,
-"other_type": false
-}
-],
-"biospecimens_from_humans": false,
-"biospecimens_type": []
+
+    {% if population_data.individual_level %}
+        "individual_level": true,
+    {% else %}
+        "individual_level": false,
+    {% endif %}
+
+    {% if population_data.linkable_encounters %}
+        "linkable_encounters": true,
+    {% else %}
+        "linkable_encounters": false,
+    {% endif %}
+
+    "population_studies": [
+
+     {% for entry in population.population_studies %}
+
+            {
+                "value": "{{ entry.value }}",
+
+                {% if entry.other_type %}
+                    "other_type": true
+                {% else %}
+                    "other_type": false
+                {% endif %}
+
+            }
+
+        {{ "," if not loop.last }}
+        {% endfor %}
+
+
+    ],
+
+
+    {% if population.biospecimens_from_humans %}
+        "biospecimens_from_humans": true,
+    {% else %}
+        "biospecimens_from_humans": false,
+    {% endif %}
+
+    "biospecimens_type": [
+
+        {% for entry in population.biospecimens_type %}
+
+            "{{ entry }}"
+
+            {{ "," if not loop.last }}
+        {% endfor %}
+
+    ]
 },
+
+
 "geospatial_data": {
 "spatial_resolution": [
 {
