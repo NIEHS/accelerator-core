@@ -207,6 +207,16 @@ class AccelGeospatialDataModel:
         self.geographic_feature = []
 
 
+class AccelComputationalWorkflow:
+    """
+    Tool/Computation related metadata
+    """
+
+    def __init__(self):
+        self.tool_type = []
+        self.is_open = False
+
+
 def build_accel_from_model(
     version: str,
     submission: SubmissionInfoModel = SubmissionInfoModel(),
