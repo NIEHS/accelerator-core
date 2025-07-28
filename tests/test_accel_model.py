@@ -15,6 +15,7 @@ from accelerator_core.schema.models.accel_model import (
     AccelGeospatialDataModel,
     AccelTemporalDataModel,
     AccelPopulationDataModel,
+    ProjectSponsor,
 )
 from accelerator_core.schema.models.base_model import (
     SubmissionInfoModel,
@@ -56,15 +57,17 @@ class TestAccelModel(unittest.TestCase):
         project = AccelProjectModel()
         project.code = "code"
         project.name = "name"
-        project.project_sponsor = ["sponsor1"]
-        project.project_sponsor_other = ["sponsor2"]
-        project.project_sponsor_type = ["sponsor_type1"]
-        project.project_sponsor_type_other = ["sponsor_type2"]
-        project.project_ur = "http://project.url.com"
+        project.project_url = "http://project.url.com"
+
+        project_sponsor = ProjectSponsor()
+        project_sponsor.sponsor = "sponsor1"
+        project_sponsor.type = "sponsor_type"
+
+        project.project_sponsor.append(project_sponsor)
 
         resource = AccelIntermediateResourceModel()
         resource.name = "rescname"
-        resource.version = "1.0.0"
+        resource.version = "1.0.1"
         resource.resource_type = "boo"
         resource.resource_url = "http://resc.url.com"
         resource.description = "description"
@@ -111,7 +114,7 @@ class TestAccelModel(unittest.TestCase):
         population_data.population_studies = ["study1"]
 
         rendered = build_accel_from_model(
-            version="1.0.0",
+            version="1.0.1",
             submission=submission,
             technical=technical,
             program=program,
@@ -125,6 +128,6 @@ class TestAccelModel(unittest.TestCase):
 
         schema_tools = SchemaTools(self.config)
         result = schema_tools.validate_json_against_schema(
-            rendered, "accelerator", "1.0.0"
+            rendered, "accelerator", "1.0.1"
         )
         self.assertTrue(result.valid)

@@ -1,104 +1,104 @@
 {
   "submission": {
-    "submitter_name": null,
-    "submitter_email": null,
-    "submitter_comment": null
+    "submitter_name": "",
+    "submitter_email": "",
+    "submitter_comment": ""
   },
   "data": {
     "program": {
-      "program_name": null,
-      "preferred_label": null
+      "program_name": "",
+      "preferred_label": ""
     },
     "project": {
-      "project_code": null,
-      "project_name": null,
-      "project_short_name": null,
-      "project_guid": null,
+      "project_code": "",
+      "project_name": "",
+      "project_short_name": "",
+      "project_guid": "",
       "project_sponsor": [
         {
-          "type": null,
-          "name": null,
+          "type": "",
+          "name": "",
           "other_type": false
         }
       ]
     },
     "resource": {
-      "resource_name": null,
-      "resource_version": null,
-      "resource_short_name": null,
-      "resource_type": null,
-      "resource_url": null,
-      "resource:doi": null,
-      "resource_description": null,
+      "resource_name": "",
+      "resource_version": "",
+      "resource_short_name": "",
+      "resource_type": "",
+      "resource_url": "",
+      "resource:doi": "",
+      "resource_description": "",
       "resource_domain": [
         {
-          "name": null,
-          "other_type": null
+          "name": "",
+          "other_type": ""
         }
       ],
       "resource_keywords": [],
-      "resource_access_type": null,
+      "resource_access_type": [],
       "resource_license": {
         "license_name": "",
         "license_uri": ""
       },
       "resource_reference": [
         {
-          "resource_reference_text": null,
-          "resource_reference_link": null
+          "resource_reference_text": "",
+          "resource_reference_link": ""
         }
       ],
       "resource_use_agreement": [
         {
-          "resource_use_agreement_text": null,
-          "resource_use_agreement_link": null
+          "resource_use_agreement_text": "",
+          "resource_use_agreement_link": ""
         }
       ],
       "publication": [
         {
-          "citation": null,
-          "citation_link": null
+          "citation": "",
+          "citation_link": ""
         }
       ],
       "is_static": false,
       "payment_required": false,
-      "comments": null
+      "comments": ""
     },
     "personnel": [
       {
-        "name": null,
-        "affiliation": null,
-        "role": null,
-        "email": null,
-        "identifier": null,
-        "identifier_type": null
+        "name": "",
+        "affiliation": "",
+        "role": "",
+        "email": "",
+        "identifier": "",
+        "identifier_type": ""
       }
     ],
     "data_resource": {
       "exposure_media": [],
       "measures": [
         {
-          "value": null,
+          "value": "",
           "other_type": false
         }
       ],
       "measurement_method": [
         {
-          "value": null,
+          "value": "",
           "other_type": false
         }
       ],
-      "time_extent_start": null,
-      "time_extent_end": null,
-      "time_available_comment": null,
-      "update_frequency": null,
+      "time_extent_start": "",
+      "time_extent_end": "",
+      "time_available_comment": "",
+      "update_frequency": [],
       "key_variables": [],
       "data_formats": [],
       "example_metrics": [],
       "data_location": [
         {
-          "data_location_text": null,
-          "data_location_link": null
+          "data_location_text": "",
+          "data_location_link": ""
         }
       ],
       "includes_citizen_collected": false,
@@ -106,26 +106,26 @@
       "has_visualization_tool": false
     },
     "data_usage": {
-      "intended_use": null,
-      "strengths": null,
-      "limitations": null,
-      "suggested_audience": null
+      "intended_use": [],
+      "strengths": [],
+      "limitations": [],
+      "suggested_audience": []
     },
     "temporal_data": {
       "temporal_resolution": [
         {
-          "value": null,
+          "value": "",
           "other_type": false
         }
       ],
-      "temporal_resolution_comment": null
+      "temporal_resolution_comment": ""
     },
     "population_data": {
       "individual_level": false,
       "linkable_encounters": false,
       "population_studies": [
         {
-          "value": null,
+          "value": "",
           "other_type": false
         }
       ],
@@ -135,14 +135,14 @@
     "geospatial_data": {
       "spatial_resolution": [
         {
-          "value": null,
+          "value": "",
           "other_type": false
         }
       ],
-      "spatial_resolution_comment": null,
+      "spatial_resolution_comment": "",
       "spatial_coverage": [
         {
-          "value": null,
+          "value": "",
           "other_type": false
         }
       ],
@@ -150,19 +150,19 @@
       "geometry_type": [],
       "geometry_source": [
         {
-          "value": null,
+          "value": "",
           "other_type": false
         }
       ],
       "model_methods": [
         {
-          "value": null,
+          "value": "",
           "other_type": false
         }
       ],
       "geographic_feature": [
         {
-          "value": null,
+          "value": "",
           "other_type": false
         }
       ]
@@ -170,33 +170,41 @@
     "computational_workflow": {
       "tool_type": [
         {
-          "value": null,
+          "value": "",
           "other_type": false
         }
       ],
       "is_open": false,
       "languages": [
         {
-          "value": null,
+          "value": "",
           "other_type": false
         }
       ],
-      "tool_text": null,
-      "tool_link": null,
-      "example_application": null,
-      "example_application_link": null
+      "use_tools": [
+        {
+          "tool_text": "",
+          "tool_link": ""
+        }
+      ],
+      "example_applications": [
+        {
+          "tool_text": "",
+          "tool_link": ""
+        }
+      ]
     },
     "technical_metadata": {
-      "created": null,
-      "modified": null,
-      "verified": null,
-      "original_source_type": null,
-      "original_source_identifier": null,
-      "original_source_link": null,
+      "created": "",
+      "modified": "",
+      "verified": "",
+      "original_source_type": "",
+      "original_source_identifier": "",
+      "original_source_link": "",
       "history": [
         {
-          "timestamp": null,
-          "msg": null
+          "timestamp": "",
+          "msg": ""
         }
       ]
     }
