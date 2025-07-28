@@ -738,23 +738,13 @@
                 }
               ]
             }
-          },
-          "required": [
-            "created",
-            "modified",
-            "verified",
-            "original_source_type",
-            "original_source_identifier",
-            "original_source_link",
-            "history"
-          ]
+          }
         }
       },
       "required": [
         "program",
         "project",
-        "resource",
-        "technical_metadata"
+        "resource"
       ]
     }
   },
