@@ -4,6 +4,7 @@ General methods to interact with the mongo database
 
 import bson
 from bson import ObjectId
+from pymongo.synchronous.client_session import ClientSession
 
 from accelerator_core.schema.models.base_model import TechnicalMetadataHistory
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
@@ -95,17 +96,41 @@ class AccelDatabaseUtils:
     def log_document_event(
         self,
         document_id: str,
-        document_type: str,
-        temp_doc: bool,
         event: TechnicalMetadataHistory,
+        document_type: str,
+        temp_doc: bool = False,
     ):
         """
+        Add the event to the database log
+        :param document_id: unique id for the document (database doc id)
+        :param event: the event to be logged
+        :param document_type: type of the document, per the type matrix
+        :param temp_doc: bool is True if this is a temporary document
 
-        :param document_id:
-        :param document_type:
-        :param temp_doc:
-        :param events:
-        :return:
         """
-        logger.info(f"logging events for document: {document_id}")
-        logger.debug(f"event: {event}")
+
+        update_operation = {"$push": {"technical_metadata.history": event.to_dict()}}
+
+        logger.info("update_operation is %s", update_operation)
+        collection = self.build_collection_reference(document_type, temp_doc)
+
+        try:
+
+            doc = collection.find_one({"_id": ObjectId(document_id)})
+            if doc:
+                logger.info(f"Document {document_id} found before update.")
+            else:
+                logger.warning(f"Document {document_id} NOT found before update.")
+                raise Exception(f"Document {document_id} NOT found before update.")
+
+            result = collection.update_one(
+                {"_id": ObjectId(document_id)}, update_operation
+            )
+            if result.modified_count > 0:
+                logger.info(f"Successfully updated document {document_id} with event.")
+            else:
+                logger.warning(
+                    f"No documents updated for {document_id}. Possible no match or no change."
+                )
+        except Exception as e:
+            logger.error(f"Failed to update document {document_id}: {e}")

@@ -13,7 +13,7 @@
       "project_code": "",
       "project_name": "",
       "project_short_name": "",
-      "project_guid": "",
+      "project_url": "",
       "project_sponsor": [
         {
           "type": "",
@@ -33,11 +33,11 @@
       "resource_domain": [
         {
           "name": "",
-          "other_type": ""
+          "other_type": false
         }
       ],
       "resource_keywords": [],
-      "resource_access_type": "",
+      "resource_access_type": [],
       "resource_license": {
         "license_name": "",
         "license_uri": ""
@@ -91,7 +91,7 @@
       "time_extent_start": "",
       "time_extent_end": "",
       "time_available_comment": "",
-      "update_frequency": "",
+      "update_frequency": [],
       "key_variables": [],
       "data_formats": [],
       "example_metrics": [],
@@ -106,10 +106,10 @@
       "has_visualization_tool": false
     },
     "data_usage": {
-      "intended_use": "",
-      "strengths": "",
-      "limitations": "",
-      "suggested_audience": ""
+      "intended_use": [],
+      "strengths": [],
+      "limitations": [],
+      "suggested_audience": []
     },
     "temporal_data": {
       "temporal_resolution": [
@@ -181,24 +181,29 @@
           "other_type": false
         }
       ],
-      "tool_text": "",
-      "tool_link": "",
-      "example_application": "",
-      "example_application_link": ""
-    },
-    "technical_metadata": {
-      "created": "",
-      "modified": "",
-      "verified": "",
-      "original_source_type": "",
-      "original_source_identifier": "",
-      "original_source_link": "",
-      "history": [
+      "use_tools": [
         {
-          "timestamp": "",
-          "msg": ""
+          "tool_text": "",
+          "tool_link": ""
+        }
+      ],
+      "example_applications": [
+        {
+          "tool_text": "",
+          "tool_link": ""
         }
       ]
     }
+  },
+  "technical_metadata": {
+    "created": "",
+    "modified": "",
+    "verified": "",
+    "original_source_type": "",
+    "original_source_identifier": "",
+    "original_source_link": "",
+    "history": [
+
+    ]
   }
 }

@@ -64,20 +64,26 @@ class DisseminationMongo(Dissemination):
         """
 
         logger.info(f"Disseminating document {document_id}")
+
         doc = self.accel_database_utils.find_by_id(
             document_id,
             dissemination_request.ingest_type,
             temp_doc=dissemination_request.temp_collection,
         )
 
+        if doc is None:
+            logger.warning(f"Document {document_id} not found")
+            raise Exception(f"Document {document_id} not found")
+
         event = create_timestamped_log(
-            f"Disseminating document {document_id} of type { dissemination_request.ingest_type} to target: {dissemination_request.dissemination_type}"
+            f"Disseminating document {document_id} of type {dissemination_request.ingest_type} to target: {dissemination_request.dissemination_type}"
         )
+
         self.accel_database_utils.log_document_event(
-            document_id,
+            str(document_id),
+            event,
             dissemination_request.ingest_type,
             dissemination_request.temp_collection,
-            event,
         )
 
         dissemination_payload = DisseminationPayload(dissemination_request)

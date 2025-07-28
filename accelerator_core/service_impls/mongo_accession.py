@@ -26,6 +26,13 @@ TODO: delegate calls to accel_database_utils - mc
 """
 
 
+class ValidationResult:
+
+    def __init__(self):
+        self.valid = True  # indicates whether the payload is ready
+        self.log = []  # log messages with errors
+
+
 class AccessionMongo(Accession):
     """
     Accession module based on Mongo persistence
@@ -68,6 +75,14 @@ class AccessionMongo(Accession):
         """
         logger.info("ingest()")
 
+        result = self.pre_validate_ingest_source_descriptor(ingest_payload)
+
+        if not result.valid:
+            logger.warn(f"invalid ingest payload: ingest_payload={ingest_payload}")
+            for entry in result.log:
+                logger.warn(entry)
+            raise Exception("invalid ingest payload")
+
         payload_length = self.get_payload_length(ingest_payload)
 
         if payload_length == 0:
@@ -84,23 +99,27 @@ class AccessionMongo(Accession):
 
         doc = self.payload_resolve(ingest_payload, 0)
 
-        # TODO: add check for update versus insert - mcc
+        # require unique id in technical metadata
 
         # look for technical metadata and add log message
         technical_metadata = doc.get("technical_metadata", None)
-        if technical_metadata:
-            technical_metadata["created"] = get_time_now_iso()
-            technical_metadata["original_source"] = (
-                ingest_payload.ingest_source_descriptor.ingest_item_id
-            )
-            technical_metadata["original_source_link"] = (
-                ingest_payload.ingest_source_descriptor.ingest_link
-            )
-            technical_metadata["history"].append(
-                create_timestamped_log(
-                    f"accession from {ingest_payload.ingest_source_descriptor.ingest_type} with identifier {ingest_payload.ingest_source_descriptor.ingest_item_id} in operation {ingest_payload.ingest_source_descriptor.ingest_identifier}"
-                ).to_dict()
-            )
+
+        if not technical_metadata:
+            raise Exception("no technical metadata found, invalid record")
+
+        technical_metadata["created"] = get_time_now_iso()
+
+        technical_metadata["original_source"] = (
+            ingest_payload.ingest_source_descriptor.ingest_item_id
+        )
+        technical_metadata["original_source_link"] = (
+            ingest_payload.ingest_source_descriptor.ingest_link
+        )
+        technical_metadata["history"].append(
+            create_timestamped_log(
+                f"accession from {ingest_payload.ingest_source_descriptor.ingest_type} with identifier {ingest_payload.ingest_source_descriptor.ingest_item_id} in operation {ingest_payload.ingest_source_descriptor.ingest_identifier}"
+            ).to_dict()
+        )
 
         result = self.validate(doc, ingest_payload.ingest_source_descriptor)
         if not result.valid:
@@ -193,3 +212,51 @@ class AccessionMongo(Accession):
             coll_name = type_matrix_info.collection
 
         return db[coll_name]
+
+    def pre_validate_ingest_source_descriptor(
+        self, ingest_payload: IngestPayload
+    ) -> ValidationResult:
+        """
+        Check for required data (submission and technical metadata) necessary to properly maintain
+        catalog data
+        """
+
+        validation_result = ValidationResult()
+
+        if not ingest_payload.ingest_source_descriptor.ingest_item_id:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.ingest_item_id is None"
+            )
+
+        if not ingest_payload.ingest_source_descriptor.ingest_link:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.ingest_link is None"
+            )
+
+        if not ingest_payload.ingest_source_descriptor.ingest_identifier:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.ingest_identifier is None"
+            )
+
+        if not ingest_payload.ingest_source_descriptor.ingest_type:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.ingest_type is None"
+            )
+
+        if not ingest_payload.ingest_source_descriptor.submitter_name:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.submitter_name is None"
+            )
+
+        if not ingest_payload.ingest_source_descriptor.submitter_email:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.submitter_email is None"
+            )
+
+        return validation_result
