@@ -695,14 +695,7 @@
                 }
               ]
             }
-          },
-          "required": [
-            "tool_type",
-            "is_open",
-            "languages",
-            "use_tools",
-            "example_applications"
-          ]
+          }
         },
         "technical_metadata": {
           "type": "object",
@@ -761,13 +754,6 @@
         "program",
         "project",
         "resource",
-        "personnel",
-        "data_resource",
-        "data_usage",
-        "temporal_data",
-        "population_data",
-        "geospatial_data",
-        "computational_workflow",
         "technical_metadata"
       ]
     }
