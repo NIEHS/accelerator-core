@@ -117,7 +117,7 @@
                       "type": "string"
                     },
                     "other_type": {
-                      "type": "string"
+                      "type": "boolean"
                     }
                   },
                   "required": [
