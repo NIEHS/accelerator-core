@@ -33,7 +33,7 @@
       "resource_domain": [
         {
           "name": "",
-          "other_type": ""
+          "other_type": false
         }
       ],
       "resource_keywords": [],

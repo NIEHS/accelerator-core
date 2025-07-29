@@ -50,7 +50,7 @@
             "project_short_name": {
               "type": "string"
             },
-            "project_guid": {
+            "project_url": {
               "type": "string"
             },
             "project_sponsor": {
