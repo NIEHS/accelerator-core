@@ -13,7 +13,7 @@
       "project_code": "",
       "project_name": "",
       "project_short_name": "",
-      "project_guid": "",
+      "project_url": "",
       "project_sponsor": [
         {
           "type": "",
@@ -193,20 +193,20 @@
           "tool_link": ""
         }
       ]
-    },
-    "technical_metadata": {
-      "created": "",
-      "modified": "",
-      "verified": "",
-      "original_source_type": "",
-      "original_source_identifier": "",
-      "original_source_link": "",
-      "history": [
-        {
-          "timestamp": "",
-          "msg": ""
-        }
-      ]
     }
+  },
+  "technical_metadata": {
+    "created": "",
+    "modified": "",
+    "verified": "",
+    "original_source_type": "",
+    "original_source_identifier": "",
+    "original_source_link": "",
+    "history": [
+      {
+        "timestamp": "",
+        "msg": ""
+      }
+    ]
   }
 }

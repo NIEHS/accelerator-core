@@ -682,7 +682,7 @@
           "type": "string"
         },
         "original_source_link": {
-          "type": "string"
+          "type": ["string", "null"]
         },
         "history": {
           "type": "array",
@@ -711,7 +711,7 @@
         "verified",
         "original_source_type",
         "original_source_identifier",
-        "original_source_link",
+
         "history"
       ]
     }
