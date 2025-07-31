@@ -67,6 +67,11 @@ class TestProvenance(unittest.TestCase):
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
         ingest_source_descriptor.schema_version = "1.0.1"
+        ingest_source_descriptor.ingest_identifier = "myrunid"
+        ingest_source_descriptor.ingest_item_id = "myitemid"
+        ingest_source_descriptor.ingest_link = "mylink"
+        ingest_source_descriptor.submitter_name = "mysubmittername"
+        ingest_source_descriptor.submitter_email = "mysubmitteremail"
 
         ingest_result = IngestPayload(ingest_source_descriptor)
 
@@ -104,6 +109,11 @@ class TestProvenance(unittest.TestCase):
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
             ingest_source_descriptor.schema_version = "1.0.1"
+            ingest_source_descriptor.ingest_identifier = "myrunid"
+            ingest_source_descriptor.ingest_item_id = "myitemid"
+            ingest_source_descriptor.ingest_link = "mylink"
+            ingest_source_descriptor.submitter_name = "mysubmittername"
+            ingest_source_descriptor.submitter_email = "mysubmitteremail"
 
             ingest_result = IngestPayload(ingest_source_descriptor)
 
@@ -136,7 +146,9 @@ class TestProvenance(unittest.TestCase):
             ingest_source_descriptor.schema_version = "1.0.1"
             ingest_source_descriptor.ingest_identifier = "myrunid"
             ingest_source_descriptor.ingest_item_id = "myitemid"
-
+            ingest_source_descriptor.ingest_link = "mylink"
+            ingest_source_descriptor.submitter_name = "mysubmittername"
+            ingest_source_descriptor.submitter_email = "mysubmitteremail"
             ingest_result = IngestPayload(ingest_source_descriptor)
 
             d = json.load(json_data)
@@ -166,6 +178,11 @@ class TestProvenance(unittest.TestCase):
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
             ingest_source_descriptor.schema_version = "1.0.1"
+            ingest_source_descriptor.ingest_identifier = "myrunid"
+            ingest_source_descriptor.ingest_item_id = "myitemid"
+            ingest_source_descriptor.ingest_link = "mylink"
+            ingest_source_descriptor.submitter_name = "mysubmittername"
+            ingest_source_descriptor.submitter_email = "mysubmitteremail"
 
             ingest_result = IngestPayload(ingest_source_descriptor)
 

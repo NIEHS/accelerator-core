@@ -63,7 +63,7 @@ class AccelIngestComponent(AcceleratorWorkflowTask):
 
     def ingest_single(self, identifier, additional_parameters: dict) -> IngestPayload:
         """
-        proposed (WIP) method to support background access/update of accel data by checking the registered data/document
+        Method to support background access/update of accel data by checking the registered data/document
         on the original source
         :param identifier: identifier from the accel record that allows re-access on the target site
         :param additional_parameters: dict of individual parameters that can be fed to this method per implementation
