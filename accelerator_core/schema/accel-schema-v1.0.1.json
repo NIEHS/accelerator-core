@@ -80,7 +80,8 @@
           },
           "required": [
             "project_code",
-            "project_name"
+            "project_name",
+            "project_short_name"
           ]
         },
         "resource": {
@@ -221,7 +222,8 @@
             }
           },
           "required": [
-            "resource_name"
+            "resource_name",
+            "resource_type"
           ]
         },
         "personnel": {
@@ -361,23 +363,7 @@
             "has_visualization_tool": {
               "type": "boolean"
             }
-          },
-          "required": [
-            "exposure_media",
-            "measures",
-            "measurement_method",
-            "time_extent_start",
-            "time_extent_end",
-            "time_available_comment",
-            "update_frequency",
-            "key_variables",
-            "data_formats",
-            "example_metrics",
-            "data_location",
-            "includes_citizen_collected",
-            "has_api",
-            "has_visualization_tool"
-          ]
+          }
         },
         "data_usage": {
           "type": "object",
@@ -398,13 +384,7 @@
               "type": "array",
               "items": {}
             }
-          },
-          "required": [
-            "intended_use",
-            "strengths",
-            "limitations",
-            "suggested_audience"
-          ]
+          }
         },
         "temporal_data": {
           "type": "object",
@@ -432,11 +412,7 @@
             "temporal_resolution_comment": {
               "type": "string"
             }
-          },
-          "required": [
-            "temporal_resolution",
-            "temporal_resolution_comment"
-          ]
+          }
         },
         "population_data": {
           "type": "object",
@@ -474,14 +450,7 @@
               "type": "array",
               "items": {}
             }
-          },
-          "required": [
-            "individual_level",
-            "linkable_encounters",
-            "population_studies",
-            "biospecimens_from_humans",
-            "biospecimens_type"
-          ]
+          }
         },
         "geospatial_data": {
           "type": "object",
@@ -597,17 +566,7 @@
                 }
               ]
             }
-          },
-          "required": [
-            "spatial_resolution",
-            "spatial_resolution_comment",
-            "spatial_coverage",
-            "spatial_bounding_box",
-            "geometry_type",
-            "geometry_source",
-            "model_methods",
-            "geographic_feature"
-          ]
+          }
         },
         "computational_workflow": {
           "type": "object",
@@ -696,49 +655,6 @@
               ]
             }
           }
-        },
-        "technical_metadata": {
-          "type": "object",
-          "properties": {
-            "created": {
-              "type": "string"
-            },
-            "modified": {
-              "type": "string"
-            },
-            "verified": {
-              "type": "string"
-            },
-            "original_source_type": {
-              "type": "string"
-            },
-            "original_source_identifier": {
-              "type": "string"
-            },
-            "original_source_link": {
-              "type": "string"
-            },
-            "history": {
-              "type": "array",
-              "items": [
-                {
-                  "type": "object",
-                  "properties": {
-                    "timestamp": {
-                      "type": "string"
-                    },
-                    "msg": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "timestamp",
-                    "msg"
-                  ]
-                }
-              ]
-            }
-          }
         }
       },
       "required": [
@@ -746,10 +662,63 @@
         "project",
         "resource"
       ]
+    },
+    "technical_metadata": {
+      "type": "object",
+      "properties": {
+        "created": {
+          "type": "string"
+        },
+        "modified": {
+          "type": "string"
+        },
+        "verified": {
+          "type": "string"
+        },
+        "original_source_type": {
+          "type": "string"
+        },
+        "original_source_identifier": {
+          "type": "string"
+        },
+        "original_source_link": {
+          "type": "string"
+        },
+        "history": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "timestamp",
+                "msg"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "created",
+        "modified",
+        "verified",
+        "original_source_type",
+        "original_source_identifier",
+        "original_source_link",
+        "history"
+      ]
     }
   },
   "required": [
     "submission",
-    "data"
+    "data",
+    "technical_metadata"
   ]
 }
