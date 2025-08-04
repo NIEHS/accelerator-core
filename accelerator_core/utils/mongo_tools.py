@@ -4,7 +4,7 @@ setup and teardown
 """
 
 from bson.json_util import CANONICAL_JSON_OPTIONS
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING
 
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
@@ -65,6 +65,41 @@ def create_accel_database(mongo_client: MongoClient, db_name: str) -> None:
     db.create_collection(temp_collection)
 
     logger.info("created!")
+
+
+def create_accel_indexes(
+    accel_config: AcceleratorConfig,
+    mongo_client: MongoClient,
+    db_name: str,
+    matrix_type: str,
+) -> None:
+
+    logger.info(f"creating indexes: {aip_collection}")
+
+    type_info = accel_config.find_type_matrix_info_for_type(matrix_type)
+
+    db = mongo_client[db_name]
+    coll = db[type_info.collection]
+    index_name = coll.create_index(
+        [
+            ("technical_metadata.original_source_link", ASCENDING),
+            ("technical_metadata.original_source_identifier", ASCENDING),
+        ],
+        unique=True,
+    )
+    logger.info(f"created index {index_name}")
+
+    if type_info.temp_collection:
+        logger.info(f"index for temporary collection {type_info.temp_collection}")
+        coll = db[type_info.temp_collection]
+        index_name = coll.create_index(
+            [
+                ("technical_metadata.original_source_link", ASCENDING),
+                ("technical_metadata.original_source_identifier", ASCENDING),
+            ],
+            unique=True,
+        )
+        logger.info(f"created index {index_name}")
 
 
 def convert_doc_to_json(doc: dict) -> dict:

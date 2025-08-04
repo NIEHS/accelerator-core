@@ -53,6 +53,7 @@ class TestDisseminationMongo(unittest.TestCase):
         ingest_source_descriptor.ingest_link = "mylink"
         ingest_source_descriptor.submitter_name = "mysubmittername"
         ingest_source_descriptor.submitter_email = "mysubmitteremail"
+        ingest_source_descriptor.use_tempfiles = False
 
         ingest_result = IngestPayload(ingest_source_descriptor)
 
@@ -79,7 +80,7 @@ class TestDisseminationMongo(unittest.TestCase):
 
             dissemination_request = DisseminationDescriptor()
             dissemination_request.dissemination_type = "tests"
-            dissemination_request.temp_collection = "false"
+            dissemination_request.temp_collection = False
             dissemination_request.ingest_type = "accelerator"
             dissemination_request.schema_version = "1.0.1"
             dissemination_request.inline_results = True
@@ -93,7 +94,7 @@ class TestDisseminationMongo(unittest.TestCase):
             )
 
             dissemination_payload = dissemination.disseminate_by_id(
-                id, dissemination_request
+                str(id), dissemination_request
             )
 
             self.assertIsNotNone(dissemination_payload)
