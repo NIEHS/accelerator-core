@@ -2,10 +2,13 @@ import json
 import os
 import shutil
 
-from airflow.models import Variable
+from airflow.sdk import Variable
 
 
-class XcomProperties():
+# from airflow.models import Variable
+
+
+class XcomProperties:
     """
     Properties around xcom, particularly whether and how passing via reference to temp files is done
     """
@@ -15,7 +18,7 @@ class XcomProperties():
         self.temp_files_location = None
 
 
-class XcomPropsResolver():
+class XcomPropsResolver:
     """
     Injectable handler for resolving xcom properties, this is the base class
     """
@@ -27,11 +30,13 @@ class XcomPropsResolver():
         """
         pass
 
+
 class DirectXcomPropsResolver(XcomPropsResolver):
     """
-        Resolver directly passes values (esp for testing)
-        """
-    def __init__(self, temp_files_supported:bool, temp_files_location:str):
+    Resolver directly passes values (esp for testing)
+    """
+
+    def __init__(self, temp_files_supported: bool, temp_files_location: str):
 
         super().__init__()
         self.temp_files_supported = temp_files_supported
@@ -51,8 +56,12 @@ class AirflowXcomPropsResolver(XcomPropsResolver):
 
     def __init__(self):
         super().__init__()
-        self.temp_files_supported = Variable.get("accelerator.xcom.tempfiles.supported", default_var=False)
-        self.temp_files_location = Variable.get("accelerator.xcom.tempfile.path", default_var=None)
+        self.temp_files_supported = Variable.get(
+            "accelerator.xcom.tempfiles.supported", default_var=False
+        )
+        self.temp_files_location = Variable.get(
+            "accelerator.xcom.tempfile.path", default_var=None
+        )
 
     def get_xcom_props(self) -> XcomProperties:
         props = XcomProperties()
@@ -61,14 +70,14 @@ class AirflowXcomPropsResolver(XcomPropsResolver):
         return props
 
 
-class XcomUtils():
+class XcomUtils:
     """
     Utility class for handling XCOM data, allowing storage of xcom values to temporary file storage
     """
 
-    def __init__(self, resolver:XcomPropsResolver=None):
-         self.resolver = resolver
-         self.xcom_properties = self.resolver.get_xcom_props()
+    def __init__(self, resolver: XcomPropsResolver = None):
+        self.resolver = resolver
+        self.xcom_properties = self.resolver.get_xcom_props()
 
     def is_tempfiles_supported(self) -> bool:
         """
@@ -84,7 +93,7 @@ class XcomUtils():
         """
         return self.xcom_properties.temp_files_location
 
-    def resolve_task_dir(self, runid:str) -> str:
+    def resolve_task_dir(self, runid: str) -> str:
         """
         Get the directory path that corresponds to this task, creating it if necessary
         """
@@ -107,7 +116,7 @@ class XcomUtils():
 
         return dirpath
 
-    def store_dict_in_temp_file(self, key:str, json_value:dict, runid:str) -> str:
+    def store_dict_in_temp_file(self, key: str, json_value: dict, runid: str) -> str:
         """
         Store a dictionary into the temp file (as json)
         @param key: the key to store in a file (leave off the file extension)
@@ -120,12 +129,12 @@ class XcomUtils():
 
         temp_file_path = os.path.join(filedir, filename)
 
-        with open(temp_file_path, 'w') as fp:
+        with open(temp_file_path, "w") as fp:
             json.dump(json_value, fp)
 
         return temp_file_path
 
-    def retrieve_dict_from_temp_file(self, temp_file_path:str) -> dict:
+    def retrieve_dict_from_temp_file(self, temp_file_path: str) -> dict:
         """
         Retrieve the dictionary of xcom values from a temp file
         """
@@ -133,7 +142,7 @@ class XcomUtils():
         json_dict = json.load(open(temp_file_path))
         return json_dict
 
-    def clear_temp_data_for_run(self, runid:str):
+    def clear_temp_data_for_run(self, runid: str):
         """
         Clear the temp directory for this run
         """
@@ -143,5 +152,3 @@ class XcomUtils():
 
         dirpath = f"{self.xcom_properties.temp_files_location}/{runid}"
         shutil.rmtree(dirpath)
-
-
