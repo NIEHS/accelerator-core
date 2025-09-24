@@ -237,7 +237,7 @@ def build_accel_from_model(
     version: str,
     submission: SubmissionInfoModel = SubmissionInfoModel(),
     technical: TechnicalMetadataModel = TechnicalMetadataModel,
-    program: AccelPublicationModel = AccelPublicationModel(),
+    program: AccelProgramModel = AccelProgramModel(),
     project: AccelProjectModel = AccelProjectModel(),
     resource: AccelResourceReferenceModel = AccelResourceReferenceModel(),
     personnel: AccelPersonnelModel = AccelPersonnelModel(),
