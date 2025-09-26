@@ -80,8 +80,8 @@
           },
           "required": [
             "project_code",
-            "project_name",
-            "project_short_name"
+            "project_name"
+
           ]
         },
         "resource": {
@@ -145,11 +145,7 @@
                 "license_uri": {
                   "type": "string"
                 }
-              },
-              "required": [
-                "license_name",
-                "license_uri"
-              ]
+              }
             },
             "resource_reference": {
               "type": "array",
@@ -163,11 +159,8 @@
                     "resource_reference_link": {
                       "type": "string"
                     }
-                  },
-                  "required": [
-                    "resource_reference_text",
-                    "resource_reference_link"
-                  ]
+                  }
+
                 }
               ]
             },
@@ -183,11 +176,7 @@
                     "resource_use_agreement_link": {
                       "type": "string"
                     }
-                  },
-                  "required": [
-                    "resource_use_agreement_text",
-                    "resource_use_agreement_link"
-                  ]
+                  }
                 }
               ]
             },
@@ -203,11 +192,7 @@
                     "citation_link": {
                       "type": "string"
                     }
-                  },
-                  "required": [
-                    "citation",
-                    "citation_link"
-                  ]
+                  }
                 }
               ]
             },
@@ -252,12 +237,7 @@
                 }
               },
               "required": [
-                "name",
-                "affiliation",
-                "role",
-                "email",
-                "identifier",
-                "identifier_type"
+                "name"
               ]
             }
           ]
@@ -346,11 +326,7 @@
                     "data_location_link": {
                       "type": "string"
                     }
-                  },
-                  "required": [
-                    "data_location_text",
-                    "data_location_link"
-                  ]
+                  }
                 }
               ]
             },
@@ -626,11 +602,7 @@
                     "tool_link": {
                       "type": "string"
                     }
-                  },
-                  "required": [
-                    "tool_text",
-                    "tool_link"
-                  ]
+                  }
                 }
               ]
             },
@@ -646,11 +618,7 @@
                     "tool_link": {
                       "type": "string"
                     }
-                  },
-                  "required": [
-                    "tool_text",
-                    "tool_link"
-                  ]
+                  }
                 }
               ]
             }
@@ -660,7 +628,14 @@
       "required": [
         "program",
         "project",
-        "resource"
+        "resource",
+        "personnel",
+        "data_resource",
+        "data_usage",
+        "temporal_data",
+        "population_data",
+        "geospatial_data",
+        "computational_workflow"
       ]
     },
     "technical_metadata": {
@@ -675,6 +650,12 @@
         "verified": {
           "type": "string"
         },
+        "target_schema_type": {
+          "type": "string"
+        },
+        "target_schema_version": {
+          "type": "string"
+        },
         "original_source_type": {
           "type": "string"
         },
@@ -682,7 +663,7 @@
           "type": "string"
         },
         "original_source_link": {
-          "type": ["string", "null"]
+          "type": "string"
         },
         "history": {
           "type": "array",
@@ -703,16 +684,42 @@
               ]
             }
           ]
+        },
+        "dissemination_endpoints": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "dissemination_endpoint_type": {
+                  "type": "string"
+                },
+                "dissemination_unique_identifier": {
+                  "type": "string"
+                },
+                "dissemination_link": {
+                  "type": "string"
+                },
+                "dissemination_date": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "dissemination_endpoint_type",
+                "dissemination_date"
+              ]
+            }
+          ]
         }
       },
       "required": [
         "created",
-        "modified",
-        "verified",
+        "target_schema_type",
+        "target_schema_version",
         "original_source_type",
         "original_source_identifier",
-
-        "history"
+        "history",
+        "dissemination_endpoints"
       ]
     }
   },

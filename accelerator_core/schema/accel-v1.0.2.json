@@ -199,6 +199,8 @@
     "created": "",
     "modified": "",
     "verified": "",
+    "target_schema_type": "",
+    "target_schema_version": "",
     "original_source_type": "",
     "original_source_identifier": "",
     "original_source_link": "",
@@ -207,6 +209,15 @@
         "timestamp": "",
         "msg": ""
       }
+    ],
+    "dissemination_endpoints": [
+      {
+        "dissemination_endpoint_type": "",
+        "dissemination_unique_identifier": "",
+        "dissemination_link": "",
+        "dissemination_date": ""
+      }
+
     ]
   }
 }
