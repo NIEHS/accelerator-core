@@ -36,10 +36,10 @@ class Dissemination(AcceleratorWorkflowTask):
     ) -> DisseminationPayload:
         """
         Disseminate an individual document, identified by its type (parent collection) and its id
-        :param document_id: str with unique document id
-        :param dissemination_request: DisseminationDescriptor that describes the type, version, and
+        @param document_id: str with unique document id
+        @param dissemination_request: DisseminationDescriptor that describes the type, version, and
         other information
-        :return: DisseminationPayload with the resulting information
+        @return: DisseminationPayload with the resulting information
         """
         pass
 
@@ -50,9 +50,9 @@ class Dissemination(AcceleratorWorkflowTask):
     ) -> [DisseminationPayload]:
         """
         Apply the given filter to create a set of documents to be disseminated to a target
-        :param filter: DisseminationFilter that will select documents to disseminate. The internal meaning
+        @param filter: DisseminationFilter that will select documents to disseminate. The internal meaning
         of the filter is dependent on the particular implementation
-        :param dissemination_request: DisseminationRequest that describes the type, version, and other information
-        :return: array of documents as DisseminationPayload
+        @param dissemination_request: DisseminationRequest that describes the type, version, and other information
+        @return: array of documents as DisseminationPayload
         """
         pass

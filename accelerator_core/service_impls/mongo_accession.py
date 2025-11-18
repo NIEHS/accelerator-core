@@ -112,9 +112,11 @@ class AccessionMongo(Accession):
         technical_metadata["original_source"] = (
             ingest_payload.ingest_source_descriptor.ingest_item_id
         )
+
         technical_metadata["original_source_link"] = (
             ingest_payload.ingest_source_descriptor.ingest_link
         )
+
         technical_metadata["history"].append(
             create_timestamped_log(
                 f"accession from {ingest_payload.ingest_source_descriptor.ingest_type} with identifier {ingest_payload.ingest_source_descriptor.ingest_item_id} in operation {ingest_payload.ingest_source_descriptor.ingest_identifier}"

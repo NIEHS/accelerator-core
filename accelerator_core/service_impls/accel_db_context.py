@@ -17,3 +17,6 @@ class AccelDbContext(object):
         self.db = self.mongo_client.get_database(
             self.accelerator_config.params["mongo.db.name"]
         )
+
+    def start_session(self):
+        return self.db.client.start_session()

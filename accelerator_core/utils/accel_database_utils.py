@@ -6,7 +6,10 @@ import bson
 from bson import ObjectId
 from pymongo.synchronous.client_session import ClientSession
 
-from accelerator_core.schema.models.base_model import TechnicalMetadataHistory
+from accelerator_core.schema.models.base_model import (
+    TechnicalMetadataHistory,
+    DisseminationLinkReport,
+)
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
@@ -80,6 +83,7 @@ class AccelDatabaseUtils:
         """
 
         db = self.connect_to_db()
+
         type_matrix_info = self.accelerator_config.find_type_matrix_info_for_type(
             document_type
         )
@@ -114,23 +118,33 @@ class AccelDatabaseUtils:
         logger.info("update_operation is %s", update_operation)
         collection = self.build_collection_reference(document_type, temp_doc)
 
-        try:
+        with self.accel_db_context.start_session() as session:
+            with session.start_transaction():
+                try:
 
-            doc = collection.find_one({"_id": ObjectId(document_id)})
-            if doc:
-                logger.info(f"Document {document_id} found before update.")
-            else:
-                logger.warning(f"Document {document_id} NOT found before update.")
-                raise Exception(f"Document {document_id} NOT found before update.")
+                    doc = collection.find_one({"_id": ObjectId(document_id)})
+                    if doc:
+                        logger.info(f"Document {document_id} found before update.")
+                    else:
+                        logger.warning(
+                            f"Document {document_id} NOT found before update."
+                        )
+                        raise Exception(
+                            f"Document {document_id} NOT found before update."
+                        )
 
-            result = collection.update_one(
-                {"_id": ObjectId(document_id)}, update_operation
-            )
-            if result.modified_count > 0:
-                logger.info(f"Successfully updated document {document_id} with event.")
-            else:
-                logger.warning(
-                    f"No documents updated for {document_id}. Possible no match or no change."
-                )
-        except Exception as e:
-            logger.error(f"Failed to update document {document_id}: {e}")
+                    result = collection.update_one(
+                        {"_id": ObjectId(document_id)}, update_operation
+                    )
+
+                    if result.modified_count > 0:
+                        logger.info(
+                            f"Successfully updated document {document_id} with event."
+                        )
+                    else:
+                        logger.warning(
+                            f"No documents updated for {document_id}. Possible no match or no change."
+                        )
+                except Exception as e:
+                    # Transaction is automatically aborted if an exception occurred within the 'with' block
+                    print(f"Transaction aborted due to an error: {e}")

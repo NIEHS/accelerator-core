@@ -715,7 +715,6 @@
       "required": [
         "created",
         "target_schema_type",
-        "target_schema_version",
         "original_source_type",
         "original_source_identifier",
         "history",

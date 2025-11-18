@@ -200,10 +200,12 @@
     "modified": "",
     "verified": "",
     "original_source_type": "",
+    "target_schema_type": "",
     "original_source_identifier": "",
     "original_source_link": "",
     "history": [
 
-    ]
+    ],
+    "dissemination_endpoints": []
   }
 }
