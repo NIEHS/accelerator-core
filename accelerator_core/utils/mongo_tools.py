@@ -28,7 +28,14 @@ def build_connection_string(accel_config: AcceleratorConfig) -> str:
 
     """
 
-    return f'mongodb://{accel_config.params["mongo.user"]}:{accel_config.params["mongo.password"]}@{accel_config.params["mongo.host"]}:{accel_config.params["mongo.port"]}/'
+    conn = f'mongodb://{accel_config.params["mongo.user"]}:{accel_config.params["mongo.password"]}@{accel_config.params["mongo.host"]}:{accel_config.params["mongo.port"]}/'
+
+    if accel_config.params.get("mongo.replicaset", None):
+        conn += f"?replicaSet={accel_config.params['mongo.replicaset']}&directConnection=true"
+    else:
+        conn += "?directConnection=true"
+
+    return conn
 
 
 def initialize_mongo_client(accel_config: AcceleratorConfig) -> MongoClient:
