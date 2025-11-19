@@ -691,22 +691,22 @@
             {
               "type": "object",
               "properties": {
-                "dissemination_endpoint_type": {
+                "endpoint_type": {
                   "type": "string"
                 },
-                "dissemination_unique_identifier": {
+                "unique_identifier": {
                   "type": "string"
                 },
-                "dissemination_link": {
+                "link": {
                   "type": "string"
                 },
-                "dissemination_date": {
+                "date": {
                   "type": "string"
                 }
               },
               "required": [
-                "dissemination_endpoint_type",
-                "dissemination_date"
+                "endpoint_type",
+                "date"
               ]
             }
           ]

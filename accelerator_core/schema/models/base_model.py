@@ -111,26 +111,28 @@ class DisseminationEndpoint:
     """
 
     def __init__(self):
-        self.endpoint_type = ""
-        self.unique_identifier = ""
-        self.link = ""
-        self.date = ""
+        self.endpoint_type = ""  #  identifier of the endpoint type, will tie to the dag that publishes data (e.g. CAFE)
+        self.unique_identifier = (
+            ""  # doi or other identifier at the published endpoint (if available)
+        )
+        self.link = ""  # direct link to the published record (if available)
+        self.date = ""  # date of dissemination or update of an existing dissemination
 
     def to_dict(self):
         val = {}
-        val["dissemination_endpoint_type"] = self.endpoint_type
-        val["dissemination_unique_identifier"] = self.unique_identifier
-        val["dissemination_link"] = self.link
-        val["dissemination_date"] = self.date
+        val["endpoint_type"] = self.endpoint_type
+        val["unique_identifier"] = self.unique_identifier
+        val["link"] = self.link
+        val["date"] = self.date
         return val
 
     @staticmethod
     def from_dict(dict_obj):
         obj = DisseminationEndpoint()
-        obj.endpoint_type = dict_obj["dissemination_endpoint_type"]
-        obj.unique_identifier = dict_obj["dissemination_unique_identifier"]
-        obj.link = dict_obj["dissemination_link"]
-        obj.date = dict_obj["dissemination_date"]
+        obj.endpoint_type = dict_obj["endpoint_type"]
+        obj.unique_identifier = dict_obj["unique_identifier"]
+        obj.link = dict_obj["link"]
+        obj.date = dict_obj["date"]
         return obj
 
 
@@ -152,9 +154,7 @@ class DisseminationLinkReport:
         self.original_source_identifier = (
             ""  # unique id for the document in the accel database
         )
-        self.original_source_type = (
-            ""  # type of data (ingest type) of the original source
-        )
+
         self.success = True
         self.message = ""
         self.dissemination_endpoint = None  # DisseminationEndpoint
@@ -165,7 +165,6 @@ class DisseminationLinkReport:
         obj.target_schema_type = dict_obj["target_schema_type"]
         obj.target_schema_version = dict_obj["target_schema_version"]
         obj.original_source_identifier = dict_obj["original_source_identifier"]
-        obj.original_source_type = dict_obj["original_source_type"]
         obj.temporary_data = dict_obj.get("temporary_data", False)
         obj.success = dict_obj.get("success", True)
         obj.message = dict_obj.get("message", "")
@@ -180,7 +179,6 @@ class DisseminationLinkReport:
             "target_schema_type": obj.target_schema_type,
             "target_schema_version": obj.target_schema_version,
             "original_source_identifier": obj.original_source_identifier,
-            "original_source_type": obj.original_source_type,
             "temporary_data": obj.temporary_data,
             "success": obj.success,
             "message": obj.message,

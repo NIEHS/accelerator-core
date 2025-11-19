@@ -445,10 +445,10 @@
     "dissemination_endpoints": [
     {% for entry in technical_metadata.dissemination_endpoints %}
       {
-        "dissemination_endpoint_type": "{{ entry.dissemination_endpoint_type }}",
-        "dissemination_unique_identifier": "{{ entry.dissemination_unique_identifier }}",
-        "dissemination_link": "{{ entry.dissemination_link }}",
-        "dissemination_date": "{{ entry.dissemination_date }}"
+        "endpoint_type": "{{ entry.endpoint_type }}",
+        "unique_identifier": "{{ entry.unique_identifier }}",
+        "link": "{{ entry.link }}",
+        "date": "{{ entry.date }}"
       }
     {{ "," if not loop.last }}
     {% endfor %}

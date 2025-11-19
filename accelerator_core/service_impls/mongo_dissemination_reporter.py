@@ -74,11 +74,12 @@ class MongoDisseminationReporter(DisseminationReporter):
                         dissemination_link_report.temporary_data,
                     )
 
-                    endpoints = doc["technical_metadata"]["endpoints"]
+                    endpoints = doc["technical_metadata"]["dissemination_endpoints"]
+                    matched = False
 
                     for endpoint in endpoints:
                         if (
-                            endpoint["dissemination_unique_identifier"]
+                            endpoint["endpoint_type"]
                             == dissemination_link_report.dissemination_endpoint.endpoint_type
                         ):
                             logger.info("found id, updating dissemination date")
@@ -88,15 +89,11 @@ class MongoDisseminationReporter(DisseminationReporter):
                                     dissemination_link_report.temporary_data,
                                 )
                             )
+                            # For updating an existing endpoint
                             update_operation = {
                                 "$set": {
-                                    "technical_metadata.dissemination_endpoints.$[x].dissemination_date": dissemination_link_report.dissemination_endpoint.dissemination_date
-                                },
-                                "arrayFilters": [
-                                    {
-                                        "x.target_schema_type": dissemination_link_report.target_schema_type
-                                    }
-                                ],
+                                    "technical_metadata.dissemination_endpoints.$[elem].date": dissemination_link_report.dissemination_endpoint.date
+                                }
                             }
 
                             result = collection.update_one(
@@ -106,51 +103,40 @@ class MongoDisseminationReporter(DisseminationReporter):
                                     )
                                 },
                                 update_operation,
+                                array_filters=[
+                                    {
+                                        "elem.endpoint_type": dissemination_link_report.dissemination_endpoint.endpoint_type
+                                    }
+                                ],
+                                session=session,
                             )
 
-                        else:
-                            logger.info("adding new endpoint")
-                            endpoints.append(
-                                dissemination_link_report.dissemination_endpoint.to_dict()
+                            matched = True
+
+                    if not matched:
+                        logger.info("adding new endpoint")
+
+                        # For adding a new endpoint
+                        update_operation = {
+                            "$push": {
+                                "technical_metadata.dissemination_endpoints": dissemination_link_report.dissemination_endpoint.to_dict()
+                            }
+                        }
+                        collection = (
+                            self.accel_database_utils.build_collection_reference(
+                                dissemination_link_report.target_schema_type,
+                                dissemination_link_report.temporary_data,
                             )
+                        )
+                        result = collection.update_one(
+                            {
+                                "_id": ObjectId(
+                                    dissemination_link_report.original_source_identifier
+                                )
+                            },
+                            update_operation,
+                        )
 
                 except Exception as e:
                     # Transaction is automatically aborted if an exception occurred within the 'with' block
                     print(f"Transaction aborted due to an error: {e}")
-
-                finally:
-                    session.close()
-
-
-def find_by_id(
-    self,
-    document_id: str,
-    document_type: str,
-    temp_doc: bool = False,
-    session: Optional[ClientSession] = None,
-) -> dict:
-    """
-    Find the document by id, from either the AIP store or the temporary store
-
-    Args:
-        document_id: unique id for the document
-        document_type: type of document per type matrix
-        temp_doc: bool indicates whether the document is temporary or not
-        session: Optional MongoDB session for transaction support
-
-    Returns:
-        dict with the document structure
-
-    Raises:
-        AccelDocumentNotFoundException: if the document is not found
-    """
-    logger.info(f"find_by_id({document_id}) is temp doc? {temp_doc}")
-
-    coll = self.build_collection_reference(document_type, temp_doc=False)
-    doc = coll.find_one({"_id": ObjectId(document_id)}, session=session)
-
-    if not doc:
-        raise AccelDocumentNotFoundException(document_id, document_type, temp_doc)
-
-    doc = convert_doc_to_json(doc)
-    return doc

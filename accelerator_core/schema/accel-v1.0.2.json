@@ -212,10 +212,10 @@
     ],
     "dissemination_endpoints": [
       {
-        "dissemination_endpoint_type": "",
-        "dissemination_unique_identifier": "",
-        "dissemination_link": "",
-        "dissemination_date": ""
+        "endpoint_type": "",
+        "unique_identifier": "",
+        "link": "",
+        "date": ""
       }
 
     ]
