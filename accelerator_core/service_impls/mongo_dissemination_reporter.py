@@ -1,9 +1,15 @@
+from typing import Optional
+
+from pymongo.synchronous.client_session import ClientSession
+
 from accelerator_core.schema.models.base_model import DisseminationLinkReport
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.services.dissemination_reporter import DisseminationReporter
 from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
+from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.logger import setup_logger
+from accelerator_core.utils.mongo_tools import convert_doc_to_json
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from bson import ObjectId
 
@@ -114,3 +120,37 @@ class MongoDisseminationReporter(DisseminationReporter):
 
                 finally:
                     session.close()
+
+
+def find_by_id(
+    self,
+    document_id: str,
+    document_type: str,
+    temp_doc: bool = False,
+    session: Optional[ClientSession] = None,
+) -> dict:
+    """
+    Find the document by id, from either the AIP store or the temporary store
+
+    Args:
+        document_id: unique id for the document
+        document_type: type of document per type matrix
+        temp_doc: bool indicates whether the document is temporary or not
+        session: Optional MongoDB session for transaction support
+
+    Returns:
+        dict with the document structure
+
+    Raises:
+        AccelDocumentNotFoundException: if the document is not found
+    """
+    logger.info(f"find_by_id({document_id}) is temp doc? {temp_doc}")
+
+    coll = self.build_collection_reference(document_type, temp_doc=False)
+    doc = coll.find_one({"_id": ObjectId(document_id)}, session=session)
+
+    if not doc:
+        raise AccelDocumentNotFoundException(document_id, document_type, temp_doc)
+
+    doc = convert_doc_to_json(doc)
+    return doc

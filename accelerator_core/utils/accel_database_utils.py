@@ -145,6 +145,8 @@ class AccelDatabaseUtils:
                         logger.warning(
                             f"No documents updated for {document_id}. Possible no match or no change."
                         )
+
+                    session.commit_transaction()
                 except Exception as e:
-                    # Transaction is automatically aborted if an exception occurred within the 'with' block
-                    print(f"Transaction aborted due to an error: {e}")
+                    logger.error(f"Transaction failed: {str(e)}")
+                    raise  # Re-raise the exception after logging
