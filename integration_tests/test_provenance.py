@@ -42,10 +42,10 @@ class TestProvenance(unittest.TestCase):
 
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
-        ingest_source_descriptor.schema_version = "1.0.1"
+        ingest_source_descriptor.schema_version = "1.0.2"
 
         json_path = determine_resource_path(
-            accelerator_core.schema, "accel-v1.0.1.json"
+            accelerator_core.schema, "accel-v1.0.2.json"
         )
 
         with open(json_path) as json_data:
@@ -66,7 +66,7 @@ class TestProvenance(unittest.TestCase):
     def test_ingest(self):
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
-        ingest_source_descriptor.schema_version = "1.0.1"
+        ingest_source_descriptor.schema_version = "1.0.2"
         ingest_source_descriptor.ingest_identifier = "myrunid"
         ingest_source_descriptor.ingest_item_id = "myitemid"
         ingest_source_descriptor.ingest_link = "mylink"
@@ -76,7 +76,7 @@ class TestProvenance(unittest.TestCase):
         ingest_result = IngestPayload(ingest_source_descriptor)
 
         json_path = determine_resource_path(
-            accelerator_core.schema, "accel-v1.0.1.json"
+            accelerator_core.schema, "accel-v1.0.2.json"
         )
         with open(json_path) as json_data:
             d = json.load(json_data)
@@ -103,12 +103,12 @@ class TestProvenance(unittest.TestCase):
 
     def test_find_by_id(self):
         json_path = determine_resource_path(
-            accelerator_core.schema, "accel-v1.0.1.json"
+            accelerator_core.schema, "accel-v1.0.2.json"
         )
         with open(json_path) as json_data:
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
-            ingest_source_descriptor.schema_version = "1.0.1"
+            ingest_source_descriptor.schema_version = "1.0.2"
             ingest_source_descriptor.ingest_identifier = "myrunid"
             ingest_source_descriptor.ingest_item_id = "myitemid"
             ingest_source_descriptor.ingest_link = "mylink"
@@ -138,12 +138,12 @@ class TestProvenance(unittest.TestCase):
 
     def test_decommission(self):
         json_path = determine_resource_path(
-            accelerator_core.schema, "accel-v1.0.1.json"
+            accelerator_core.schema, "accel-v1.0.2.json"
         )
         with open(json_path) as json_data:
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
-            ingest_source_descriptor.schema_version = "1.0.1"
+            ingest_source_descriptor.schema_version = "1.0.2"
             ingest_source_descriptor.ingest_identifier = "myrunid"
             ingest_source_descriptor.ingest_item_id = "myitemid"
             ingest_source_descriptor.ingest_link = "mylink"
@@ -172,12 +172,12 @@ class TestProvenance(unittest.TestCase):
 
     def test_delete_temp_document(self):
         json_path = determine_resource_path(
-            accelerator_core.schema, "accel-v1.0.1.json"
+            accelerator_core.schema, "accel-v1.0.2.json"
         )
         with open(json_path) as json_data:
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
-            ingest_source_descriptor.schema_version = "1.0.1"
+            ingest_source_descriptor.schema_version = "1.0.2"
             ingest_source_descriptor.ingest_identifier = "myrunid"
             ingest_source_descriptor.ingest_item_id = "myitemid"
             ingest_source_descriptor.ingest_link = "mylink"

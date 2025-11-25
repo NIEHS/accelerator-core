@@ -312,7 +312,7 @@ def build_accel_from_model(
         computational_workflow = AccelComputationalWorkflow()
 
     rendered = template.render(
-        version="1.0.1",
+        version="1.0.2",
         submission=submission,
         technical_metadata=technical,
         program=program,

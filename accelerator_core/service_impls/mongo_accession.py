@@ -3,6 +3,7 @@ Accession support concrete implementation for Mongo data store
 """
 
 from bson import ObjectId
+import pymongo
 
 from accelerator_core.schema.models.base_model import (
     create_timestamped_log,
@@ -67,11 +68,18 @@ class AccessionMongo(Accession):
     ) -> str:
         """
         Ingest the given document
-        :param ingest_payload: ingest source descriptor describing the type, schema,
-        and other configuration along with a payload (either in-line or a path to a document)
-        :param check_duplicates: bool indicates whether pre-checks for duplicate data run
-        :param temp_doc: bool indicates whether the document is temporary or not
-        :return: str with id of the ingested document
+
+        Args:
+            ingest_payload: ingest source descriptor describing the type, schema,
+                          and other configuration along with a payload
+            check_duplicates: bool indicates whether pre-checks for duplicate data run
+            temp_doc: bool indicates whether the document is temporary or not
+
+        Returns:
+            str: id of the ingested document
+
+        Raises:
+            Exception: If payload is invalid or document insertion fails
         """
         logger.info("ingest()")
 
@@ -112,23 +120,35 @@ class AccessionMongo(Accession):
         technical_metadata["original_source"] = (
             ingest_payload.ingest_source_descriptor.ingest_item_id
         )
+
         technical_metadata["original_source_link"] = (
             ingest_payload.ingest_source_descriptor.ingest_link
         )
+
         technical_metadata["history"].append(
             create_timestamped_log(
                 f"accession from {ingest_payload.ingest_source_descriptor.ingest_type} with identifier {ingest_payload.ingest_source_descriptor.ingest_item_id} in operation {ingest_payload.ingest_source_descriptor.ingest_identifier}"
             ).to_dict()
         )
 
-        result = self.validate(doc, ingest_payload.ingest_source_descriptor)
-        if not result.valid:
-            raise Exception(f"Invalid document provided {result.error_message}")
+        try:
+            result = self.validate(doc, ingest_payload.ingest_source_descriptor)
+            if not result.valid:
+                raise Exception(f"Invalid document provided {result.error_message}")
 
-        id = coll.insert_one(doc).inserted_id
+            inserted_id = coll.insert_one(doc).inserted_id
+            logger.info(f"Successfully inserted document with id {inserted_id}")
+            return str(inserted_id)
 
-        logger.info(f"inserted id {id}")
-        return id
+        except pymongo.errors.DuplicateKeyError:
+            logger.error(f"Document already exists")
+            raise
+        except pymongo.errors.PyMongoError as e:
+            logger.error(f"Database error during insert: {str(e)}")
+            raise
+        except Exception as e:
+            logger.error(f"Unexpected error during insert: {str(e)}")
+            raise
 
     def decommission(
         self,

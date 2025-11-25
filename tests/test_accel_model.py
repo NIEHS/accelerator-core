@@ -114,7 +114,7 @@ class TestAccelModel(unittest.TestCase):
         population_data.population_studies = ["study1"]
 
         rendered = build_accel_from_model(
-            version="1.0.1",
+            version="1.0.2",
             submission=submission,
             technical=technical,
             program=program,
@@ -128,6 +128,6 @@ class TestAccelModel(unittest.TestCase):
 
         schema_tools = SchemaTools(self.config)
         result = schema_tools.validate_json_against_schema(
-            rendered, "accelerator", "1.0.1"
+            rendered, "accelerator", "1.0.2"
         )
         self.assertTrue(result.valid)

@@ -2,9 +2,16 @@ import json
 import unittest
 
 import accelerator_core
+from accelerator_core.schema.models.base_model import (
+    DisseminationLinkReport,
+    DisseminationEndpoint,
+)
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.service_impls.mongo_accession import AccessionMongo
 from accelerator_core.service_impls.mongo_dissemination import DisseminationMongo
+from accelerator_core.service_impls.mongo_dissemination_reporter import (
+    MongoDisseminationReporter,
+)
 from accelerator_core.utils import resource_utils, mongo_tools
 from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
 from accelerator_core.utils.accelerator_config import (
@@ -23,7 +30,7 @@ from accelerator_core.workflow.accel_source_ingest import (
 )
 
 
-class TestDisseminationMongo(unittest.TestCase):
+class TestDisseminationReporterMongo(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -44,12 +51,12 @@ class TestDisseminationMongo(unittest.TestCase):
     def tearDownClass(cls):
         cls._accel_db_context.mongo_client.close()
 
-    def test_dissemination(self):
+    def test_report_dissem(self):
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
         ingest_source_descriptor.schema_version = "1.0.2"
-        ingest_source_descriptor.ingest_identifier = "myrunid"
-        ingest_source_descriptor.ingest_item_id = "myitemid"
+        ingest_source_descriptor.ingest_identifier = "test_report_dissem"
+        ingest_source_descriptor.ingest_item_id = "test_report_dissem"
         ingest_source_descriptor.ingest_link = "mylink"
         ingest_source_descriptor.submitter_name = "mysubmittername"
         ingest_source_descriptor.submitter_email = "mysubmitteremail"
@@ -99,25 +106,61 @@ class TestDisseminationMongo(unittest.TestCase):
 
             self.assertIsNotNone(dissemination_payload)
 
-    def test_dissemination_not_found(self):
-        ingest_source_descriptor = IngestSourceDescriptor()
-        id = "95E43738404BEECDF66573B4"
-        dissemination_request = DisseminationDescriptor()
-        dissemination_request.dissemination_type = "tests"
-        dissemination_request.temp_collection = "false"
-        dissemination_request.ingest_type = "accelerator"
-        dissemination_request.schema_version = "1.0.2"
-        dissemination_request.inline_results = True
+            # now report a dissemination to dataverse
 
-        xcom_props_resolver = DirectXcomPropsResolver(
-            temp_files_supported=False, temp_files_location=""
-        )
+            link_report = DisseminationLinkReport()
+            link_report.target_schema_type = "accelerator"
+            link_report.target_schema_version = "1.0.2"
+            link_report.temporary_data = False
+            link_report.original_source_identifier = id
 
-        dissemination = DisseminationMongo(
-            self.__class__._accelerator_config,
-            xcom_props_resolver,
-            self.__class__._accel_db_context,
-        )
+            endpoint = DisseminationEndpoint()
+            endpoint.endpoint_type = "dataverse"
+            endpoint.link = "https://dataverse.harvard.edu"
+            endpoint.unique_identifier = "test_report_dissem"
+            endpoint.date = "2022-01-01"
 
-        with self.assertRaises(AccelDocumentNotFoundException) as context:
-            dissemination.disseminate_by_id(id, dissemination_request)
+            link_report.dissemination_endpoint = endpoint
+
+            dissemination_reporter = MongoDisseminationReporter(
+                self.__class__._accelerator_config,
+                xcom_props_resolver,
+                self.__class__._accel_db_context,
+            )
+
+            dissemination_reporter.report_dissemination_result(link_report)
+
+            actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
+            self.assertIsNotNone(actual)
+            endpoints = actual["technical_metadata"]["dissemination_endpoints"]
+            self.assertEqual(len(endpoints), 1)
+            self.assertEqual(endpoints[0]["endpoint_type"], "dataverse")
+            self.assertEqual(endpoints[0]["link"], "https://dataverse.harvard.edu")
+            self.assertEqual(endpoints[0]["unique_identifier"], "test_report_dissem")
+            self.assertEqual(endpoints[0]["date"], "2022-01-01")
+
+            # now force an update to a new date and check
+
+            link_report = DisseminationLinkReport()
+            link_report.target_schema_type = "accelerator"
+            link_report.target_schema_version = "1.0.2"
+            link_report.temporary_data = False
+            link_report.original_source_identifier = id
+
+            endpoint = DisseminationEndpoint()
+            endpoint.endpoint_type = "dataverse"
+            endpoint.link = "https://dataverse.harvard.edu"
+            endpoint.unique_identifier = "test_report_dissem"
+            endpoint.date = "2022-01-02"
+            link_report.dissemination_endpoint = endpoint
+
+            dissemination_reporter.report_dissemination_result(link_report)
+
+            actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
+            self.assertIsNotNone(actual)
+            endpoints = actual["technical_metadata"]["dissemination_endpoints"]
+            self.assertEqual(len(endpoints), 1)
+            self.assertEqual(endpoints[0]["endpoint_type"], "dataverse")
+            self.assertEqual(endpoints[0]["link"], "https://dataverse.harvard.edu")
+            self.assertEqual(endpoints[0]["unique_identifier"], "test_report_dissem")
+            self.assertEqual(endpoints[0]["date"], "2022-01-02")

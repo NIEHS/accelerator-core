@@ -133,8 +133,6 @@ class AcceleratorWorkflowTask:
         if not item_id:
             raise Exception("no item_id provided")
 
-        dissemination_payload.dissemination_descriptor.dissemination_item_id = item_id
-
         if not dissemination_payload.dissemination_descriptor.use_tempfiles:
             logger.debug("appending the item inline")
             dissemination_payload.payload.append(item)
