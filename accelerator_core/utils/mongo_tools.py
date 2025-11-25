@@ -31,13 +31,14 @@ def build_connection_string(accel_config: AcceleratorConfig) -> str:
     conn = f'mongodb://{accel_config.params["mongo.user"]}:{accel_config.params["mongo.password"]}@{accel_config.params["mongo.host"]}:{accel_config.params["mongo.port"]}/'
 
     if accel_config.params.get("mongo.replicaset", None):
+        logger.info(f"repl: {accel_config.params['mongo.replicaset']}")
+
         conn += (
             f"?replicaSet={accel_config.params['mongo.replicaset']}&authSource=admin"
         )
 
     logger.info(f"connection string: {conn}")
     logger.info(f"pwd: {accel_config.params['mongo.password']}")
-    logger.info(f"repl: {accel_config.params['mongo.replicaset']}")
 
     return conn
 
