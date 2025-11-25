@@ -35,6 +35,8 @@ def build_connection_string(accel_config: AcceleratorConfig) -> str:
     else:
         conn += "?directConnection=true"
 
+    logger.info(f"connection string: {conn}")
+
     return conn
 
 
