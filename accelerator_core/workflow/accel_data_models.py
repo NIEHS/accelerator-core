@@ -115,17 +115,21 @@ class DisseminationDescriptor:
         self.submitter_name = None
         self.submitter_email = None
         self.submit_date = None
-        self.ingest_type = None  # matches type in type matrix
+        self.ingest_type = None  # matches type in type matrix, this is the source in accel for the dissemination
         self.schema_version = None  # version of the specific ingest_type
         self.temp_collection = False  # is this in the temp collection
-        self.dissemination_type = None  # identifier for the target type
+        self.dissemination_type = (
+            None  # contains the endpoint to which the dissemination is made
+        )
         self.by_filter = False  # true if dissemination by a filter
         self.dissemination_version = None  # x.x.x version information for dissemination
-        self.dissemination_identifier = None  # run id of the dissemination process
-        self.dissemination_item_id = (
-            None  # unique id if this is an individual item, blank for a batch
+        self.dissemination_identifier = (
+            None  # generated name for xcom files for this particular dissemination
         )
-        self.dissemination_filter = {}
+        self.dissemination_item_id = None  # contains the accel db record id
+        self.dissemination_filter = (
+            {}
+        )  # specific filter used to do this dissemination (if by filter)
         self.use_tempfiles = False
 
     def to_dict(self) -> dict:
