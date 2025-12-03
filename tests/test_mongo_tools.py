@@ -1,7 +1,10 @@
 import unittest
 
 from accelerator_core.utils import resource_utils, mongo_tools
-from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
+from accelerator_core.utils.accelerator_config import (
+    AcceleratorConfig,
+    config_from_file,
+)
 
 
 class TestMongoTools(unittest.TestCase):
@@ -22,6 +25,14 @@ class TestMongoTools(unittest.TestCase):
         config = self.config
         actual = mongo_tools.build_connection_string(config)
         self.assertIsNotNone(actual)
+
+    def test_mongo_direct(self):
+        test_path = resource_utils.determine_test_resource_path(
+            "application.properties", "tests"
+        )
+        config = self.config
+        actual = mongo_tools.is_mongo_direct(config)
+        self.assertTrue(actual)
 
 
 if __name__ == "__main__":

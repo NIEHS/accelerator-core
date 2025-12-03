@@ -48,6 +48,18 @@ class AccelDatabaseUtils:
         delete_result = coll.delete_one({"_id": ObjectId(document_id)})
         logger.info(f"deleted id {delete_result}")
 
+    def clear_collection(self, document_type: str, temp_doc=False):
+        """
+        DANGER! This method is used to support unit testing, and clears all documents in the given
+        collection. It should not be used in production.
+        :param document_type: the type of document to be cleared, per the type matrix\
+        :param temp_doc: bool indicates whether the document is temporary or not
+        """
+
+        db = self.connect_to_db()
+        coll = self.build_collection_reference(document_type, temp_doc=temp_doc)
+        coll.delete_many({})
+
     def find_by_id(
         self, document_id: str, document_type: str, temp_doc: bool = False
     ) -> dict:

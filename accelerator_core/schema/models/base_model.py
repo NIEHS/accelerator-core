@@ -43,8 +43,7 @@ class TechnicalMetadataModel:
         )
         self.target_schema_version = ""  # version of the schema
         self.original_source_identifier = (
-            ""  # unique id for the document, will be a accel database id
-            # (e.g. a mongo _id)
+            ""  # unique id for the document, will be unique id in the original source
         )
         self.original_source_type = (
             ""  # type of data (ingest type) of the original source
@@ -52,6 +51,8 @@ class TechnicalMetadataModel:
 
         self.original_source_link = (
             ""  # link to document, if available, will be an index in accel
+            # FIXME:// this needs to become the 'type' of the original source, not a link, this maps to the
+            # dag that does the accession to the accel database model
         )
         self.history = []  # TechnicalMetadataHistory
         self.dissemination_endpoints = []  # DisseminationEndpoint

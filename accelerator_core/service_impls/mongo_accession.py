@@ -34,6 +34,17 @@ class ValidationResult:
         self.log = []  # log messages with errors
 
 
+class DuplicateCheckResult:
+    def __init__(self):
+        self.duplicate_found = False
+        self.document_id = ""  # database document id, unique id in database
+        self.ingest_type = ""  # accel type corresponding to type matrix
+        self.original_source_identifier = ""  # unique key of original source
+        self.orginal_source_type = (
+            ""  # corresponds to the dag that ingests the source into accelerator
+        )
+
+
 class AccessionMongo(Accession):
     """
     Accession module based on Mongo persistence
@@ -232,6 +243,49 @@ class AccessionMongo(Accession):
             coll_name = type_matrix_info.collection
 
         return db[coll_name]
+
+    def check_if_insert_or_update(
+        self, ingest_payoad: IngestPayload, temp_doc: bool = False
+    ) -> DuplicateCheckResult:
+        """
+        Evaluates if a document should be inserted or updated in the database based on its
+        original source details. It searches the database to identify potential duplicates
+        by matching against the provided source identifier and link information.
+
+        Parameters:
+            ingest_payoad (IngestPayload): The payload containing ingestion source details.
+            temp_doc (bool, optional): Indicates if the temporary document collection should
+                be used. Defaults to False.
+
+        Returns:
+            DuplicateCheckResult: A result object encapsulating whether a duplicate was
+            found, and additional metadata including the document ID if a duplicate exists.
+        """
+
+        logger.info("check_if_insert_or_update()")
+        result = DuplicateCheckResult()
+
+        ingest_source_descriptor = ingest_payoad.ingest_source_descriptor
+        original_source_identifier = ingest_source_descriptor.ingest_item_id
+        original_source_type = ingest_source_descriptor.ingest_link
+        ingest_type = ingest_source_descriptor.ingest_type
+        result.original_source_identifier = original_source_identifier
+        result.orginal_source_type = original_source_type
+        db = self.connect_to_db()
+        coll = self.build_collection_reference(db, ingest_type, temp_doc=temp_doc)
+        query = {
+            "technical_metadata.original_source_link": original_source_type,
+            "technical_metadata.original_source_identifier": original_source_identifier,
+        }
+        doc = coll.find_one(query)
+
+        if doc:
+            result.duplicate_found = True
+            result.document_id = str(doc["_id"])
+        else:
+            result.duplicate_found = False
+
+        return result
 
     def pre_validate_ingest_source_descriptor(
         self, ingest_payload: IngestPayload

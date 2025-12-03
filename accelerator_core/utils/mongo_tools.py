@@ -18,6 +18,30 @@ aip_collection = "aip_store"
 temp_collection = "temp_store"
 
 
+def is_mongo_direct(accel_config: AcceleratorConfig) -> bool:
+    """
+    Determines if the given accelerator configuration uses a direct MongoDB connection.
+
+    This function evaluates whether the provided `AcceleratorConfig` object is
+    configured for direct communication with MongoDB, returning a boolean result.
+
+    Args:
+        accel_config (AcceleratorConfig): The configuration object for the accelerator.
+
+    Returns:
+        bool: True if the accelerator configuration uses a direct MongoDB connection,
+        False otherwise.
+    """
+
+    mongo_direct = accel_config.params.get("mongo.direct", None)
+
+    if not mongo_direct:
+        return False
+
+    val = mongo_direct.lower() == "true"
+    return val
+
+
 def build_connection_string(accel_config: AcceleratorConfig) -> str:
     """
     Build a mongo connection string from properties
@@ -28,6 +52,7 @@ def build_connection_string(accel_config: AcceleratorConfig) -> str:
 
     """
 
+    mongo_direct = is_mongo_direct(accel_config)
     conn = f'mongodb://{accel_config.params["mongo.user"]}:{accel_config.params["mongo.password"]}@{accel_config.params["mongo.host"]}:{accel_config.params["mongo.port"]}/'
 
     if accel_config.params.get("mongo.replicaset", None):
@@ -37,8 +62,14 @@ def build_connection_string(accel_config: AcceleratorConfig) -> str:
             f"?replicaSet={accel_config.params['mongo.replicaset']}&authSource=admin"
         )
 
+        if mongo_direct:
+            conn += "&directConnection=true"
+
+    else:
+        if mongo_direct:
+            conn += "?directConnection=true"
+
     logger.info(f"connection string: {conn}")
-    logger.info(f"pwd: {accel_config.params['mongo.password']}")
 
     return conn
 
