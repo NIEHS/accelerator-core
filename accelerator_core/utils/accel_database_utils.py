@@ -83,6 +83,47 @@ class AccelDatabaseUtils:
         doc = convert_doc_to_json(doc)
         return doc
 
+    def find_doc_by_original_source_identifier(
+        self,
+        ingest_type: str,
+        original_source_link: str,
+        original_source_identifier: str,
+        temp_doc: bool = False,
+    ) -> dict:
+        """
+        Find a document based on the given original source link and identifier.
+
+        This method searches for a document in the database using the provided
+        original source link and original source identifier. The optional
+        temp_data parameter determines whether to look in the temporary data
+        storage.
+
+        Parameters:
+        ingest_type: str
+            String identifier of the database collection to search. This is the same as the type matrix entry for the document type.
+        original_source_link: str
+            The link to the original source of the document. In reality this is a string that denotes the DAG that ingests the source into the accelerator.
+            E.g. "cedar" for the PCOR cedar ingest DAG
+        original_source_identifier: str
+            The unique identifier associated with the original source. This would be the identifier in the source, such
+            as the CEDAR document id
+        temp_doc: bool, optional
+            Flag indicating whether to search in temporary data storage. Defaults to False.
+
+        Returns:
+        dict
+            A dictionary representing the document details if found, otherwise None
+        """
+
+        db = self.connect_to_db()
+        coll = self.build_collection_reference(ingest_type, temp_doc=temp_doc)
+        query = {
+            "technical_metadata.original_source_link": original_source_link,
+            "technical_metadata.original_source_identifier": original_source_identifier,
+        }
+        doc = coll.find_one(query)
+        return doc
+
     def connect_to_db(self):
         return self.accel_db_context.db
 

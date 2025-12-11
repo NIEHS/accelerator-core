@@ -10,6 +10,7 @@ from accelerator_core.schema.models.base_model import (
     get_time_now_iso,
 )
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
+from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
 from accelerator_core.utils.schema_tools import SchemaValidationResult
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_source_ingest import (
@@ -65,6 +66,9 @@ class AccessionMongo(Accession):
         """
         super().__init__(accelerator_config, xcom_properties_resolver)
         self.accel_db_context = accel_db_context
+        self.accel_database_utils = AccelDatabaseUtils(
+            accelerator_config, accel_db_context
+        )
 
     def validate(
         self, json_dict: dict, ingest_source_descriptor: IngestSourceDescriptor
@@ -264,20 +268,19 @@ class AccessionMongo(Accession):
 
         logger.info("check_if_insert_or_update()")
         result = DuplicateCheckResult()
-
         ingest_source_descriptor = ingest_payoad.ingest_source_descriptor
         original_source_identifier = ingest_source_descriptor.ingest_item_id
         original_source_type = ingest_source_descriptor.ingest_link
         ingest_type = ingest_source_descriptor.ingest_type
         result.original_source_identifier = original_source_identifier
         result.orginal_source_type = original_source_type
-        db = self.connect_to_db()
-        coll = self.build_collection_reference(db, ingest_type, temp_doc=temp_doc)
-        query = {
-            "technical_metadata.original_source_link": original_source_type,
-            "technical_metadata.original_source_identifier": original_source_identifier,
-        }
-        doc = coll.find_one(query)
+
+        doc = self.accel_database_utils.find_doc_by_original_source_identifier(
+            ingest_type,
+            original_source_type,
+            original_source_identifier,
+            temp_doc=temp_doc,
+        )
 
         if doc:
             result.duplicate_found = True
