@@ -150,6 +150,10 @@ class AccelDatabaseUtils:
 
         return db[coll_name]
 
+    @staticmethod
+    def extract_id_from_doc(doc: dict) -> str:
+        return str(doc["_id"])
+
     def log_document_event(
         self,
         document_id: str,

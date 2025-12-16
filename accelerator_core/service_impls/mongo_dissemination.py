@@ -145,21 +145,23 @@ class DisseminationMongo(Dissemination):
                 f"Document not found for original source: {original_source} and document identifier: {original_document_identifier} "
             )
 
+        doc_id = AccelDatabaseUtils.extract_id_from_doc(doc)
+
         event = create_timestamped_log(
-            f"Disseminating document  original source: {original_source} and document identifier: {original_document_identifier} of type {dissemination_request.ingest_type} to target: {dissemination_request.dissemination_type}"
+            f"Disseminating document  original source: {original_source} and document identifier: {original_document_identifier} as doc_id: {doc_id} of type {dissemination_request.ingest_type} to target: {dissemination_request.dissemination_type}"
         )
 
-        """
+        dissemination_request.dissemination_item_id = doc_id
+
         self.accel_database_utils.log_document_event(
-            str(),
+            doc_id,
             event,
             dissemination_request.ingest_type,
             dissemination_request.temp_collection,
         )
-        """
 
         dissemination_payload = DisseminationPayload(dissemination_request)
-        # self.report_individual_dissemination(dissemination_payload, document_id, doc)
+        self.report_individual_dissemination(dissemination_payload, doc_id, doc)
         dissemination_payload.dissemination_successful = True
         return dissemination_payload
 
