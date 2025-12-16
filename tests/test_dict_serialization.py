@@ -14,7 +14,6 @@ from accelerator_core.workflow.accel_source_ingest import (
 class TestDictSerialization(unittest.TestCase):
     def test_ingest_source_description(self):
         ingest_source_descriptor = IngestSourceDescriptor()
-        ingest_source_descriptor.ingest_format = "format"
         ingest_source_descriptor.ingest_link = "link"
         ingest_source_descriptor.ingest_type = "type"
         ingest_source_descriptor.ingest_identifier = "identifier"
@@ -31,7 +30,6 @@ class TestDictSerialization(unittest.TestCase):
         self.assertIsNotNone(actual)
 
         actual_from_dict = IngestSourceDescriptor.from_dict(actual)
-        self.assertEqual(actual_from_dict.ingest_format, "format")
         self.assertEqual(actual_from_dict.ingest_link, "link")
         self.assertEqual(actual_from_dict.ingest_type, "type")
         self.assertEqual(actual_from_dict.ingest_identifier, "identifier")
@@ -43,7 +41,6 @@ class TestDictSerialization(unittest.TestCase):
 
     def test_ingest_payload(self):
         ingest_source_descriptor = IngestSourceDescriptor()
-        ingest_source_descriptor.ingest_format = "format"
         ingest_source_descriptor.ingest_link = "link"
         ingest_source_descriptor.ingest_type = "type"
         ingest_source_descriptor.ingest_identifier = "identifier"

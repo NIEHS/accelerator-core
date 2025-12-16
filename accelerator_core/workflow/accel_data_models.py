@@ -33,7 +33,6 @@ class IngestSourceDescriptor:
             "schema_version": self.schema_version,
             "ingest_identifier": self.ingest_identifier,
             "ingest_link": self.ingest_link,
-            "ingest_format": self.ingest_format,
             "use_tempfiles": self.use_tempfiles,
         }
         return serialized
@@ -49,7 +48,6 @@ class IngestSourceDescriptor:
         ingest_source_descriptor.ingest_identifier = input_dict["ingest_identifier"]
         ingest_source_descriptor.ingest_link = input_dict["ingest_link"]
         ingest_source_descriptor.ingest_item_id = input_dict["ingest_item_id"]
-        ingest_source_descriptor.ingest_format = input_dict["ingest_format"]
         ingest_source_descriptor.use_tempfiles = sanitize_boolean(
             input_dict["use_tempfiles"]
         )
