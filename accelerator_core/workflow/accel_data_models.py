@@ -19,10 +19,8 @@ class IngestSourceDescriptor:
         self.ingest_item_id = (
             None  # unique id if this is an individual item, blank for a batch
         )
-        self.ingest_link = None  # link to the ingest source
-        self.ingest_format = (
-            None  # data source of the ingest (e.g. CEDAR, CAFE, Data.Gov)
-        )
+        self.ingest_link = None  # link to the ingest source, currently is a string value indicating the original
+        # source of the data, e.g. "cedar"
         self.use_tempfiles = False  # request temp files versus inline. System behavior for a task will consult this flag
 
     def to_dict(self) -> dict:

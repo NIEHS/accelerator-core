@@ -59,7 +59,8 @@ class DisseminationMongo(Dissemination):
         self, document_id: str, dissemination_request: DisseminationDescriptor
     ) -> DisseminationPayload:
         """
-        Disseminate an individual document, identified by its type (parent collection) and its id
+        Disseminate an individual document, identified by its type (parent collection) and its id in the accelerator
+        database
         @param document_id: str with unique document id
         @param dissemination_request: DisseminationDescriptor that describes the type, version, and
         other information
@@ -91,6 +92,74 @@ class DisseminationMongo(Dissemination):
 
         dissemination_payload = DisseminationPayload(dissemination_request)
         self.report_individual_dissemination(dissemination_payload, document_id, doc)
+        dissemination_payload.dissemination_successful = True
+        return dissemination_payload
+
+    def disseminate_by_original_source_and_id(
+        self,
+        original_source: str,
+        original_document_identifier,
+        dissemination_request: DisseminationDescriptor,
+    ) -> DisseminationPayload:
+        """
+        This method is used for creating a dissemination payload by applying a filter
+        that selects specific documents. The filtering mechanism is determined by the
+        implementation and works on provided source and document identifiers. This is meant to return a single
+        document based on its original source (e.g. "cedar") and the original identifier (e.g. the document DOI in cedar).
+
+        This is distinguised from the dissemination_by_id method which is meant to return a single document based on its
+        accelerator database identifier.
+
+        Parameters:
+            original_source: str
+                The originating source of the document, used to identify the context or
+                source system of the document.
+            original_document_identifier
+                The unique identifier of the document associated with the original source.
+            dissemination_request: DisseminationDescriptor
+                The object encapsulating metadata, rules, and instructions for how the document
+                should be disseminated.
+
+        Returns:
+            DisseminationPayload
+                The resulting payload from the dissemination operation, containing the processed
+                document and relevant dissemination metadata.
+        """
+
+        logger.info(
+            f"Disseminating document based on original source: {original_source} and document identifier: {original_document_identifier} of type {dissemination_request.ingest_type} to target: {dissemination_request.dissemination_type}"
+        )
+
+        doc = self.accel_database_utils.find_doc_by_original_source_identifier(
+            dissemination_request.ingest_type,
+            original_source,
+            original_document_identifier,
+            dissemination_request.temp_collection,
+        )
+
+        if doc is None:
+            logger.warning(
+                f"Document not found for original source: {original_source} and document identifier: {original_document_identifier} "
+            )
+            raise Exception(
+                f"Document not found for original source: {original_source} and document identifier: {original_document_identifier} "
+            )
+
+        event = create_timestamped_log(
+            f"Disseminating document  original source: {original_source} and document identifier: {original_document_identifier} of type {dissemination_request.ingest_type} to target: {dissemination_request.dissemination_type}"
+        )
+
+        """
+        self.accel_database_utils.log_document_event(
+            str(),
+            event,
+            dissemination_request.ingest_type,
+            dissemination_request.temp_collection,
+        )
+        """
+
+        dissemination_payload = DisseminationPayload(dissemination_request)
+        # self.report_individual_dissemination(dissemination_payload, document_id, doc)
         dissemination_payload.dissemination_successful = True
         return dissemination_payload
 

@@ -43,6 +43,39 @@ class Dissemination(AcceleratorWorkflowTask):
         """
         pass
 
+    def disseminate_by_original_source_and_id(
+        self,
+        original_source: str,
+        original_document_identifier,
+        dissemination_request: DisseminationDescriptor,
+    ) -> DisseminationPayload:
+        """
+        Apply a filter to create and disseminate a single document specified target.
+
+        This method is used for creating a dissemination payload by applying a filter
+        that selects specific documents. The filtering mechanism is determined by the
+        implementation and works on provided source and document identifiers. This is meant to return a single
+        document based on its original source (e.g. "cedar") and the original identifier (e.g. the document DOI in cedar).
+
+        This is distinguised from the dissemination_by_id method which is meant to return a single document based on its
+        accelerator database identifier.
+
+        Parameters:
+            original_source: str
+                The source where the original document resides. This represents the DAG that ingested the document
+                originally
+            original_document_identifier
+                The identifier of the document in the original source. (e.g. the CEDAR generated document GUID).
+            dissemination_request: DisseminationDescriptor
+                A descriptor that details the dissemination type, version, and
+                additional relevant information.
+
+        Returns:
+            DisseminationPayload
+                The payload containing the documents selected for dissemination.
+        """
+        pass
+
     def disseminate_by_filter(
         self,
         filter: DisseminationFilter,

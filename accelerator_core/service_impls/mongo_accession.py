@@ -131,11 +131,9 @@ class AccessionMongo(Accession):
             raise Exception("no technical metadata found, invalid record")
 
         technical_metadata["created"] = get_time_now_iso()
-
-        technical_metadata["original_source"] = (
+        technical_metadata["original_source_identifier"] = (
             ingest_payload.ingest_source_descriptor.ingest_item_id
         )
-
         technical_metadata["original_source_link"] = (
             ingest_payload.ingest_source_descriptor.ingest_link
         )

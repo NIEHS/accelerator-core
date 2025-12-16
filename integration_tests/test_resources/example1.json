@@ -199,8 +199,9 @@
     "created": "",
     "modified": "",
     "verified": "",
-    "original_source_type": "",
-    "target_schema_type": "",
+    "original_source_type": "cedar",
+    "target_schema_type": "accelerator",
+    "target_schema_version": "1.0.2",
     "original_source_identifier": "",
     "original_source_link": "",
     "history": [

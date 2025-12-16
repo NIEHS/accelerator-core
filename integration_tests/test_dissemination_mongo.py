@@ -160,6 +160,65 @@ class TestDisseminationMongo(unittest.TestCase):
 
             self.assertIsNotNone(actual)
 
+    def test_disseminate_by_original_source_and_id(self):
+        ingest_source_descriptor = IngestSourceDescriptor()
+        ingest_source_descriptor.ingest_type = "accelerator"
+        ingest_source_descriptor.schema_version = "1.0.2"
+        ingest_source_descriptor.ingest_identifier = "myrunid"
+        ingest_source_descriptor.ingest_item_id = (
+            "test_disseminate_by_original_source_and_id"
+        )
+        ingest_source_descriptor.ingest_link = "ingest_source"
+        ingest_source_descriptor.submitter_name = "mysubmittername"
+        ingest_source_descriptor.submitter_email = "mysubmitteremail"
+        ingest_source_descriptor.use_tempfiles = False
+
+        ingest_result = IngestPayload(ingest_source_descriptor)
+
+        json_path = determine_test_resource_path("example1.json", "integration_tests")
+        with open(json_path) as json_data:
+            d = json.load(json_data)
+            ingest_result.payload.append(d)
+            ingest_result.payload_inline = True
+
+            xcom_props_resolver = DirectXcomPropsResolver(
+                temp_files_supported=False, temp_files_location=""
+            )
+
+            accession = AccessionMongo(
+                self.__class__._accelerator_config,
+                self.__class__._accel_db_context,
+                xcom_props_resolver,
+            )
+
+            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
+            self.assertIsNotNone(id)
+
+            # now get the dissemination for this item
+
+            dissemination_request = DisseminationDescriptor()
+            dissemination_request.dissemination_type = "dataverse"
+            dissemination_request.temp_collection = False
+            dissemination_request.ingest_type = "accelerator"
+            dissemination_request.schema_version = "1.0.2"
+            dissemination_request.inline_results = True
+            dissemination_request.dissemination_identifier = "test_dissemination"
+            dissemination_request.dissemination_item_id = id
+
+            dissemination = DisseminationMongo(
+                self.__class__._accelerator_config,
+                xcom_props_resolver,
+                self.__class__._accel_db_context,
+            )
+
+            dissemination_payload = dissemination.disseminate_by_original_source_and_id(
+                ingest_source_descriptor.ingest_link,
+                ingest_source_descriptor.ingest_item_id,
+                dissemination_request,
+            )
+
+            self.assertIsNotNone(dissemination_payload)
+
     def test_dissemination_not_found(self):
         ingest_source_descriptor = IngestSourceDescriptor()
         id = "95E43738404BEECDF66573B4"
