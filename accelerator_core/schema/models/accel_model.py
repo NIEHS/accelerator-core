@@ -104,6 +104,19 @@ class AccelDataResourceModel:
         self.has_visualization_tool = False
 
 
+class AccelPopulationDataModel:
+    """
+    Population data
+    """
+
+    def __init__(self):
+        self.individual_level = False
+        self.population_studies = []
+        self.linkable_encounters = False
+        self.biospecimens_from_humans = False
+        self.biospecimens_type = []
+
+
 class AccelPersonnelModel:
     """
     Modeling personnel connections to a resource
@@ -188,19 +201,6 @@ class AccelTemporalDataModel:
         self.temporal_resolution = []
         self.temporal_resolution_all_available = []
         self.temporal_resolution_comment = ""
-
-
-class AccelPopulationDataModel:
-    """
-    Population data
-    """
-
-    def __init__(self):
-        self.individual_level = False
-        self.population_studies = []
-        self.linkable_encounters = False
-        self.biospecimens_from_humans = False
-        self.biospecimens_type = []
 
 
 class AccelGeospatialDataModel:
