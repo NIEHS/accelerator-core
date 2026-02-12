@@ -2,6 +2,8 @@
 General methods to interact with the mongo database
 """
 
+from typing import Optional
+
 import bson
 from bson import ObjectId
 from pymongo.synchronous.client_session import ClientSession
@@ -61,7 +63,11 @@ class AccelDatabaseUtils:
         coll.delete_many({})
 
     def find_by_id(
-        self, document_id: str, document_type: str, temp_doc: bool = False
+        self,
+        document_id: str,
+        document_type: str,
+        temp_doc: bool = False,
+        session: Optional[ClientSession] = None,
     ) -> dict:
         """
         Find the document by id, from either the AIP store or the temporary store
@@ -76,7 +82,7 @@ class AccelDatabaseUtils:
 
         db = self.connect_to_db()
         coll = self.build_collection_reference(document_type, temp_doc=False)
-        doc = coll.find_one({"_id": ObjectId(document_id)})
+        doc = coll.find_one({"_id": ObjectId(document_id)}, session=session)
         if not doc:
             raise AccelDocumentNotFoundException(document_id, document_type, temp_doc)
 
@@ -89,6 +95,7 @@ class AccelDatabaseUtils:
         original_source_link: str,
         original_source_identifier: str,
         temp_doc: bool = False,
+        session: Optional[ClientSession] = None,
     ) -> dict:
         """
         Find a document based on the given original source link and identifier.
@@ -121,7 +128,7 @@ class AccelDatabaseUtils:
             "technical_metadata.original_source_link": original_source_link,
             "technical_metadata.original_source_identifier": original_source_identifier,
         }
-        doc = coll.find_one(query)
+        doc = coll.find_one(query, session=session)
         return doc
 
     def connect_to_db(self):
@@ -191,7 +198,16 @@ class AccelDatabaseUtils:
                         )
 
                     result = collection.update_one(
-                        {"_id": ObjectId(document_id)}, update_operation
+                        {"_id": ObjectId(document_id)},
+                        update_operation,
+                        session=session,
+                    )
+
+                    logger.info(
+                        "update_one: matched=%s modified=%s acknowledged=%s",
+                        result.matched_count,
+                        result.modified_count,
+                        result.acknowledged,
                     )
 
                     if result.modified_count > 0:
@@ -203,7 +219,6 @@ class AccelDatabaseUtils:
                             f"No documents updated for {document_id}. Possible no match or no change."
                         )
 
-                    session.commit_transaction()
                 except Exception as e:
                     logger.error(f"Transaction failed: {str(e)}")
                     raise  # Re-raise the exception after logging

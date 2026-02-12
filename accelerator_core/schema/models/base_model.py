@@ -116,14 +116,17 @@ class DisseminationEndpoint:
         self.unique_identifier = (
             ""  # doi or other identifier at the published endpoint (if available)
         )
-        self.link = ""  # direct link to the published record (if available)
+        self.link = ""  # direct link to the published record (if available), may also hold stylized information
+        # for alternative access methods (e.g. host:port:schema). This is dependent on the dissemination endpoint
         self.date = ""  # date of dissemination or update of an existing dissemination
 
     def to_dict(self):
         val = {}
         val["endpoint_type"] = self.endpoint_type
         val["unique_identifier"] = self.unique_identifier
-        val["link"] = self.link
+        val["link"] = (
+            self.link
+        )  # http link or otherwise styled coordinates where the data can be found
         val["date"] = self.date
         return val
 

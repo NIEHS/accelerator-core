@@ -72,6 +72,7 @@ class MongoDisseminationReporter(DisseminationReporter):
                         dissemination_link_report.original_source_identifier,
                         dissemination_link_report.target_schema_type,
                         dissemination_link_report.temporary_data,
+                        session=session,
                     )
 
                     endpoints = doc["technical_metadata"]["dissemination_endpoints"]
