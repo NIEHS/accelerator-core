@@ -5,7 +5,6 @@ import accelerator_core
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.service_impls.mongo_accession import AccessionMongo
 from accelerator_core.utils import resource_utils, mongo_tools
-from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
 from accelerator_core.utils.accelerator_config import (
     AcceleratorConfig,
     config_from_file,
@@ -18,7 +17,7 @@ from accelerator_core.workflow.accel_source_ingest import (
 )
 
 
-class TestAccessionMongo(unittest.TestCase):
+class TestProvenance(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -38,12 +37,6 @@ class TestAccessionMongo(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls._accel_db_context.mongo_client.close()
-
-    def setUp(self):
-        accel_database_utils = AccelDatabaseUtils(
-            self.__class__._accelerator_config, self.__class__._accel_db_context
-        )
-        accel_database_utils.clear_collection("accelerator", temp_doc=False)
 
     def test_validation(self):
 
@@ -79,6 +72,7 @@ class TestAccessionMongo(unittest.TestCase):
         ingest_source_descriptor.ingest_link = "mylink"
         ingest_source_descriptor.submitter_name = "mysubmittername"
         ingest_source_descriptor.submitter_email = "mysubmitteremail"
+
         ingest_result = IngestPayload(ingest_source_descriptor)
 
         json_path = determine_resource_path(
@@ -107,49 +101,6 @@ class TestAccessionMongo(unittest.TestCase):
             actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
             self.assertIsNotNone(actual)
 
-    def test_ingest_and_check_for_duplicate(self):
-        ingest_source_descriptor = IngestSourceDescriptor()
-        ingest_source_descriptor.ingest_type = "accelerator"
-        ingest_source_descriptor.schema_version = "1.0.2"
-        ingest_source_descriptor.ingest_identifier = "myrunid"
-        ingest_source_descriptor.ingest_item_id = "test_ingest_and_check_for_duplicate"
-        ingest_source_descriptor.ingest_link = "mylink"
-        ingest_source_descriptor.submitter_name = "mysubmittername"
-        ingest_source_descriptor.submitter_email = "mysubmitteremail"
-        ingest_result = IngestPayload(ingest_source_descriptor)
-
-        json_path = determine_resource_path(
-            accelerator_core.schema, "accel-v1.0.2.json"
-        )
-        with open(json_path) as json_data:
-            d = json.load(json_data)
-
-            d["technical_metadata"][
-                "original_source_identifier"
-            ] = ingest_source_descriptor.ingest_item_id
-            d["technical_metadata"][
-                "original_source_link"
-            ] = ingest_source_descriptor.ingest_link
-
-            ingest_result.payload.append(d)
-            ingest_result.payload_inline = True
-
-            xcom_props_resolver = DirectXcomPropsResolver(
-                temp_files_supported=False, temp_files_location=""
-            )
-
-            accession = AccessionMongo(
-                self.__class__._accelerator_config,
-                self.__class__._accel_db_context,
-                xcom_props_resolver,
-            )
-
-            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
-            self.assertIsNotNone(id)
-
-            actual = accession.check_if_insert_or_update(ingest_result, False)
-            self.assertTrue(actual.duplicate_found)
-
     def test_find_by_id(self):
         json_path = determine_resource_path(
             accelerator_core.schema, "accel-v1.0.2.json"
@@ -163,6 +114,7 @@ class TestAccessionMongo(unittest.TestCase):
             ingest_source_descriptor.ingest_link = "mylink"
             ingest_source_descriptor.submitter_name = "mysubmittername"
             ingest_source_descriptor.submitter_email = "mysubmitteremail"
+
             ingest_result = IngestPayload(ingest_source_descriptor)
 
             d = json.load(json_data)
@@ -197,7 +149,6 @@ class TestAccessionMongo(unittest.TestCase):
             ingest_source_descriptor.ingest_link = "mylink"
             ingest_source_descriptor.submitter_name = "mysubmittername"
             ingest_source_descriptor.submitter_email = "mysubmitteremail"
-
             ingest_result = IngestPayload(ingest_source_descriptor)
 
             d = json.load(json_data)

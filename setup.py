@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="accelerator_core",
-    version="0.1.0",
+    version="0.1.1",
     description="Core libraries for the accelerator metadata backbone",
     author="Mike Conway",
     author_email="mike.conway@nih.gov",

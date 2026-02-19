@@ -1,0 +1,730 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "submission": {
+      "type": "object",
+      "properties": {
+        "submitter_name": {
+          "type": "string"
+        },
+        "submitter_email": {
+          "type": "string"
+        },
+        "submitter_comment": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "submitter_name",
+        "submitter_email"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "properties": {
+        "program": {
+          "type": "object",
+          "properties": {
+            "program_name": {
+              "type": "string"
+            },
+            "preferred_label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "program_name",
+            "preferred_label"
+          ]
+        },
+        "project": {
+          "type": "object",
+          "properties": {
+            "project_code": {
+              "type": "string"
+            },
+            "project_name": {
+              "type": "string"
+            },
+            "project_short_name": {
+              "type": "string"
+            },
+            "project_url": {
+              "type": "string"
+            },
+            "project_sponsor": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "name",
+                    "other_type"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "project_code",
+            "project_name"
+
+          ]
+        },
+        "resource": {
+          "type": "object",
+          "properties": {
+            "resource_name": {
+              "type": "string"
+            },
+            "resource_version": {
+              "type": "string"
+            },
+            "resource_short_name": {
+              "type": "string"
+            },
+            "resource_type": {
+              "type": "string"
+            },
+            "resource_url": {
+              "type": "string"
+            },
+            "resource:doi": {
+              "type": "string"
+            },
+            "resource_description": {
+              "type": "string"
+            },
+            "resource_domain": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "resource_keywords": {
+              "type": "array",
+              "items": {}
+            },
+            "resource_access_type": {
+              "type": "array",
+              "items": {}
+            },
+            "resource_license": {
+              "type": "object",
+              "properties": {
+                "license_name": {
+                  "type": "string"
+                },
+                "license_uri": {
+                  "type": "string"
+                }
+              }
+            },
+            "resource_reference": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "resource_reference_text": {
+                      "type": "string"
+                    },
+                    "resource_reference_link": {
+                      "type": "string"
+                    }
+                  }
+
+                }
+              ]
+            },
+            "resource_use_agreement": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "resource_use_agreement_text": {
+                      "type": "string"
+                    },
+                    "resource_use_agreement_link": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            },
+            "publication": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "citation": {
+                      "type": "string"
+                    },
+                    "citation_link": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            },
+            "is_static": {
+              "type": "boolean"
+            },
+            "payment_required": {
+              "type": "boolean"
+            },
+            "comments": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "resource_name",
+            "resource_type"
+          ]
+        },
+        "personnel": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "affiliation": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "identifier": {
+                  "type": "string"
+                },
+                "identifier_type": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            }
+          ]
+        },
+        "data_resource": {
+          "type": "object",
+          "properties": {
+            "exposure_media": {
+              "type": "array",
+              "items": {}
+            },
+            "measures": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "measurement_method": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "time_extent_start": {
+              "type": "string"
+            },
+            "time_extent_end": {
+              "type": "string"
+            },
+            "time_available_comment": {
+              "type": "string"
+            },
+            "update_frequency": {
+              "type": "array",
+              "items": {}
+            },
+            "key_variables": {
+              "type": "array",
+              "items": {}
+            },
+            "data_formats": {
+              "type": "array",
+              "items": {}
+            },
+            "example_metrics": {
+              "type": "array",
+              "items": {}
+            },
+            "data_location": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "data_location_text": {
+                      "type": "string"
+                    },
+                    "data_location_link": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            },
+            "includes_citizen_collected": {
+              "type": "boolean"
+            },
+            "has_api": {
+              "type": "boolean"
+            },
+            "has_visualization_tool": {
+              "type": "boolean"
+            }
+          }
+        },
+        "data_usage": {
+          "type": "object",
+          "properties": {
+            "intended_use": {
+              "type": "array",
+              "items": {}
+            },
+            "strengths": {
+              "type": "array",
+              "items": {}
+            },
+            "limitations": {
+              "type": "array",
+              "items": {}
+            },
+            "suggested_audience": {
+              "type": "array",
+              "items": {}
+            }
+          }
+        },
+        "temporal_data": {
+          "type": "object",
+          "properties": {
+            "temporal_resolution": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "temporal_resolution_comment": {
+              "type": "string"
+            }
+          }
+        },
+        "population_data": {
+          "type": "object",
+          "properties": {
+            "individual_level": {
+              "type": "boolean"
+            },
+            "linkable_encounters": {
+              "type": "boolean"
+            },
+            "population_studies": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "biospecimens_from_humans": {
+              "type": "boolean"
+            },
+            "biospecimens_type": {
+              "type": "array",
+              "items": {}
+            }
+          }
+        },
+        "geospatial_data": {
+          "type": "object",
+          "properties": {
+            "spatial_resolution": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "spatial_resolution_comment": {
+              "type": "string"
+            },
+            "spatial_coverage": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "spatial_bounding_box": {
+              "type": "array",
+              "items": {}
+            },
+            "geometry_type": {
+              "type": "array",
+              "items": {}
+            },
+            "geometry_source": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "model_methods": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "geographic_feature": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "computational_workflow": {
+          "type": "object",
+          "properties": {
+            "tool_type": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "is_open": {
+              "type": "boolean"
+            },
+            "languages": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string"
+                    },
+                    "other_type": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "value",
+                    "other_type"
+                  ]
+                }
+              ]
+            },
+            "use_tools": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "tool_text": {
+                      "type": "string"
+                    },
+                    "tool_link": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            },
+            "example_applications": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "tool_text": {
+                      "type": "string"
+                    },
+                    "tool_link": {
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "required": [
+        "program",
+        "project",
+        "resource",
+        "personnel",
+        "data_resource",
+        "data_usage",
+        "temporal_data",
+        "population_data",
+        "geospatial_data",
+        "computational_workflow"
+      ]
+    },
+    "technical_metadata": {
+      "type": "object",
+      "properties": {
+        "created": {
+          "type": "string"
+        },
+        "modified": {
+          "type": "string"
+        },
+        "verified": {
+          "type": "string"
+        },
+        "target_schema_type": {
+          "type": "string"
+        },
+        "target_schema_version": {
+          "type": "string"
+        },
+        "original_source_type": {
+          "type": "string"
+        },
+        "original_source_identifier": {
+          "type": "string"
+        },
+        "original_source_link": {
+          "type": "string"
+        },
+        "history": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "timestamp": {
+                  "type": "string"
+                },
+                "msg": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "timestamp",
+                "msg"
+              ]
+            }
+          ]
+        },
+        "dissemination_endpoints": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "endpoint_type": {
+                  "type": "string"
+                },
+                "unique_identifier": {
+                  "type": "string"
+                },
+                "link": {
+                  "type": "string"
+                },
+                "date": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "endpoint_type",
+                "date"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "created",
+        "target_schema_type",
+        "original_source_type",
+        "original_source_identifier",
+        "history",
+        "dissemination_endpoints"
+      ]
+    }
+  },
+  "required": [
+    "submission",
+    "data",
+    "technical_metadata"
+  ]
+}

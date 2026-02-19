@@ -174,4 +174,4 @@ cython_debug/
 .DS_Store
 
 # ignore generated files
-tests/test_resources/temp_files/*
+tests/test_resources/temp_dirs/*

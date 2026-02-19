@@ -10,5 +10,5 @@ class TestTemplateProcessor(unittest.TestCase):
 
     def test_get_accel_template(self):
         templateProcessor = AccelTemplateProcessor()
-        actual = templateProcessor.retrieve_template("accel", "1.0.0")
+        actual = templateProcessor.retrieve_template("accel", "1.0.1")
         self.assertIsInstance(actual, Template)

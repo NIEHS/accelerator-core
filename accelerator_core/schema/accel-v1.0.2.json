@@ -28,7 +28,7 @@
       "resource_short_name": "",
       "resource_type": "",
       "resource_url": "",
-      "resource:doi": "",
+      "resource_doi": "",
       "resource_description": "",
       "resource_domain": [
         {
@@ -199,14 +199,25 @@
     "created": "",
     "modified": "",
     "verified": "",
-    "original_source_type": "cedar",
-    "target_schema_type": "accelerator",
-    "target_schema_version": "1.0.2",
+    "target_schema_type": "",
+    "target_schema_version": "",
+    "original_source_type": "",
     "original_source_identifier": "",
     "original_source_link": "",
     "history": [
-
+      {
+        "timestamp": "",
+        "msg": ""
+      }
     ],
-    "dissemination_endpoints": []
+    "dissemination_endpoints": [
+      {
+        "endpoint_type": "",
+        "unique_identifier": "",
+        "link": "",
+        "date": ""
+      }
+
+    ]
   }
 }

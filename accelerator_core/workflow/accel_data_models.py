@@ -19,8 +19,8 @@ class IngestSourceDescriptor:
         self.ingest_item_id = (
             None  # unique id if this is an individual item, blank for a batch
         )
-        self.ingest_link = None  # link to the ingest source
-        self.ingest_format = None  # reserved
+        self.ingest_link = None  # link to the ingest source, currently is a string value indicating the original
+        # source of the data, e.g. "cedar"
         self.use_tempfiles = False  # request temp files versus inline. System behavior for a task will consult this flag
 
     def to_dict(self) -> dict:
@@ -33,7 +33,6 @@ class IngestSourceDescriptor:
             "schema_version": self.schema_version,
             "ingest_identifier": self.ingest_identifier,
             "ingest_link": self.ingest_link,
-            "ingest_format": self.ingest_format,
             "use_tempfiles": self.use_tempfiles,
         }
         return serialized
@@ -49,7 +48,6 @@ class IngestSourceDescriptor:
         ingest_source_descriptor.ingest_identifier = input_dict["ingest_identifier"]
         ingest_source_descriptor.ingest_link = input_dict["ingest_link"]
         ingest_source_descriptor.ingest_item_id = input_dict["ingest_item_id"]
-        ingest_source_descriptor.ingest_format = input_dict["ingest_format"]
         ingest_source_descriptor.use_tempfiles = sanitize_boolean(
             input_dict["use_tempfiles"]
         )
@@ -113,17 +111,21 @@ class DisseminationDescriptor:
         self.submitter_name = None
         self.submitter_email = None
         self.submit_date = None
-        self.ingest_type = None  # matches type in type matrix
+        self.ingest_type = None  # matches type in type matrix, this is the source in accel for the dissemination
         self.schema_version = None  # version of the specific ingest_type
         self.temp_collection = False  # is this in the temp collection
-        self.dissemination_type = None  # identifier for the target type
+        self.dissemination_type = (
+            None  # contains the endpoint to which the dissemination is made
+        )
         self.by_filter = False  # true if dissemination by a filter
         self.dissemination_version = None  # x.x.x version information for dissemination
-        self.dissemination_identifier = None  # run id of the dissemination process
-        self.dissemination_item_id = (
-            None  # unique id if this is an individual item, blank for a batch
+        self.dissemination_identifier = (
+            None  # generated name for xcom files for this particular dissemination
         )
-        self.dissemination_filter = {}
+        self.dissemination_item_id = None  # contains the accel db record id
+        self.dissemination_filter = (
+            {}
+        )  # specific filter used to do this dissemination (if by filter)
         self.use_tempfiles = False
 
     def to_dict(self) -> dict:

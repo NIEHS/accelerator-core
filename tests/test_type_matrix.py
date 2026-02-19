@@ -11,7 +11,7 @@ class TestTypeMatrix(unittest.TestCase):
         )
         actual = parse_type_matrix(test_path)
         self.assertIsNotNone(actual)
-        self.assertEqual("pcor", actual[0].type)
+        self.assertEqual("accelerator", actual[0].type)
 
 
 if __name__ == "__main__":

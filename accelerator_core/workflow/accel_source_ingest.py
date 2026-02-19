@@ -50,12 +50,20 @@ class AccelIngestComponent(AcceleratorWorkflowTask):
         Note that the IngestSourceDescriptor has an ingest_identifier that should be set to the run_id of the workflow
         or other representation of the process that is calling this task
 
+        This method is meant to cover ingest of one or many, based on unique parameters that are put into the additional_parameters
+        field. The ingest_single() method below is specifically meant to obtain one data record via the unique identifer
+        parameter (which can be a url, doi, guid, or other unique identifier that can tie the archived version back
+        to the original source.
+
+        Implementors can advertise the ability to link back to the original source via this identifier by
+        implementing the reacquire_supported method, returning true in that case.
+
         """
         pass
 
     def ingest_single(self, identifier, additional_parameters: dict) -> IngestPayload:
         """
-        proposed (WIP) method to support background access/update of accel data by checking the registered data/document
+        Method to support background access/update of accel data by checking the registered data/document
         on the original source
         :param identifier: identifier from the accel record that allows re-access on the target site
         :param additional_parameters: dict of individual parameters that can be fed to this method per implementation

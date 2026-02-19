@@ -13,14 +13,12 @@
       "project_code": "",
       "project_name": "",
       "project_short_name": "",
-      "project_url": "",
-      "project_sponsor": [
-        {
-          "type": "",
-          "name": "",
-          "other_type": false
-        }
-      ]
+      "project_guid": "",
+      "project_sponsor": {
+        "type": "",
+        "name": "",
+        "other_type": false
+      }
     },
     "resource": {
       "resource_name": "",
@@ -33,11 +31,11 @@
       "resource_domain": [
         {
           "name": "",
-          "other_type": false
+          "other_type": ""
         }
       ],
       "resource_keywords": [],
-      "resource_access_type": [],
+      "resource_access_type": "",
       "resource_license": {
         "license_name": "",
         "license_uri": ""
@@ -77,13 +75,13 @@
     "data_resource": {
       "exposure_media": [],
       "measures": [
-        {
+          {
           "value": "",
           "other_type": false
         }
       ],
       "measurement_method": [
-        {
+         {
           "value": "",
           "other_type": false
         }
@@ -91,7 +89,8 @@
       "time_extent_start": "",
       "time_extent_end": "",
       "time_available_comment": "",
-      "update_frequency": [],
+      "update_frequency": "",
+      "update_frequency_other": "",
       "key_variables": [],
       "data_formats": [],
       "example_metrics": [],
@@ -106,14 +105,14 @@
       "has_visualization_tool": false
     },
     "data_usage": {
-      "intended_use": [],
-      "strengths": [],
-      "limitations": [],
-      "suggested_audience": []
+      "intended_use": "",
+      "strengths": "",
+      "limitations": "",
+      "suggested_audience": ""
     },
     "temporal_data": {
       "temporal_resolution": [
-        {
+          {
           "value": "",
           "other_type": false
         }
@@ -124,7 +123,7 @@
       "individual_level": false,
       "linkable_encounters": false,
       "population_studies": [
-        {
+         {
           "value": "",
           "other_type": false
         }
@@ -135,21 +134,21 @@
     "geospatial_data": {
       "spatial_resolution": [
         {
-          "value": "",
+          "resolution:": "",
           "other_type": false
         }
       ],
       "spatial_resolution_comment": "",
       "spatial_coverage": [
         {
-          "value": "",
+          "coverage": "",
           "other_type": false
         }
       ],
       "spatial_bounding_box": [],
       "geometry_type": [],
       "geometry_source": [
-        {
+           {
           "value": "",
           "other_type": false
         }
@@ -159,6 +158,7 @@
           "value": "",
           "other_type": false
         }
+
       ],
       "geographic_feature": [
         {
@@ -168,45 +168,35 @@
       ]
     },
     "computational_workflow": {
-      "tool_type": [
-        {
+      "tool_type": {
           "value": "",
           "other_type": false
-        }
-      ],
+      },
       "is_open": false,
       "languages": [
-        {
+         {
           "value": "",
           "other_type": false
         }
-      ],
-      "use_tools": [
-        {
-          "tool_text": "",
-          "tool_link": ""
-        }
-      ],
-      "example_applications": [
-        {
-          "tool_text": "",
-          "tool_link": ""
-        }
       ]
-    }
+    },
+    "tool_text": "",
+    "tool_link": "",
+    "example_application": "",
+    "example_application_link": ""
   },
   "technical_metadata": {
     "created": "",
     "modified": "",
     "verified": "",
-    "original_source_type": "cedar",
-    "target_schema_type": "accelerator",
-    "target_schema_version": "1.0.2",
+    "original_source_type": "",
     "original_source_identifier": "",
     "original_source_link": "",
     "history": [
-
-    ],
-    "dissemination_endpoints": []
+      {
+        "timestamp": "",
+        "msg": ""
+      }
+    ]
   }
 }

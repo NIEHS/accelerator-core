@@ -3,12 +3,14 @@ Accession support concrete implementation for Mongo data store
 """
 
 from bson import ObjectId
+import pymongo
 
 from accelerator_core.schema.models.base_model import (
     create_timestamped_log,
     get_time_now_iso,
 )
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
+from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
 from accelerator_core.utils.schema_tools import SchemaValidationResult
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_source_ingest import (
@@ -24,6 +26,24 @@ logger = setup_logger("accelerator")
 """
 TODO: delegate calls to accel_database_utils - mc
 """
+
+
+class ValidationResult:
+
+    def __init__(self):
+        self.valid = True  # indicates whether the payload is ready
+        self.log = []  # log messages with errors
+
+
+class DuplicateCheckResult:
+    def __init__(self):
+        self.duplicate_found = False
+        self.document_id = ""  # database document id, unique id in database
+        self.ingest_type = ""  # accel type corresponding to type matrix
+        self.original_source_identifier = ""  # unique key of original source
+        self.orginal_source_type = (
+            ""  # corresponds to the dag that ingests the source into accelerator
+        )
 
 
 class AccessionMongo(Accession):
@@ -46,6 +66,9 @@ class AccessionMongo(Accession):
         """
         super().__init__(accelerator_config, xcom_properties_resolver)
         self.accel_db_context = accel_db_context
+        self.accel_database_utils = AccelDatabaseUtils(
+            accelerator_config, accel_db_context
+        )
 
     def validate(
         self, json_dict: dict, ingest_source_descriptor: IngestSourceDescriptor
@@ -60,13 +83,28 @@ class AccessionMongo(Accession):
     ) -> str:
         """
         Ingest the given document
-        :param ingest_payload: ingest source descriptor describing the type, schema,
-        and other configuration along with a payload (either in-line or a path to a document)
-        :param check_duplicates: bool indicates whether pre-checks for duplicate data run
-        :param temp_doc: bool indicates whether the document is temporary or not
-        :return: str with id of the ingested document
+
+        Args:
+            ingest_payload: ingest source descriptor describing the type, schema,
+                          and other configuration along with a payload
+            check_duplicates: bool indicates whether pre-checks for duplicate data run
+            temp_doc: bool indicates whether the document is temporary or not
+
+        Returns:
+            str: id of the ingested document
+
+        Raises:
+            Exception: If payload is invalid or document insertion fails
         """
         logger.info("ingest()")
+
+        result = self.pre_validate_ingest_source_descriptor(ingest_payload)
+
+        if not result.valid:
+            logger.warn(f"invalid ingest payload: ingest_payload={ingest_payload}")
+            for entry in result.log:
+                logger.warn(entry)
+            raise Exception("invalid ingest payload")
 
         payload_length = self.get_payload_length(ingest_payload)
 
@@ -84,32 +122,46 @@ class AccessionMongo(Accession):
 
         doc = self.payload_resolve(ingest_payload, 0)
 
-        # TODO: add check for update versus insert - mcc
+        # require unique id in technical metadata
 
         # look for technical metadata and add log message
         technical_metadata = doc.get("technical_metadata", None)
-        if technical_metadata:
-            technical_metadata["created"] = get_time_now_iso()
-            technical_metadata["original_source"] = (
-                ingest_payload.ingest_source_descriptor.ingest_item_id
-            )
-            technical_metadata["original_source_link"] = (
-                ingest_payload.ingest_source_descriptor.ingest_link
-            )
-            technical_metadata["history"].append(
-                create_timestamped_log(
-                    f"accession from {ingest_payload.ingest_source_descriptor.ingest_type} with identifier {ingest_payload.ingest_source_descriptor.ingest_item_id} in operation {ingest_payload.ingest_source_descriptor.ingest_identifier}"
-                ).to_dict()
-            )
 
-        result = self.validate(doc, ingest_payload.ingest_source_descriptor)
-        if not result.valid:
-            raise Exception(f"Invalid document provided {result.error_message}")
+        if not technical_metadata:
+            raise Exception("no technical metadata found, invalid record")
 
-        id = coll.insert_one(doc).inserted_id
+        technical_metadata["created"] = get_time_now_iso()
+        technical_metadata["original_source_identifier"] = (
+            ingest_payload.ingest_source_descriptor.ingest_item_id
+        )
+        technical_metadata["original_source_link"] = (
+            ingest_payload.ingest_source_descriptor.ingest_link
+        )
 
-        logger.info(f"inserted id {id}")
-        return id
+        technical_metadata["history"].append(
+            create_timestamped_log(
+                f"accession from {ingest_payload.ingest_source_descriptor.ingest_type} with identifier {ingest_payload.ingest_source_descriptor.ingest_item_id} in operation {ingest_payload.ingest_source_descriptor.ingest_identifier}"
+            ).to_dict()
+        )
+
+        try:
+            result = self.validate(doc, ingest_payload.ingest_source_descriptor)
+            if not result.valid:
+                raise Exception(f"Invalid document provided {result.error_message}")
+
+            inserted_id = coll.insert_one(doc).inserted_id
+            logger.info(f"Successfully inserted document with id {inserted_id}")
+            return str(inserted_id)
+
+        except pymongo.errors.DuplicateKeyError:
+            logger.error(f"Document already exists")
+            raise
+        except pymongo.errors.PyMongoError as e:
+            logger.error(f"Database error during insert: {str(e)}")
+            raise
+        except Exception as e:
+            logger.error(f"Unexpected error during insert: {str(e)}")
+            raise
 
     def decommission(
         self,
@@ -193,3 +245,93 @@ class AccessionMongo(Accession):
             coll_name = type_matrix_info.collection
 
         return db[coll_name]
+
+    def check_if_insert_or_update(
+        self, ingest_payoad: IngestPayload, temp_doc: bool = False
+    ) -> DuplicateCheckResult:
+        """
+        Evaluates if a document should be inserted or updated in the database based on its
+        original source details. It searches the database to identify potential duplicates
+        by matching against the provided source identifier and link information.
+
+        Parameters:
+            ingest_payoad (IngestPayload): The payload containing ingestion source details.
+            temp_doc (bool, optional): Indicates if the temporary document collection should
+                be used. Defaults to False.
+
+        Returns:
+            DuplicateCheckResult: A result object encapsulating whether a duplicate was
+            found, and additional metadata including the document ID if a duplicate exists.
+        """
+
+        logger.info("check_if_insert_or_update()")
+        result = DuplicateCheckResult()
+        ingest_source_descriptor = ingest_payoad.ingest_source_descriptor
+        original_source_identifier = ingest_source_descriptor.ingest_item_id
+        original_source_type = ingest_source_descriptor.ingest_link
+        ingest_type = ingest_source_descriptor.ingest_type
+        result.original_source_identifier = original_source_identifier
+        result.orginal_source_type = original_source_type
+
+        doc = self.accel_database_utils.find_doc_by_original_source_identifier(
+            ingest_type,
+            original_source_type,
+            original_source_identifier,
+            temp_doc=temp_doc,
+        )
+
+        if doc:
+            result.duplicate_found = True
+            result.document_id = str(doc["_id"])
+        else:
+            result.duplicate_found = False
+
+        return result
+
+    def pre_validate_ingest_source_descriptor(
+        self, ingest_payload: IngestPayload
+    ) -> ValidationResult:
+        """
+        Check for required data (submission and technical metadata) necessary to properly maintain
+        catalog data
+        """
+
+        validation_result = ValidationResult()
+
+        if not ingest_payload.ingest_source_descriptor.ingest_item_id:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.ingest_item_id is None"
+            )
+
+        if not ingest_payload.ingest_source_descriptor.ingest_link:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.ingest_link is None"
+            )
+
+        if not ingest_payload.ingest_source_descriptor.ingest_identifier:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.ingest_identifier is None"
+            )
+
+        if not ingest_payload.ingest_source_descriptor.ingest_type:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.ingest_type is None"
+            )
+
+        if not ingest_payload.ingest_source_descriptor.submitter_name:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.submitter_name is None"
+            )
+
+        if not ingest_payload.ingest_source_descriptor.submitter_email:
+            validation_result.valid = False
+            validation_result.log.append(
+                f"ingest_payload.ingest_source_descriptor.submitter_email is None"
+            )
+
+        return validation_result
