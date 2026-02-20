@@ -2,26 +2,22 @@
 General methods to interact with the mongo database
 """
 
+import logging
 from typing import Optional
 
-import bson
+from accelerator_core.utils.logger import setup_logger
 from bson import ObjectId
 from pymongo.synchronous.client_session import ClientSession
 
 from accelerator_core.schema.models.base_model import (
     TechnicalMetadataHistory,
-    DisseminationLinkReport,
 )
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
-from accelerator_core.utils.logger import setup_logger
-from bson.json_util import loads
-from bson.json_util import dumps, CANONICAL_JSON_OPTIONS
-
 from accelerator_core.utils.mongo_tools import convert_doc_to_json
 
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 
 class AccelDatabaseUtils:
@@ -186,7 +182,9 @@ class AccelDatabaseUtils:
             with session.start_transaction():
                 try:
 
-                    doc = collection.find_one({"_id": ObjectId(document_id)})
+                    doc = collection.find_one(
+                        {"_id": ObjectId(document_id)}, session=session
+                    )
                     if doc:
                         logger.info(f"Document {document_id} found before update.")
                     else:

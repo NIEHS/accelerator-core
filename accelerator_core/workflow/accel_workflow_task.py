@@ -1,9 +1,5 @@
-import logging
-
 from accelerator_core.payload import Payload
-from accelerator_core.utils.logger import setup_logger
 from accelerator_core.utils.xcom_utils import (
-    XcomProperties,
     XcomUtils,
     XcomPropsResolver,
 )
@@ -12,7 +8,9 @@ from accelerator_core.workflow.accel_data_models import (
     DisseminationPayload,
 )
 
-logger = setup_logger(__name__)
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class AcceleratorWorkflowTask:

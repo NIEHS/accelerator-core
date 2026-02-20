@@ -5,11 +5,10 @@ import accelerator_core
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.service_impls.mongo_accession import AccessionMongo
 from accelerator_core.service_impls.mongo_dissemination import DisseminationMongo
-from accelerator_core.utils import resource_utils, mongo_tools
+from accelerator_core.utils import resource_utils
 from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
 from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
 from accelerator_core.utils.accelerator_config import (
-    AcceleratorConfig,
     config_from_file,
 )
 from accelerator_core.utils.resource_utils import (

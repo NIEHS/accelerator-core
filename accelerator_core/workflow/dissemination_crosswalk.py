@@ -1,11 +1,7 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_data_models import DisseminationPayload
-from accelerator_core.workflow.accel_source_ingest import (
-    IngestSourceDescriptor,
-    IngestPayload,
-)
 from accelerator_core.workflow.accel_workflow_task import AcceleratorWorkflowTask
 
 

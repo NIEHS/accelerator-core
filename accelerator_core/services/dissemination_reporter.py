@@ -2,10 +2,14 @@
 Accounting step updates relevant technical metadata after a dissemination operation
 """
 
+import logging
+
 from accelerator_core.schema.models.base_model import DisseminationLinkReport
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_workflow_task import AcceleratorWorkflowTask
+
+logger = logging.getLogger(__name__)
 
 
 class DisseminationReporter(AcceleratorWorkflowTask):

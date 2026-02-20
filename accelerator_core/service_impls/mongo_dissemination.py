@@ -2,14 +2,11 @@
 Dissemination support concrete implementation for Mongo data store
 """
 
+import logging
 from io import UnsupportedOperation
-
-from bson import ObjectId
-from pipenv.patched.safety.formatter import NOT_IMPLEMENTED
 
 from accelerator_core.schema.models.base_model import (
     create_timestamped_log,
-    DisseminationEndpoint,
 )
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.services.dissemination import (
@@ -19,19 +16,11 @@ from accelerator_core.services.dissemination import (
     DisseminationFilter,
 )
 from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
-from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
-from accelerator_core.utils.mongo_tools import convert_doc_to_json
-from accelerator_core.utils.schema_tools import SchemaValidationResult
-from accelerator_core.utils.xcom_utils import XcomPropsResolver
-from accelerator_core.workflow.accel_source_ingest import (
-    IngestSourceDescriptor,
-    IngestPayload,
-)
-from accelerator_core.services.accession import Accession
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
-from accelerator_core.utils.logger import setup_logger
+from accelerator_core.utils.mongo_tools import convert_doc_to_json
+from accelerator_core.utils.xcom_utils import XcomPropsResolver
 
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 
 class DisseminationMongo(Dissemination):

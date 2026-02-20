@@ -1,6 +1,7 @@
 import unittest
+
 from accelerator_core.utils import resource_utils
-from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
+from accelerator_core.utils.accelerator_config import config_from_file
 from accelerator_core.utils.type_matrix import TypeMatrix
 
 

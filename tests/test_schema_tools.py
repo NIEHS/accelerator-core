@@ -1,11 +1,9 @@
 import json
 import unittest
-from shlex import shlex
 
 import accelerator_core
 from accelerator_core.utils import resource_utils
 from accelerator_core.utils.accelerator_config import (
-    AcceleratorConfig,
     config_from_file,
 )
 from accelerator_core.utils.resource_utils import determine_resource_path

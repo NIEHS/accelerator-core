@@ -4,7 +4,6 @@ from accelerator_core.workflow.accel_data_models import (
     DisseminationDescriptor,
     DisseminationPayload,
 )
-
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,

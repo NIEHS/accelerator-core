@@ -2,26 +2,28 @@
 Accession support concrete implementation for Mongo data store
 """
 
-from bson import ObjectId
+import logging
+
 import pymongo
+from accelerator_core.utils.logger import setup_logger
+from bson import ObjectId
 
 from accelerator_core.schema.models.base_model import (
     create_timestamped_log,
     get_time_now_iso,
 )
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
+from accelerator_core.services.accession import Accession
 from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
+from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.schema_tools import SchemaValidationResult
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,
 )
-from accelerator_core.services.accession import Accession
-from accelerator_core.utils.accelerator_config import AcceleratorConfig
-from accelerator_core.utils.logger import setup_logger
 
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 """
 TODO: delegate calls to accel_database_utils - mc

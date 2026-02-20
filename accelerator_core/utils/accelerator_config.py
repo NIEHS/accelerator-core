@@ -2,18 +2,16 @@
 Configuration Properties for accelerator core, typically configured as secrets or properties files
 """
 
-from pathlib import Path
+import logging
 
 from coverage.annotate import os
 
-import accelerator_core
-from accelerator_core.utils.logger import setup_logger
+from accelerator_core.utils.resource_utils import determine_resource_path
 from accelerator_core.utils.resource_utils import properties_file_from_path
 from accelerator_core.utils.type_matrix import TypeMatrix
 from accelerator_core.utils.type_matrix import parse_type_matrix
-from accelerator_core.utils.resource_utils import  determine_resource_path
 
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 
 class AcceleratorConfig(object):
@@ -21,10 +19,7 @@ class AcceleratorConfig(object):
     Configuration object for accelerator
     """
 
-    def __init__(
-        self,
-        params:dict={}
-    ):
+    def __init__(self, params: dict = {}):
         """
         Initialize the configuration with a dictionary of properties
             accelerator.xcom.tempfiles.supported:  True|False
@@ -32,8 +27,9 @@ class AcceleratorConfig(object):
         """
         self.params = params
 
-        self.type_matrix = parse_type_matrix(determine_resource_path("accelerator_core.schema",
-                                                                     "type_matrix.yaml"))
+        self.type_matrix = parse_type_matrix(
+            determine_resource_path("accelerator_core.schema", "type_matrix.yaml")
+        )
 
         # see if ACCEL_MONGODB_PASSWORD is in env variables and replace the property with the env
         # variable.
@@ -54,6 +50,7 @@ class AcceleratorConfig(object):
 
         return None
 
+
 def config_from_file(filepath) -> AcceleratorConfig:
     """
     Handy method to load accel config from a file
@@ -61,4 +58,3 @@ def config_from_file(filepath) -> AcceleratorConfig:
     props = properties_file_from_path(filepath)
     accel_config = AcceleratorConfig(props)
     return accel_config
-

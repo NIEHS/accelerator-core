@@ -1,7 +1,6 @@
 import json
 import unittest
 
-import accelerator_core
 from accelerator_core.schema.models.base_model import (
     DisseminationLinkReport,
     DisseminationEndpoint,
@@ -12,14 +11,11 @@ from accelerator_core.service_impls.mongo_dissemination import DisseminationMong
 from accelerator_core.service_impls.mongo_dissemination_reporter import (
     MongoDisseminationReporter,
 )
-from accelerator_core.utils import resource_utils, mongo_tools
-from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
+from accelerator_core.utils import resource_utils
 from accelerator_core.utils.accelerator_config import (
-    AcceleratorConfig,
     config_from_file,
 )
 from accelerator_core.utils.resource_utils import (
-    determine_resource_path,
     determine_test_resource_path,
 )
 from accelerator_core.utils.xcom_utils import DirectXcomPropsResolver

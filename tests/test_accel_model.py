@@ -1,8 +1,5 @@
-import json
 import unittest
-from shlex import shlex
 
-import accelerator_core
 from accelerator_core.schema.models.accel_model import (
     AccelProgramModel,
     AccelProjectModel,
@@ -17,17 +14,16 @@ from accelerator_core.schema.models.accel_model import (
     AccelPopulationDataModel,
     ProjectSponsor,
 )
+from accelerator_core.schema.models.accel_model import build_accel_from_model
 from accelerator_core.schema.models.base_model import (
     SubmissionInfoModel,
     TechnicalMetadataModel,
 )
 from accelerator_core.utils import resource_utils
 from accelerator_core.utils.accelerator_config import (
-    AcceleratorConfig,
     config_from_file,
 )
 from accelerator_core.utils.schema_tools import SchemaTools
-from accelerator_core.schema.models.accel_model import build_accel_from_model
 
 
 class TestAccelModel(unittest.TestCase):

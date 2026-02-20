@@ -2,7 +2,7 @@ import unittest
 
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.utils import resource_utils, mongo_tools
-from accelerator_core.utils.accelerator_config import AcceleratorConfig, config_from_file
+from accelerator_core.utils.accelerator_config import config_from_file
 
 
 class TestMongoToolsIntegration(unittest.TestCase):

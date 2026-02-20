@@ -1,4 +1,3 @@
-import json
 import unittest
 
 from jinja2 import Template
