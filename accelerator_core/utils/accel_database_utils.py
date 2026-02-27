@@ -5,7 +5,6 @@ General methods to interact with the mongo database
 import logging
 from typing import Optional
 
-from accelerator_core.utils.logger import setup_logger
 from bson import ObjectId
 from pymongo.synchronous.client_session import ClientSession
 

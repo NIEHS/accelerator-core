@@ -1,6 +1,5 @@
 import logging
 
-from accelerator_core.utils.logger import setup_logger
 from bson import ObjectId
 
 from accelerator_core.schema.models.base_model import DisseminationLinkReport

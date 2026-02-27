@@ -5,7 +5,6 @@ Accession support concrete implementation for Mongo data store
 import logging
 
 import pymongo
-from accelerator_core.utils.logger import setup_logger
 from bson import ObjectId
 
 from accelerator_core.schema.models.base_model import (
