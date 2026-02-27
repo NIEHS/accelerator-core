@@ -1,7 +1,5 @@
 import logging
 
-from accelerator_core.utils.logger import setup_logger
-
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.schema_tools import SchemaTools, SchemaValidationResult
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
@@ -56,6 +54,10 @@ class Accession(AcceleratorWorkflowTask):
         temp_doc: bool = False,
     ) -> str:
         """
+
+        TODO: the synch support, including directionality, checksum stuff has to happen here
+
+
         Ingest the given document
         :param ingest_result: IngestResult instance to ingest, this should be a single document, with
         either an inline document, or a path reference to a temporary location

@@ -40,7 +40,7 @@ class AccelIngestComponent(AcceleratorWorkflowTask):
         """
         return False
 
-    def ingest(self, additional_parameters: dict) -> IngestPayload:
+    def synch(self, sych_type, additional_parameters: dict) -> IngestPayload:
         """
         primary method for subclasses to implement, this is the actual ingest, which means accessing the target
         data source and returning a result that includes provenance and technical metadata, along with a payload that

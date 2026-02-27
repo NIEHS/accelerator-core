@@ -63,7 +63,7 @@ class TestAccelModel(unittest.TestCase):
 
         resource = AccelIntermediateResourceModel()
         resource.name = "rescname"
-        resource.version = "1.0.1"
+        resource.version = "1.0.3"
         resource.resource_type = "boo"
         resource.resource_url = "http://resc.url.com"
         resource.description = "description"
@@ -110,7 +110,7 @@ class TestAccelModel(unittest.TestCase):
         population_data.population_studies = ["study1"]
 
         rendered = build_accel_from_model(
-            version="1.0.2",
+            version="1.0.3",
             submission=submission,
             technical=technical,
             program=program,
@@ -124,6 +124,6 @@ class TestAccelModel(unittest.TestCase):
 
         schema_tools = SchemaTools(self.config)
         result = schema_tools.validate_json_against_schema(
-            rendered, "accelerator", "1.0.2"
+            rendered, "accelerator", "1.0.3"
         )
         self.assertTrue(result.valid)

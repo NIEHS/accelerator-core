@@ -1,0 +1,468 @@
+{
+"submission": {
+"submitter_name": "{{ submission.submitter_name }}",
+"submitter_email": "{{ submission.submitter_email }}",
+"submitter_comment": "{{ submission.submitter_comment }}"
+},
+"data": {
+"program": {
+"program_name": "{{ program.name }}",
+"preferred_label": "{{ program.preferred_label }}"
+},
+"project": {
+"project_code": "{{ project.code }}",
+"project_name": "{{ project.name }}",
+"project_short_name": "{{ project.short_name }}",
+"project_url": "{{ project_url }}",
+"project_sponsor": [
+{% for entry in project.project_sponsor %}
+    {
+    "type": "{{ entry.type }}",
+    "name": "{{ entry.sponsor }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+
+]
+},
+"resource": {
+"resource_name": "{{ resource.name }}",
+"resource_version": "{{ resource.version }}",
+"resource_short_name": "{{ resource.short_name }}",
+"resource_type": "{{ resource.resource_type }}",
+"resource_url": "{{ resource.resource_url }}",
+"resource:doi": "{{ resource.resource_doi }}",
+"resource_description": "{{ resource.description }}",
+"resource_domain": [
+{% for entry in resource.domain %}
+    {
+    "name": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"resource_keywords": [
+{% for entry in resource.keywords %}
+    "{{ entry }}"
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"resource_access_type": [
+{% for entry in resource.access_type %}
+    "{{ entry }}"
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"resource_license": {
+"license_name": "{{ resource.license_name }}",
+"license_uri": "{{ resource.license_type }}"
+},
+"resource_reference": [
+{% for entry in resource.resource_reference %}
+    {
+    "resource_reference_text": "{{ entry.resource_reference_text }}",
+    "resource_reference_link": "{{ entry.resource_reference_link }}"
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"resource_use_agreement": [
+{% for entry in resource.resource_use_agreement %}
+    {
+    "resource_use_agreement_text": "{{ entry.resource_use_agreement_text }}",
+    "resource_use_agreement_link": "{{ entry.resource_use_agreement_link }}"
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"publication": [
+{% for entry in resource.publications %}
+    {
+    "citation": "{{ entry.citation }}",
+    "citation_link": "{{ entry.citation_link }}"
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+{% if resource.is_static %}
+    "is_static": true,
+{% else %}
+    "is_static": false,
+{% endif %}
+{% if resource.payment_required %}
+    "payment_required": true
+{% else %}
+    "payment_required": false
+{% endif %}
+},
+"personnel": [
+{% for entry in personnel.personnel %}
+    {
+    "name": "{{ entry.name }}",
+    "affiliation": "{{ entry.affiliation }}",
+    "role": "{{ entry.role }}",
+    "email": "{{ entry.email }}",
+    "identifier": "{{ entry.identifier }}",
+    "identifier_type": "{{ entry.identifier_type }}"
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"data_resource": {
+"exposure_media": [
+{% for entry in data_resource.exposure_media %}
+    "{{ entry }}"
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"measures": [
+{% for entry in data_resource.measures %}
+    {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"measurement_method": [
+{% for entry in data_resource.measurement_method %}
+    {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"time_extent_start": "{{ data_resource.time_extent_start }}",
+"time_extent_end": "{{ data_resource.time_extent_end }}",
+"time_available_comment": "{{ data_resource.time_available_comment }}",
+"update_frequency":  [
+{% for entry in data_resource.update_frequency %}
+    "{{ entry }}"
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"key_variables": [
+{% for entry in data_resource.key_variables %}
+    "{{ entry }}"
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"data_formats": [
+{% for entry in data_resource.data_formats %}
+    "{{ entry }}"
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"example_metrics": [
+{% for entry in data_resource.example_metrics %}
+    "{{ entry }}"
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"data_location": [
+{% for entry in data_resource.data_location %}
+    {
+    "data_location_text": "{{ entry.data_location_text }}",
+    "data_location_link": "{{ entry.data_location_link }}"
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+{% if data_resource.includes_citizen_collected %}
+    "includes_citizen_collected": true,
+{% else %}
+    "includes_citizen_collected": false,
+{% endif %}
+{% if data_resource.has_api %}
+    "has_api": true,
+{% else %}
+    "has_api": false,
+{% endif %}
+{% if data_resource.has_visualization_tool %}
+    "has_visualization_tool": true
+{% else %}
+    "has_visualization_tool": false
+{% endif %}
+},
+"data_usage": {
+"intended_use": [
+{% for entry in data_usage.intended_use %}
+        {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+    {% endfor %}
+],
+"strengths": [
+    {% for entry in data_usage.strengths %}
+        "{{ entry }}"
+        {{ "," if not loop.last }}
+    {% endfor %}
+],
+"limitations": [
+    {% for entry in data_usage.limitations %}
+        "{{ entry }}"
+        {{ "," if not loop.last }}
+    {% endfor %}
+],
+
+"suggested_audience": [
+ {% for entry in data_usage.suggested_audience %}
+        "{{ entry }}"
+        {{ "," if not loop.last }}
+    {% endfor %}
+]
+},
+"temporal_data": {
+"temporal_resolution": [
+{% for entry in temporal_data.temporal_resolution %}
+    {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"temporal_resolution_comment": "{{ temporal_data.temporal_resolution.comment }}"
+},
+"population_data": {
+{% if population_data.individual_level %}
+    "individual_level": true,
+{% else %}
+    "individual_level": false,
+{% endif %}
+{% if population_data.linkable_encounters %}
+    "linkable_encounters": true,
+{% else %}
+    "linkable_encounters": false,
+{% endif %}
+"population_studies": [
+{% for entry in population_data.population_studies %}
+    {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+{% if population_data.biospecimens_from_humans %}
+    "biospecimens_from_humans": true,
+{% else %}
+    "biospecimens_from_humans": false,
+{% endif %}
+"biospecimens_type": [
+{% for entry in population_data.biospecimens_type %}
+    "{{ entry }}"
+    {{ "," if not loop.last }}
+{% endfor %}
+]
+},
+"geospatial_data": {
+"spatial_resolution": [
+{% for entry in geospatial_data.spatial_resolution %}
+    {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"spatial_resolution_comment": "{{ geospatial_data.spatial_resolution_comment }}",
+"spatial_coverage": [
+{% for entry in geospatial_data.spatial_coverage %}
+    {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"spatial_bounding_box": [
+{% for entry in geospatial_data.spatial_bounding_box %}
+    "{{ entry }}"
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"geometry_type": [
+{% for entry in geospatial_data.geometry_type %}
+    "{{ entry }}"
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"geometry_source": [
+{% for entry in geospatial_data.geometry_source %}
+    {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"model_methods": [
+{% for entry in geospatial_data.model_methods %}
+    {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+],
+"geographic_feature": [
+{% for entry in geospatial_data.geographic_feature %}
+    {
+    "value": "{{ entry.value }}",
+    {% if entry.other_type %}
+        "other_type": true
+    {% else %}
+        "other_type": false
+    {% endif %}
+    }
+    {{ "," if not loop.last }}
+{% endfor %}
+]
+},
+"computational_workflow": {
+    "tool_type": [
+    {% for entry in computational_workflow.tool_type %}
+        {
+        "value": "{{ entry.value }}",
+        {% if entry.other_type %}
+            "other_type": true
+        {% else %}
+            "other_type": false
+        {% endif %}
+        }
+        {{ "," if not loop.last }}
+    {% endfor %}
+    ],
+    {% if computational_workflow.is_open %}
+        "is_open": true,
+    {% else %}
+        "is_open": false,
+    {% endif %}
+    "languages": [
+    {% for entry in computational_workflow.languages %}
+        {
+        "value": "{{ entry.value }}",
+        {% if entry.other_type %}
+            "other_type": true
+        {% else %}
+            "other_type": false
+        {% endif %}
+        }
+        {{ "," if not loop.last }}
+    {% endfor %}
+    ],
+      "use_tools": [
+        {% for entry in computational_workflow.use_tool %}
+
+            {
+              "tool_text": "{{ entry.data_location_text }}",
+              "tool_link": "{{ entry.data_location_link }}"
+            }
+        {{ "," if not loop.last }}
+        {% endfor %}
+          ],
+    "example_applications": [
+        {% for entry in computational_workflow.example_application %}
+
+                {
+                  "tool_text": "{{ entry.data_location_text }}",
+                  "tool_link": "{{ entry.data.location_link }}"
+                }
+         {{ "," if not loop.last }}
+        {% endfor %}
+          ]
+    }
+},
+"technical_metadata": {
+    "created": "{{ technical_metadata.created }}",
+    "modified": "{{ technical_metadata.modified }}",
+    "verified": "{{ technical_metadata.verified }}",
+    "data_checksum": "{{ technical_metadata.data_checksum }}",
+    "target_schema_version": "{{ technical_metadata.target_schema_version }}",
+    "target_schema_type": "{{ technical_metadata.target_schema_type }}",
+
+    "original_source_type": "{{ technical_metadata.original_source_type }}",
+    "original_source_identifier": "{{ technical_metadata.original_source_identifier }}",
+    "original_source_link": "{{ technical_metadata.original_source_link }}",
+    "additional_data": [
+        {% for entry in technical_metadata.additional_data %}
+            {
+            "key": "{{ entry.key }}",
+            "value": "{{ entry.value }}",
+            "base64_encoded": "{{ entry.base64_encoded }}"
+            }
+            {{ "," if not loop.last }}
+        {% endfor %}
+    ],
+    "history": [
+        {% for entry in technical_metadata.history %}
+            {
+            "timestamp": "{{ entry.timestamp }}",
+            "msg": "{{ entry.msg }}"
+            }
+            {{ "," if not loop.last }}
+        {% endfor %}
+    ],
+    "dissemination_endpoints": [
+    {% for entry in technical_metadata.dissemination_endpoints %}
+      {
+        "endpoint_type": "{{ entry.endpoint_type }}",
+        "unique_identifier": "{{ entry.unique_identifier }}",
+        "link": "{{ entry.link }}",
+        "date": "{{ entry.date }}"
+      }
+    {{ "," if not loop.last }}
+    {% endfor %}
+    ]
+}
+}
