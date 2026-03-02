@@ -76,7 +76,7 @@ class TestDisseminationReporterMongo(unittest.TestCase):
                 xcom_props_resolver,
             )
 
-            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
+            id = accession.ingest(ingest_result, temp_doc=False)
             self.assertIsNotNone(id)
 
             # now get the dissemination for this item

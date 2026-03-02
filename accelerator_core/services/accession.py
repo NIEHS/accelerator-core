@@ -50,7 +50,6 @@ class Accession(AcceleratorWorkflowTask):
     def ingest(
         self,
         ingest_result: IngestPayload,
-        check_duplicates: bool = True,
         temp_doc: bool = False,
     ) -> str:
         """
@@ -61,7 +60,6 @@ class Accession(AcceleratorWorkflowTask):
         Ingest the given document
         :param ingest_result: IngestResult instance to ingest, this should be a single document, with
         either an inline document, or a path reference to a temporary location
-        :param check_duplicates: bool indicates whether pre-checks for duplicate data run
         :param temp_doc: bool indicates whether the document is temporary or not
         :return: str with id of the ingested document
         """

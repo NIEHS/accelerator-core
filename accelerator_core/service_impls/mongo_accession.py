@@ -81,7 +81,6 @@ class AccessionMongo(Accession):
     def ingest(
         self,
         ingest_payload: IngestPayload,
-        check_duplicates: bool = True,
         temp_doc: bool = False,
     ) -> str:
         """
@@ -90,7 +89,6 @@ class AccessionMongo(Accession):
         Args:
             ingest_payload: ingest source descriptor describing the type, schema,
                           and other configuration along with a payload
-            check_duplicates: bool indicates whether pre-checks for duplicate data run
             temp_doc: bool indicates whether the document is temporary or not
 
         Returns:
@@ -179,7 +177,7 @@ class AccessionMongo(Accession):
                                     "$set": {
                                         "data": doc["data"],
                                         "technical_metadata.data_checksum": checksum,
-                                        "technical_metadata.updated": update_time,
+                                        "technical_metadata.modified": update_time,
                                         "technical_metadata.verified": update_time,
                                     },
                                     "$push": {
@@ -239,7 +237,7 @@ class AccessionMongo(Accession):
                             )
 
                         technical_metadata["created"] = update_time
-                        technical_metadata["updated"] = update_time
+                        technical_metadata["modified"] = update_time
                         technical_metadata["verified"] = update_time
                         technical_metadata["data_checksum"] = checksum
                         technical_metadata["original_source_identifier"] = (

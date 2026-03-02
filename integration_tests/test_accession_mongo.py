@@ -98,7 +98,7 @@ class TestAccessionMongo(unittest.TestCase):
                 xcom_props_resolver,
             )
 
-            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
+            id = accession.ingest(ingest_result, temp_doc=False)
             self.assertIsNotNone(id)
 
             # now look up the doc in the expected collection
@@ -143,16 +143,18 @@ class TestAccessionMongo(unittest.TestCase):
                 xcom_props_resolver,
             )
 
-            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
+            id = accession.ingest(ingest_result, temp_doc=False)
             self.assertIsNotNone(id)
 
             actual = accession.check_if_insert_or_update(ingest_result, False)
             self.assertTrue(actual.duplicate_found)
 
     def test_find_by_id(self):
+
         json_path = determine_resource_path(
             accelerator_core.schema, "accel-v1.0.3.json"
         )
+
         with open(json_path) as json_data:
             ingest_source_descriptor = IngestSourceDescriptor()
             ingest_source_descriptor.ingest_type = "accelerator"
@@ -178,7 +180,7 @@ class TestAccessionMongo(unittest.TestCase):
                 xcom_props_resolver,
             )
 
-            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
+            id = accession.ingest(ingest_result, temp_doc=False)
             actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
             self.assertIsNotNone(actual)
             self.assertIsInstance(actual, dict)
@@ -213,7 +215,7 @@ class TestAccessionMongo(unittest.TestCase):
                 xcom_props_resolver,
             )
 
-            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
+            id = accession.ingest(ingest_result, temp_doc=False)
             accession.decommission(id, ingest_source_descriptor.ingest_type)
             actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
             self.assertIsNone(actual)
@@ -248,10 +250,90 @@ class TestAccessionMongo(unittest.TestCase):
                 xcom_props_resolver,
             )
 
-            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=True)
+            id = accession.ingest(ingest_result, temp_doc=True)
             accession.delete_temp_document(id, ingest_source_descriptor.ingest_type)
             actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
             self.assertIsNone(actual)
+
+    def test_accession_and_verify_with_no_changes(self):
+
+        json_path = "./test_resources/example2.json"
+
+        with open(json_path) as json_data:
+            ingest_source_descriptor = IngestSourceDescriptor()
+            ingest_source_descriptor.ingest_type = "accelerator"
+            ingest_source_descriptor.schema_version = "1.0.3"
+            ingest_source_descriptor.ingest_identifier = "myrunid"
+            ingest_source_descriptor.ingest_item_id = (
+                "e9f84c6c-00e9-4e3f-ab6d-e0c6ecdbc701"
+            )
+            ingest_source_descriptor.ingest_link = "cedar"
+            ingest_source_descriptor.submitter_name = "mysubmittername"
+            ingest_source_descriptor.submitter_email = "mysubmitteremail"
+            ingest_result = IngestPayload(ingest_source_descriptor)
+
+            d = json.load(json_data)
+            ingest_result.payload.append(d)
+            ingest_result.payload_inline = True
+
+            xcom_props_resolver = DirectXcomPropsResolver(
+                temp_files_supported=False, temp_files_location=""
+            )
+
+            accession = AccessionMongo(
+                self.__class__._accelerator_config,
+                self.__class__._accel_db_context,
+                xcom_props_resolver,
+            )
+
+            id = accession.ingest(ingest_result, temp_doc=False)
+            actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
+            self.assertIsNotNone(actual)
+            self.assertIsNotNone(actual.get("technical_metadata").get("verified"))
+
+    def test_accession_and_verify_with_updates(self):
+
+        json_path = "./test_resources/example2.json"
+
+        with open(json_path) as json_data:
+            ingest_source_descriptor = IngestSourceDescriptor()
+            ingest_source_descriptor.ingest_type = "accelerator"
+            ingest_source_descriptor.schema_version = "1.0.3"
+            ingest_source_descriptor.ingest_identifier = "myrunid"
+            ingest_source_descriptor.ingest_item_id = (
+                "e9f84c6c-00e9-4e3f-ab6d-e0c6ecdbc701"
+            )
+            ingest_source_descriptor.ingest_link = "cedar"
+            ingest_source_descriptor.submitter_name = "mysubmittername"
+            ingest_source_descriptor.submitter_email = "mysubmitteremail"
+            ingest_result = IngestPayload(ingest_source_descriptor)
+
+            d = json.load(json_data)
+            ingest_result.payload.append(d)
+            ingest_result.payload_inline = True
+
+            xcom_props_resolver = DirectXcomPropsResolver(
+                temp_files_supported=False, temp_files_location=""
+            )
+
+            accession = AccessionMongo(
+                self.__class__._accelerator_config,
+                self.__class__._accel_db_context,
+                xcom_props_resolver,
+            )
+
+            id = accession.ingest(ingest_result, temp_doc=False)
+            actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
+            orig_checksum = actual.get("technical_metadata").get("checksum")
+            orig_verified = actual.get("technical_metadata").get("verified")
+
+            # make a minor change
+
+            ingest_result.payload[0]["data"]["project"]["project_name"] = "new name"
+            id = accession.ingest(ingest_result, temp_doc=False)
+            actual = accession.find_by_id(id, ingest_source_descriptor.ingest_type)
+            self.assertIsNotNone(actual)
+            self.assertIsNotNone(actual.get("technical_metadata").get("verified"))
 
 
 if __name__ == "__main__":

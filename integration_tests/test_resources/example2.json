@@ -1,0 +1,274 @@
+  {
+  "submission": {
+    "submitter_name": "Mike Conway",
+    "submitter_email": "mike.conway@nih.gov",
+    "submitter_comment": ""
+  },
+  "data": {
+    "program": {
+      "program_name": "CHORDS",
+      "preferred_label": ""
+    },
+    "project": {
+      "project_code": "PM2.5-ACAG-07102024-GL",
+      "project_name": "Satellite-Derived PM2.5",
+      "project_short_name": "PM2.5-ACAG-GL",
+      "project_url": "",
+      "project_sponsor": [
+        {
+          "type": "",
+          "name": "Other",
+          "other_type": false
+        },
+        {
+          "type": "",
+          "name": "Washington University in St. Louis",
+          "other_type": true
+        },
+        {
+          "type": "",
+          "name": "Atmospheric Composition Analysis Group (ACAG)",
+          "other_type": true
+        },
+        {
+          "type": "Academic Institution",
+          "name": "",
+          "other_type": false
+        }
+      ]
+    },
+    "resource": {
+      "resource_name": "Atmospheric Composition Analysis Group (ACAG) Global/Regional Estimates",
+      "resource_version": "V5.GL.04",
+      "resource_short_name": "ACAG Global/Regional Estimates V5.GL.04",
+      "resource_type": "Data Resource",
+      "resource_url": "https://sites.wustl.edu/acag/datasets/surface-pm2-5-archive/#V5.GL.04",
+      "resource:doi": "",
+      "resource_description": "The Atmospheric Composition Analysis Group (ACAG) Global/Regional Estimates (V5.GL.04) dataset presents estimated monthly and annual average concentrations of fine particulate matter (PM2.5) air pollution. The dataset provides global coverage during 1998 to 2022 with 0.01 degree (~1 km) and 0.1 degree (~10 km) spatial resolution. Summary data tables are also available at the national scale for all countries and at the sub-national scale (e.g., for states, provinces, or regions) for Canada, China, India, and the United States. Concentrations are estimated using satellite-based air pollution observations combined with a chemical transport model and subsequent calibration to ground-based air pollution observations using geographically weighted regression. This dataset can be used to study monthly or seasonal variations in PM2.5 concentrations and is intended for use in large-scale epidemiological studies and health impact assessments.",
+      "resource_domain": [
+        {
+          "name": "Air Quality",
+          "other_type": false
+        }
+      ],
+      "resource_keywords": [
+        "Modeled Data",
+        "Air Pollution",
+        "PM2.5",
+        "Criteria Air Pollutants",
+        "Chemical Transport Model",
+        "Remote Sensing",
+        "Concentration Prediction",
+        "Annual Average",
+        "Monthly Average",
+        "Geographically Weighted Regression",
+        "Global"
+      ],
+      "resource_access_type": [
+        "Open"
+      ],
+      "resource_license": {
+        "license_name": "",
+        "license_uri": ""
+      },
+      "resource_reference": [
+        {
+          "resource_reference_text": "Aaron van Donkelaar, Melanie S. Hammer, Liam Bindle, Michael Brauer, Jeffery R. Brook, Michael J. Garay, N. Christina Hsu, Olga V. Kalashnikova, Ralph A. Kahn, Colin Lee, Robert C. Levy, Alexei Lyapustin, Andrew M. Sayer and Randall V. Martin (2021). Monthly Global Estimates of Fine Particulate Matter and Their Uncertainty. Environmental Science & Technology, 2021, doi:10.1021/acs.est.1c05309.",
+          "resource_reference_link": "https://doi.org/10.1021/acs.est.1c05309"
+        }
+      ],
+      "resource_use_agreement": [
+        {
+          "resource_use_agreement_text": "Users are asked to familiarize themselves with corresponding publications and contact principle researchers (as provided within subsequent sections) to ensure the most up-to-date and appropriate use of information.",
+          "resource_use_agreement_link": "https://sites.wustl.edu/acag/datasets/"
+        }
+      ],
+      "publication": [
+        {
+          "citation": "Aaron van Donkelaar, Melanie S. Hammer, Liam Bindle, Michael Brauer, Jeffery R. Brook, Michael J. Garay, N. Christina Hsu, Olga V. Kalashnikova, Ralph A. Kahn, Colin Lee, Robert C. Levy, Alexei Lyapustin, Andrew M. Sayer and Randall V. Martin (2021). Monthly Global Estimates of Fine Particulate Matter and Their Uncertainty. Environmental Science & Technology, 2021, doi:10.1021/acs.est.1c05309.",
+          "citation_link": "https://doi.org/10.1021/acs.est.1c05309"
+        }
+      ],
+      "is_static": true,
+      "payment_required": false
+    },
+    "personnel": [],
+    "data_resource": {
+      "exposure_media": [
+        "Air"
+      ],
+      "measures": [
+        {
+          "value": "Particulate Matter (PM2.5)",
+          "other_type": false
+        }
+      ],
+      "measurement_method": [],
+      "time_extent_start": "1998",
+      "time_extent_end": "2022",
+      "time_available_comment": "None",
+      "update_frequency": [
+        "Static"
+      ],
+      "key_variables": [
+        "PM2.5 Concentration"
+      ],
+      "data_formats": [
+        "NetCDF",
+        "CSV"
+      ],
+      "example_metrics": [
+        "Monthly or annual average PM2.5 air pollution concentration for grid cell containing geocoded address"
+      ],
+      "data_location": [
+        {
+          "data_location_text": "",
+          "data_location_link": "https://sites.wustl.edu/acag/datasets/surface-pm2-5-archive/#V5.GL.04"
+        }
+      ],
+      "includes_citizen_collected": false,
+      "has_api": false,
+      "has_visualization_tool": false
+    },
+    "data_usage": {
+      "intended_use": [
+        {
+          "value": "Geospatial exposure assessment for studies on longer-term health outcomes (e.g., chronic conditions)",
+          "other_type": false
+        },
+        {
+          "value": "Geospatial exposure assessment at the individual-level or population-level",
+          "other_type": false
+        },
+        {
+          "value": "Long-term studies",
+          "other_type": false
+        },
+        {
+          "value": "Large-scale (large geographic area) studies",
+          "other_type": false
+        },
+        {
+          "value": "Longitudinal studies",
+          "other_type": false
+        },
+        {
+          "value": "Cross-sectional studies",
+          "other_type": false
+        }
+      ],
+      "strengths": [
+        "Dataset supports analysis of differences in PM2.5 air pollution concentration across global locations over multiple decades using consistent methods",
+        "Dataset provides estimates of model uncertainty for each prediction",
+        "Dataset supports analysis of exposures during relevant monthly or multi-monthly time windows for individuals (e.g., during first trimester of pregnancy)"
+      ],
+      "limitations": [
+        "Dataset cannot be used to compare exposures within the same grid cell or at different times within the same month",
+        "Data intended for use in long-term, large-scale studies (increased uncertainties expected for use at finer spatial and temporal resolutions)",
+        "Finest available gridded estimates do not fully resolve spatial gradients in air pollution due to the influence of input data sources with coarser spatial resolution",
+        "Dataset cannot be used to compare exposures within the same grid cell or at different times within the same month",
+        "Data intended for use in long-term, large-scale studies (increased uncertainties expected for use at finer spatial and temporal resolutions)",
+        "Finest available gridded estimates do not fully resolve spatial gradients in air pollution due to the influence of input data sources with coarser spatial resolution"
+      ],
+      "suggested_audience": [
+        "Researcher"
+      ]
+    },
+    "temporal_data": {
+      "temporal_resolution": [
+        {
+          "value": "Monthly",
+          "other_type": false
+        }
+      ],
+      "temporal_resolution_comment": ""
+    },
+    "population_data": {
+      "individual_level": false,
+      "linkable_encounters": false,
+      "population_studies": [],
+      "biospecimens_from_humans": false,
+      "biospecimens_type": []
+    },
+    "geospatial_data": {
+      "spatial_resolution": [
+        {
+          "value": "Grid",
+          "other_type": false
+        },
+        {
+          "value": "0.01 Degree",
+          "other_type": true
+        }
+      ],
+      "spatial_resolution_comment": "Data available for sub-national administrative units (e.g., for states, provinces, or regions) for Canada, China, India, and the United States",
+      "spatial_coverage": [
+        {
+          "value": "Global",
+          "other_type": false
+        }
+      ],
+      "spatial_bounding_box": [],
+      "geometry_type": [
+        "Grid",
+        "Polygon"
+      ],
+      "geometry_source": [],
+      "model_methods": [
+        {
+          "value": "Other",
+          "other_type": false
+        },
+        {
+          "value": "Geographically Weighted Regression",
+          "other_type": true
+        },
+        {
+          "value": "Chemical Transport Model",
+          "other_type": true
+        }
+      ],
+      "geographic_feature": [
+        {
+          "value": "General",
+          "other_type": false
+        }
+      ]
+    },
+    "computational_workflow": {
+      "tool_type": [],
+      "is_open": false,
+      "languages": [],
+      "use_tools": [],
+      "example_applications": []
+    }
+  },
+  "technical_metadata": {
+    "created": "2025-12-17T14:12:15.911568",
+    "modified": "",
+    "verified": "",
+    "target_schema_version": "",
+    "target_schema_type": "",
+    "original_source_type": "accelerator",
+    "original_source_identifier": "e9f84c6c-00e9-4e3f-ab6d-e0c6ecdbc701",
+    "original_source_link": "cedar",
+    "history": [
+      {
+        "timestamp": "2025-12-17T14:12:15.911593",
+        "msg": "accession from accelerator with identifier e9f84c6c-00e9-4e3f-ab6d-e0c6ecdbc701 in operation CEDAR_Ingest-manual__2025-12-17T14:11:42.684782+00:00"
+      },
+      {
+        "timestamp": "2025-12-17T14:12:54.679154",
+        "msg": "Disseminating document  original source: cedar and document identifier: e9f84c6c-00e9-4e3f-ab6d-e0c6ecdbc701 as doc_id: 6942ba3fa2b65d7d38a626be of type accelerator to target: cafe"
+      }
+    ],
+    "dissemination_endpoints": [
+      {
+        "endpoint_type": "cafe",
+        "unique_identifier": "doi:10.7910/DVN/CVJGK4",
+        "link": "https://dataverse.harvard.edu/api/v1/dataverses/CHORDS/datasets",
+        "date": "2025-12-17"
+      }
+    ]
+  }
+}
