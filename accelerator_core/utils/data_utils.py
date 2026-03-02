@@ -2,6 +2,7 @@
 Various data handling utilities
 """
 
+import hashlib
 import json
 
 
@@ -43,3 +44,13 @@ class Serializable:
     @classmethod
     def from_json(cls, json_str):
         return from_dict(cls, json.loads(json_str))
+
+
+def checksum_data(data) -> str:
+    """
+    Generate a checksum for the given data, this is the data portion of a payload
+    @param data: data to checksum, should be the dict representation of the data
+    @return: str with the checksum
+    """
+    stringified_data = json.dumps(data, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(stringified_data.encode("utf-8")).hexdigest()

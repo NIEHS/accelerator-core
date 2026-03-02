@@ -10,11 +10,13 @@ from bson import ObjectId
 from accelerator_core.schema.models.base_model import (
     create_timestamped_log,
     get_time_now_iso,
+    TechnicalMetadataHistory,
 )
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.services.accession import Accession
 from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
+from accelerator_core.utils.data_utils import checksum_data
 from accelerator_core.utils.schema_tools import SchemaValidationResult
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_source_ingest import (
@@ -102,9 +104,9 @@ class AccessionMongo(Accession):
         result = self.pre_validate_ingest_source_descriptor(ingest_payload)
 
         if not result.valid:
-            logger.warn(f"invalid ingest payload: ingest_payload={ingest_payload}")
+            logger.warning(f"invalid ingest payload: ingest_payload={ingest_payload}")
             for entry in result.log:
-                logger.warn(entry)
+                logger.warning(entry)
             raise Exception("invalid ingest payload")
 
         payload_length = self.get_payload_length(ingest_payload)
@@ -116,53 +118,160 @@ class AccessionMongo(Accession):
             # TODO: refactor to support multiple ingest, will require api change to return payload
             raise Exception("currently only supports one doc per ingest")
 
+        # checksum payload data
+        doc = self.payload_resolve(ingest_payload, 0)
+
+        result = self.validate(doc, ingest_payload.ingest_source_descriptor)
+        if not result.valid:
+            raise Exception(f"Invalid document provided {result.error_message}")
+
+        checksum = checksum_data(doc["data"])
+
+        # start transaction
         db = self.connect_to_db()
-        coll = self.build_collection_reference(
+        collection = self.build_collection_reference(
             db, ingest_payload.ingest_source_descriptor.ingest_type, temp_doc
         )
 
-        doc = self.payload_resolve(ingest_payload, 0)
+        # try and find the doc
 
-        # require unique id in technical metadata
+        with self.accel_db_context.start_session() as session:
+            with session.start_transaction():
+                try:
 
-        # look for technical metadata and add log message
-        technical_metadata = doc.get("technical_metadata", None)
+                    stored_doc = self.accel_database_utils.find_doc_by_original_source_identifier(
+                        ingest_payload.ingest_source_descriptor.ingest_type,
+                        ingest_payload.ingest_source_descriptor.ingest_link,
+                        ingest_payload.ingest_source_descriptor.ingest_item_id,
+                        temp_doc=temp_doc,
+                        session=session,
+                    )
 
-        if not technical_metadata:
-            raise Exception("no technical metadata found, invalid record")
+                    if stored_doc:
 
-        technical_metadata["created"] = get_time_now_iso()
-        technical_metadata["original_source_identifier"] = (
-            ingest_payload.ingest_source_descriptor.ingest_item_id
-        )
-        technical_metadata["original_source_link"] = (
-            ingest_payload.ingest_source_descriptor.ingest_link
-        )
+                        # is this doc already stored? process as a potential update
+                        logger.info(
+                            f"Document {stored_doc['_id']} already exists in database. Processing update."
+                        )
 
-        technical_metadata["history"].append(
-            create_timestamped_log(
-                f"accession from {ingest_payload.ingest_source_descriptor.ingest_type} with identifier {ingest_payload.ingest_source_descriptor.ingest_item_id} in operation {ingest_payload.ingest_source_descriptor.ingest_identifier}"
-            ).to_dict()
-        )
+                        stored_checksum = stored_doc["technical_metadata"].get(
+                            "data_checksum", None
+                        )
 
-        try:
-            result = self.validate(doc, ingest_payload.ingest_source_descriptor)
-            if not result.valid:
-                raise Exception(f"Invalid document provided {result.error_message}")
+                        # compare the checksums and see if the data has changed
+                        if checksum != stored_checksum:
 
-            inserted_id = coll.insert_one(doc).inserted_id
-            logger.info(f"Successfully inserted document with id {inserted_id}")
-            return str(inserted_id)
+                            update_time = get_time_now_iso()
 
-        except pymongo.errors.DuplicateKeyError:
-            logger.error(f"Document already exists")
-            raise
-        except pymongo.errors.PyMongoError as e:
-            logger.error(f"Database error during insert: {str(e)}")
-            raise
-        except Exception as e:
-            logger.error(f"Unexpected error during insert: {str(e)}")
-            raise
+                            # checksums do not match, update data and tech metadata
+                            logger.info(
+                                f"Checksums do not match. Updating data and tech metadata."
+                            )
+
+                            tech_metadata_event = TechnicalMetadataHistory(
+                                update_time,
+                                f"updated checksum {stored_checksum} to {checksum} and updating document from upstream source",
+                            )
+
+                            collection.update_one(
+                                {"_id": stored_doc["_id"]},
+                                {
+                                    "$set": {
+                                        "data": doc["data"],
+                                        "technical_metadata.data_checksum": checksum,
+                                        "technical_metadata.updated": update_time,
+                                        "technical_metadata.verified": update_time,
+                                    },
+                                    "$push": {
+                                        "technical_metadata.history": tech_metadata_event.to_dict()
+                                    },
+                                },
+                                upsert=False,
+                                session=session,
+                            )
+
+                            return str(stored_doc["_id"])
+
+                        else:
+
+                            # checksums match, no update needed, but update the last validated timestamp
+                            logger.info(f"Checksums match. No update needed.")
+                            update_time = get_time_now_iso()
+
+                            tech_metadata_event = TechnicalMetadataHistory(
+                                update_time,
+                                f"validated data checksum {stored_checksum} from upstream source with no changes detected",
+                            )
+
+                            collection.update_one(
+                                {"_id": stored_doc["_id"]},
+                                {
+                                    "$set": {
+                                        "technical_metadata.last_validated": update_time
+                                    },
+                                    "$push": {
+                                        "technical_metadata.history": tech_metadata_event.to_dict()
+                                    },
+                                },
+                                upsert=False,
+                                session=session,
+                            )
+
+                            return str(stored_doc["_id"])
+
+                    else:
+
+                        # doc will be an insert, proceed as normal
+                        logger.info(
+                            f"Document {ingest_payload.ingest_source_descriptor.ingest_item_id} not found in database. Processing insert."
+                        )
+
+                        # require unique id in technical metadata
+
+                        # look for technical metadata and add log message
+                        technical_metadata = doc.get("technical_metadata", None)
+
+                        update_time = get_time_now_iso()
+
+                        if not technical_metadata:
+                            raise Exception(
+                                "no technical metadata found, invalid record"
+                            )
+
+                        technical_metadata["created"] = update_time
+                        technical_metadata["updated"] = update_time
+                        technical_metadata["verified"] = update_time
+                        technical_metadata["data_checksum"] = checksum
+                        technical_metadata["original_source_identifier"] = (
+                            ingest_payload.ingest_source_descriptor.ingest_item_id
+                        )
+                        technical_metadata["original_source_link"] = (
+                            ingest_payload.ingest_source_descriptor.ingest_link
+                        )
+
+                        technical_metadata["history"].append(
+                            create_timestamped_log(
+                                f"accession from {ingest_payload.ingest_source_descriptor.ingest_type} with identifier {ingest_payload.ingest_source_descriptor.ingest_item_id} in operation {ingest_payload.ingest_source_descriptor.ingest_identifier}"
+                            ).to_dict()
+                        )
+
+                        inserted_id = collection.insert_one(
+                            doc, session=session
+                        ).inserted_id
+                        logger.info(
+                            f"Successfully inserted document with id {inserted_id}"
+                        )
+                        return str(inserted_id)
+
+                except pymongo.errors.DuplicateKeyError:
+                    logger.error(f"Document already exists")
+                    raise
+                except pymongo.errors.PyMongoError as e:
+                    logger.error(f"Database error during insert: {str(e)}")
+                    raise
+                except Exception as e:
+                    logger.error(f"Unexpected error during insert: {str(e)}")
+                    raise
 
     def decommission(
         self,
@@ -216,7 +325,7 @@ class AccessionMongo(Accession):
         logger.info(f"find_by_id({document_id}) is temp doc? {temp_doc}")
 
         db = self.connect_to_db()
-        coll = self.build_collection_reference(db, document_type, temp_doc=False)
+        coll = self.build_collection_reference(db, document_type, temp_doc=temp_doc)
         doc = coll.find_one({"_id": ObjectId(document_id)})
         return doc
 

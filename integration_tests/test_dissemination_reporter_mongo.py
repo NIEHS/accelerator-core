@@ -50,7 +50,7 @@ class TestDisseminationReporterMongo(unittest.TestCase):
     def test_report_dissem(self):
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
-        ingest_source_descriptor.schema_version = "1.0.2"
+        ingest_source_descriptor.schema_version = "1.0.3"
         ingest_source_descriptor.ingest_identifier = "test_report_dissem"
         ingest_source_descriptor.ingest_item_id = "test_report_dissem"
         ingest_source_descriptor.ingest_link = "mylink"
@@ -85,7 +85,7 @@ class TestDisseminationReporterMongo(unittest.TestCase):
             dissemination_request.dissemination_type = "tests"
             dissemination_request.temp_collection = False
             dissemination_request.ingest_type = "accelerator"
-            dissemination_request.schema_version = "1.0.2"
+            dissemination_request.schema_version = "1.0.3"
             dissemination_request.inline_results = True
             dissemination_request.dissemination_identifier = "test_dissemination"
             dissemination_request.dissemination_item_id = id
@@ -106,7 +106,7 @@ class TestDisseminationReporterMongo(unittest.TestCase):
 
             link_report = DisseminationLinkReport()
             link_report.target_schema_type = "accelerator"
-            link_report.target_schema_version = "1.0.2"
+            link_report.target_schema_version = "1.0.3"
             link_report.temporary_data = False
             link_report.original_source_identifier = id
 
@@ -139,7 +139,7 @@ class TestDisseminationReporterMongo(unittest.TestCase):
 
             link_report = DisseminationLinkReport()
             link_report.target_schema_type = "accelerator"
-            link_report.target_schema_version = "1.0.2"
+            link_report.target_schema_version = "1.0.3"
             link_report.temporary_data = False
             link_report.original_source_identifier = id
 

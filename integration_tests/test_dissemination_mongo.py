@@ -53,7 +53,7 @@ class TestDisseminationMongo(unittest.TestCase):
     def test_dissemination(self):
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
-        ingest_source_descriptor.schema_version = "1.0.2"
+        ingest_source_descriptor.schema_version = "1.0.3"
         ingest_source_descriptor.ingest_identifier = "myrunid"
         ingest_source_descriptor.ingest_item_id = "myitemid"
         ingest_source_descriptor.ingest_link = "mylink"
@@ -88,7 +88,7 @@ class TestDisseminationMongo(unittest.TestCase):
             dissemination_request.dissemination_type = "tests"
             dissemination_request.temp_collection = False
             dissemination_request.ingest_type = "accelerator"
-            dissemination_request.schema_version = "1.0.2"
+            dissemination_request.schema_version = "1.0.3"
             dissemination_request.inline_results = True
             dissemination_request.dissemination_identifier = "test_dissemination"
             dissemination_request.dissemination_item_id = id
@@ -108,7 +108,7 @@ class TestDisseminationMongo(unittest.TestCase):
     def test_find_one_by_filter(self):
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
-        ingest_source_descriptor.schema_version = "1.0.2"
+        ingest_source_descriptor.schema_version = "1.0.3"
         ingest_source_descriptor.ingest_identifier = "myrunid"
         ingest_source_descriptor.ingest_item_id = "test_find_one_by_filter"
         ingest_source_descriptor.ingest_link = "mylink"
@@ -117,7 +117,7 @@ class TestDisseminationMongo(unittest.TestCase):
         ingest_result = IngestPayload(ingest_source_descriptor)
 
         json_path = determine_resource_path(
-            accelerator_core.schema, "accel-v1.0.2.json"
+            accelerator_core.schema, "accel-v1.0.3.json"
         )
         with open(json_path) as json_data:
             d = json.load(json_data)
@@ -162,7 +162,7 @@ class TestDisseminationMongo(unittest.TestCase):
     def test_disseminate_by_original_source_and_id(self):
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
-        ingest_source_descriptor.schema_version = "1.0.2"
+        ingest_source_descriptor.schema_version = "1.0.3"
         ingest_source_descriptor.ingest_identifier = "myrunid"
         ingest_source_descriptor.ingest_item_id = (
             "test_disseminate_by_original_source_and_id"
@@ -199,7 +199,7 @@ class TestDisseminationMongo(unittest.TestCase):
             dissemination_request.dissemination_type = "dataverse"
             dissemination_request.temp_collection = False
             dissemination_request.ingest_type = "accelerator"
-            dissemination_request.schema_version = "1.0.2"
+            dissemination_request.schema_version = "1.0.3"
             dissemination_request.inline_results = True
             dissemination_request.dissemination_identifier = "test_dissemination"
             dissemination_request.dissemination_item_id = id
@@ -225,7 +225,7 @@ class TestDisseminationMongo(unittest.TestCase):
         dissemination_request.dissemination_type = "tests"
         dissemination_request.temp_collection = "false"
         dissemination_request.ingest_type = "accelerator"
-        dissemination_request.schema_version = "1.0.2"
+        dissemination_request.schema_version = "1.0.3"
         dissemination_request.inline_results = True
 
         xcom_props_resolver = DirectXcomPropsResolver(
