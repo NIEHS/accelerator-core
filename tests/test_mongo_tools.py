@@ -2,7 +2,6 @@ import unittest
 
 from accelerator_core.utils import resource_utils, mongo_tools
 from accelerator_core.utils.accelerator_config import (
-    AcceleratorConfig,
     config_from_file,
 )
 

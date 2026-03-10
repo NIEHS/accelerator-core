@@ -3,16 +3,16 @@ Tools for testing, including tools for tests setup and teardown of databases and
 setup and teardown
 """
 
+import json
+import logging
+
+from bson import json_util
 from bson.json_util import CANONICAL_JSON_OPTIONS
 from pymongo import MongoClient, ASCENDING
 
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
-from accelerator_core.utils.logger import setup_logger
-from accelerator_core.utils.resource_utils import determine_resource_path
-import json, re
-from bson import json_util
 
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 aip_collection = "aip_store"
 temp_collection = "temp_store"

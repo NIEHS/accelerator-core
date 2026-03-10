@@ -3,15 +3,14 @@ Utilities related to configuration, resources and environment variables.
 """
 
 import importlib.resources
+import logging
 import os
 from pathlib import Path
-from accelerator_core.utils.logger import setup_logger
-import json
 
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 
-def determine_resource_path(resource_package:str, resource_name:str) -> Path:
+def determine_resource_path(resource_package: str, resource_name: str) -> Path:
     """
     Given a package and resource name, get the given program resource
     :param resource_package: package where resources are located

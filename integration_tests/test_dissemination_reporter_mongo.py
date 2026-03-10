@@ -1,7 +1,6 @@
 import json
 import unittest
 
-import accelerator_core
 from accelerator_core.schema.models.base_model import (
     DisseminationLinkReport,
     DisseminationEndpoint,
@@ -12,14 +11,11 @@ from accelerator_core.service_impls.mongo_dissemination import DisseminationMong
 from accelerator_core.service_impls.mongo_dissemination_reporter import (
     MongoDisseminationReporter,
 )
-from accelerator_core.utils import resource_utils, mongo_tools
-from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
+from accelerator_core.utils import resource_utils
 from accelerator_core.utils.accelerator_config import (
-    AcceleratorConfig,
     config_from_file,
 )
 from accelerator_core.utils.resource_utils import (
-    determine_resource_path,
     determine_test_resource_path,
 )
 from accelerator_core.utils.xcom_utils import DirectXcomPropsResolver
@@ -54,7 +50,7 @@ class TestDisseminationReporterMongo(unittest.TestCase):
     def test_report_dissem(self):
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
-        ingest_source_descriptor.schema_version = "1.0.2"
+        ingest_source_descriptor.schema_version = "1.0.3"
         ingest_source_descriptor.ingest_identifier = "test_report_dissem"
         ingest_source_descriptor.ingest_item_id = "test_report_dissem"
         ingest_source_descriptor.ingest_link = "mylink"
@@ -80,7 +76,7 @@ class TestDisseminationReporterMongo(unittest.TestCase):
                 xcom_props_resolver,
             )
 
-            id = accession.ingest(ingest_result, check_duplicates=False, temp_doc=False)
+            id = accession.ingest(ingest_result, temp_doc=False)
             self.assertIsNotNone(id)
 
             # now get the dissemination for this item
@@ -89,7 +85,7 @@ class TestDisseminationReporterMongo(unittest.TestCase):
             dissemination_request.dissemination_type = "tests"
             dissemination_request.temp_collection = False
             dissemination_request.ingest_type = "accelerator"
-            dissemination_request.schema_version = "1.0.2"
+            dissemination_request.schema_version = "1.0.3"
             dissemination_request.inline_results = True
             dissemination_request.dissemination_identifier = "test_dissemination"
             dissemination_request.dissemination_item_id = id
@@ -110,7 +106,7 @@ class TestDisseminationReporterMongo(unittest.TestCase):
 
             link_report = DisseminationLinkReport()
             link_report.target_schema_type = "accelerator"
-            link_report.target_schema_version = "1.0.2"
+            link_report.target_schema_version = "1.0.3"
             link_report.temporary_data = False
             link_report.original_source_identifier = id
 
@@ -143,7 +139,7 @@ class TestDisseminationReporterMongo(unittest.TestCase):
 
             link_report = DisseminationLinkReport()
             link_report.target_schema_type = "accelerator"
-            link_report.target_schema_version = "1.0.2"
+            link_report.target_schema_version = "1.0.3"
             link_report.temporary_data = False
             link_report.original_source_identifier = id
 

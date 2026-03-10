@@ -1,7 +1,7 @@
 import unittest
 
 from accelerator_core.utils import resource_utils
-from accelerator_core.utils.type_matrix import parse_type_matrix, TypeMatrix
+from accelerator_core.utils.type_matrix import parse_type_matrix
 
 
 class TestTypeMatrix(unittest.TestCase):

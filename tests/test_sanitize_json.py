@@ -1,4 +1,3 @@
-import json
 import unittest
 
 from accelerator_core.utils.json_sanitizer import JSONSanitizer

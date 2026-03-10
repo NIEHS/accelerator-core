@@ -2,15 +2,18 @@
 Superclass for an ingest component
 """
 
-from accelerator_core.utils.logger import setup_logger
-from accelerator_core.utils.xcom_utils import XcomProperties, XcomPropsResolver
+import logging
+from typing import List
+
+from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_data_models import (
     IngestSourceDescriptor,
     IngestPayload,
+    SynchType,
 )
 from accelerator_core.workflow.accel_workflow_task import AcceleratorWorkflowTask
 
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 
 class AccelIngestComponent(AcceleratorWorkflowTask):
@@ -39,13 +42,17 @@ class AccelIngestComponent(AcceleratorWorkflowTask):
         """
         return False
 
-    def ingest(self, additional_parameters: dict) -> IngestPayload:
+    def synch(
+        self, synch_type: SynchType, identifier: str, additional_parameters: dict
+    ) -> List[IngestPayload]:
         """
         primary method for subclasses to implement, this is the actual ingest, which means accessing the target
         data source and returning a result that includes provenance and technical metadata, along with a payload that
         is either the serialized result or a path or locator that can be used to extract the result.
         :param additional_parameters: dict of individual parameters that can be fed to this method per implementation
-        :return: IngestPayload that wraps payload(s) with additional metadata
+        :param identifier: str with the identifier of the source of data on the target site
+        :param synch_type: str with the type of synch to perform
+        :return: List[IngestPayload] that wraps payload(s) with additional metadata
 
         Note that the IngestSourceDescriptor has an ingest_identifier that should be set to the run_id of the workflow
         or other representation of the process that is calling this task

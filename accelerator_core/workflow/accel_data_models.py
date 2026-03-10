@@ -1,5 +1,19 @@
+from enum import Enum
+
 from accelerator_core.payload import Payload
 from accelerator_core.utils.data_utils import sanitize_boolean
+
+
+class SynchType(Enum):
+    """
+    Enumeration representing different synchronization types.
+
+    This Enum is used to define distinct synchronization types in ingest processing. This
+    includes whether to drive the synch from the source records or from the accel database records
+    """
+
+    SOURCE = 1
+    CATALOG = 2
 
 
 class IngestSourceDescriptor:

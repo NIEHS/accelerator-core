@@ -1,11 +1,10 @@
 import json
+import logging
 import os
 
 from jinja2 import Environment, FileSystemLoader, Template
 
-from accelerator_core.utils.logger import setup_logger
-
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 
 class AccelTemplateProcessor:

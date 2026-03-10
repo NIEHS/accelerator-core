@@ -1,8 +1,5 @@
-import json
 import unittest
-from shlex import shlex
 
-import accelerator_core
 from accelerator_core.schema.models.accel_model import (
     AccelProgramModel,
     AccelProjectModel,
@@ -17,17 +14,16 @@ from accelerator_core.schema.models.accel_model import (
     AccelPopulationDataModel,
     ProjectSponsor,
 )
+from accelerator_core.schema.models.accel_model import build_accel_from_model
 from accelerator_core.schema.models.base_model import (
     SubmissionInfoModel,
     TechnicalMetadataModel,
 )
 from accelerator_core.utils import resource_utils
 from accelerator_core.utils.accelerator_config import (
-    AcceleratorConfig,
     config_from_file,
 )
 from accelerator_core.utils.schema_tools import SchemaTools
-from accelerator_core.schema.models.accel_model import build_accel_from_model
 
 
 class TestAccelModel(unittest.TestCase):
@@ -67,7 +63,7 @@ class TestAccelModel(unittest.TestCase):
 
         resource = AccelIntermediateResourceModel()
         resource.name = "rescname"
-        resource.version = "1.0.1"
+        resource.version = "1.0.3"
         resource.resource_type = "boo"
         resource.resource_url = "http://resc.url.com"
         resource.description = "description"
@@ -114,7 +110,7 @@ class TestAccelModel(unittest.TestCase):
         population_data.population_studies = ["study1"]
 
         rendered = build_accel_from_model(
-            version="1.0.2",
+            version="1.0.3",
             submission=submission,
             technical=technical,
             program=program,
@@ -128,6 +124,6 @@ class TestAccelModel(unittest.TestCase):
 
         schema_tools = SchemaTools(self.config)
         result = schema_tools.validate_json_against_schema(
-            rendered, "accelerator", "1.0.2"
+            rendered, "accelerator", "1.0.3"
         )
         self.assertTrue(result.valid)
