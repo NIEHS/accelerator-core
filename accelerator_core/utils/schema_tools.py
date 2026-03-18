@@ -1,15 +1,13 @@
-import importlib.resources
+import json
+import logging
 
+import jsonschema
 from cfgv import ValidationError
 
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
-from accelerator_core.utils.logger import setup_logger
-import accelerator_core.schema
 from accelerator_core.utils.resource_utils import determine_resource_path
-import json
-import jsonschema
 
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 CURRENT_JSON_SCHEMA_VERSION = "2020-12"
 

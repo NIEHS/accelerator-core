@@ -1,20 +1,15 @@
-from typing import Optional
+import logging
 
-from pymongo.synchronous.client_session import ClientSession
+from bson import ObjectId
 
 from accelerator_core.schema.models.base_model import DisseminationLinkReport
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.services.dissemination_reporter import DisseminationReporter
 from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
-from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
-from accelerator_core.utils.logger import setup_logger
-from accelerator_core.utils.mongo_tools import convert_doc_to_json
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
-from bson import ObjectId
 
-
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 
 class MongoDisseminationReporter(DisseminationReporter):

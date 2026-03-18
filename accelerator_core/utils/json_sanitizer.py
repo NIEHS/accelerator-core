@@ -1,7 +1,8 @@
-from typing import Union, Dict, Any
 import html
 import json
 import re
+from typing import Union, Dict, Any
+
 
 class JSONSanitizer:
     @staticmethod
@@ -28,13 +29,13 @@ class JSONSanitizer:
     @staticmethod
     def _preprocess_python_style_json(json_str: str) -> str:
         # Replace None → ""
-        json_str = re.sub(r'(:\s*)None\b', r'\1""', json_str)
+        json_str = re.sub(r"(:\s*)None\b", r'\1""', json_str)
 
         # Replace True → true
-        json_str = re.sub(r'(:\s*)True\b', r'\1true', json_str)
+        json_str = re.sub(r"(:\s*)True\b", r"\1true", json_str)
 
         # Replace False → false
-        json_str = re.sub(r'(:\s*)False\b', r'\1false', json_str)
+        json_str = re.sub(r"(:\s*)False\b", r"\1false", json_str)
 
         return json_str
 
@@ -56,8 +57,8 @@ class JSONSanitizer:
     def _clean_string(s: str) -> str:
         s = s.strip()
         s = html.unescape(s)
-        s = re.sub(r'<[^>]+>', '', s)
-        s = re.sub(r'[\r\n]+', ' ', s)
-        s = re.sub(r'[^\w\s\-.,:/]', '', s)
-        s = re.sub(r'\s+', ' ', s)
+        s = re.sub(r"<[^>]+>", "", s)
+        s = re.sub(r"[\r\n]+", " ", s)
+        s = re.sub(r"[^\w\s\-.,:/]", "", s)
+        s = re.sub(r"\s+", " ", s)
         return s.strip()

@@ -27,6 +27,24 @@ class SubmissionInfoModel:
         return obj
 
 
+class AdditionalMetadataItem:
+    """
+    An entry in addtional metadata that is a key/value pair
+    """
+
+    def __init__(self, key: str, value: str):
+        self.key = key
+        self.value = value
+        self.base64_encoded = False
+
+    def to_dict(self):
+        val = {}
+        val["key"] = self.key
+        val["value"] = self.value
+        val["base64_encoded"] = self.base64_encoded
+        return val
+
+
 class TechnicalMetadataModel:
     """
     Technical metadata about an object
@@ -38,6 +56,7 @@ class TechnicalMetadataModel:
         self.verified = (
             ""  # date the last verification was done, blank if never verified
         )
+        self.data_checksum = ""  # checksum of the data stanza as a string, used to detect changes when synching
         self.target_schema_type = (
             ""  # type_matrix name entry describing the schema of the data kept in accel
         )
@@ -54,6 +73,10 @@ class TechnicalMetadataModel:
             # FIXME:// this needs to become the 'type' of the original source, not a link, this maps to the
             # dag that does the accession to the accel database model
         )
+        self.additional_data = (
+            []
+        )  # object to hold specific additional data e.g. generated embeddings
+        # as AdditionalMetadataItem
         self.history = []  # TechnicalMetadataHistory
         self.dissemination_endpoints = []  # DisseminationEndpoint
 
@@ -62,11 +85,13 @@ class TechnicalMetadataModel:
         val["created"] = self.created
         val["modified"] = self.modified
         val["verified"] = self.verified
+        val["data_checksum"] = self.data_checksum
         val["target_schema_type"] = self.target_schema_type
         val["target_schema_version"] = self.target_schema_version
         val["original_source_identifier"] = self.original_source_identifier
         val["original_source_type"] = self.original_source_type
         val["original_source_link"] = self.original_source_link
+        val["additional_data"] = [a.to_dict() for a in self.additional_data]
         val["history"] = [h.to_dict() for h in self.history]
         val["dissemination_endpoints"] = [
             d.to_dict() for d in self.dissemination_endpoints

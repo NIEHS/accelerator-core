@@ -1,14 +1,15 @@
+import logging
+
+from accelerator_core.utils.accelerator_config import AcceleratorConfig
+from accelerator_core.utils.schema_tools import SchemaTools, SchemaValidationResult
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,
 )
-from accelerator_core.utils.accelerator_config import AcceleratorConfig
-from accelerator_core.utils.logger import setup_logger
-from accelerator_core.utils.schema_tools import SchemaTools, SchemaValidationResult
 from accelerator_core.workflow.accel_workflow_task import AcceleratorWorkflowTask
 
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 
 class Accession(AcceleratorWorkflowTask):
@@ -49,14 +50,12 @@ class Accession(AcceleratorWorkflowTask):
     def ingest(
         self,
         ingest_result: IngestPayload,
-        check_duplicates: bool = True,
         temp_doc: bool = False,
     ) -> str:
         """
         Ingest the given document
         :param ingest_result: IngestResult instance to ingest, this should be a single document, with
         either an inline document, or a path reference to a temporary location
-        :param check_duplicates: bool indicates whether pre-checks for duplicate data run
         :param temp_doc: bool indicates whether the document is temporary or not
         :return: str with id of the ingested document
         """

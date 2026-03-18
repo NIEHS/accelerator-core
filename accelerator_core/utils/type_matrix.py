@@ -3,12 +3,12 @@ Tools and representation of the type matrix that relates a named type with the s
 temp collection and other type-specific hints.
 """
 
+import logging
 from pathlib import Path
 
-from accelerator_core.utils.logger import setup_logger
 import yaml
 
-logger = setup_logger("accelerator")
+logger = logging.getLogger(__name__)
 
 
 class TypeMatrix:

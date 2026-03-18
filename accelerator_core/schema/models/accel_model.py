@@ -1,8 +1,5 @@
 import json
 import logging
-import os
-
-from jinja2 import Environment, FileSystemLoader
 
 from accelerator_core.schema.models.base_model import (
     SubmissionInfoModel,
