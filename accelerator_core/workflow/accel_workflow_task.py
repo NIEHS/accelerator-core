@@ -27,6 +27,7 @@ class AcceleratorWorkflowTask:
         self.xcom_properties_resolver = xcom_properties_resolver
         self.xcomUtils = XcomUtils(xcom_properties_resolver)
 
+    # FIXME: change this method to take IngestPayload and set up the payload and payload path appropriately
     def payload_resolve(self, payload: Payload, index: int) -> dict:
         """
         Callback function that will yield a payload that has been resolved (meaning
