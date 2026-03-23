@@ -334,6 +334,9 @@ class AccessionMongo(Accession):
         self, db, document_type: str, temp_doc: bool = False
     ):
         """
+
+        N.B. refactored to move method to AccelDbContext.
+
         Find the correct collection based on the document type information in the ingest_source_descriptor
         :param db: Mongo db
         :param document_type: type of the document, per the type matrix
@@ -341,18 +344,9 @@ class AccessionMongo(Accession):
         :return: the mongo collection
         """
 
-        type_matrix_info = self.accelerator_config.find_type_matrix_info_for_type(
-            document_type
+        return self.accel_db_context.build_collection_reference(
+            db, document_type, temp_doc
         )
-        if not type_matrix_info:
-            raise Exception(f"unknown type {document_type}")
-
-        if temp_doc:
-            coll_name = type_matrix_info.temp_collection
-        else:
-            coll_name = type_matrix_info.collection
-
-        return db[coll_name]
 
     def check_if_insert_or_update(
         self, ingest_payoad: IngestPayload, temp_doc: bool = False

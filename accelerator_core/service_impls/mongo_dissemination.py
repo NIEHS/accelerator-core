@@ -13,12 +13,12 @@ from accelerator_core.services.dissemination import (
     Dissemination,
     DisseminationDescriptor,
     DisseminationPayload,
-    DisseminationFilter,
 )
 from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.mongo_tools import convert_doc_to_json
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
+from utils.data_utils import generate_guid
 
 logger = logging.getLogger(__name__)
 
@@ -159,17 +159,53 @@ class DisseminationMongo(Dissemination):
 
     def disseminate_by_filter(
         self,
-        filter: DisseminationFilter,
         dissemination_request: DisseminationDescriptor,
     ) -> [DisseminationPayload]:
         """
         Apply the given filter to create a set of documents to be disseminated to a target
         @param filter: DisseminationFilter that will select documents to disseminate. The internal meaning
         of the filter is dependent on the particular implementation
+
+        Note that this method does not update the database indicating a dissemination, and it returns multiple documents.
+        In normal usage patterns, the caller would use the result payloads to expand into individual dissemination tasks,
+        and in those individual task calls, the caller would invoke the disseminate by id method to disseminate each document.
+
         @param dissemination_request: DisseminationRequest that describes the type, version, and other information
         @return: array of documents as DisseminationPayload
         """
-        raise UnsupportedOperation("dissemination by filter not yet supported")
+
+        if not dissemination_request:
+            raise Exception(
+                "no dissemination_request provided to disseminate_by_filter, cannot continue"
+            )
+
+        if not dissemination_request.dissemination_filter:
+            raise Exception(
+                "no dissemination_filter provided to disseminate_by_filter, cannot continue"
+            )
+
+        docs = self.accel_database_utils.find_by_filter(
+            dissemination_request.ingest_type,
+            dissemination_request.dissemination_filter,
+            dissemination_request.temp_collection,
+        )
+        if docs is None:
+            logger.warning(
+                f"No documents found for filter: {dissemination_request.dissemination_filter}"
+            )
+
+        payloads = []
+
+        for doc in docs:
+            guid = generate_guid()
+            dissemination_request.dissemination_item_id = guid
+            dissemination_payload = DisseminationPayload(dissemination_request)
+            doc_id = AccelDatabaseUtils.extract_id_from_doc(doc)
+            self.report_individual_dissemination(dissemination_payload, doc_id, doc)
+            dissemination_payload.dissemination_successful = True
+            payloads.append(dissemination_payload)
+
+        return payloads
 
     def report_individual_dissemination(
         self, dissemination_payload: DisseminationPayload, item_id: str, item: dict

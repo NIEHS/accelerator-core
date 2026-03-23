@@ -9,7 +9,6 @@ from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_data_models import (
     DisseminationDescriptor,
-    DisseminationFilter,
     DisseminationPayload,
 )
 from accelerator_core.workflow.accel_workflow_task import AcceleratorWorkflowTask
@@ -77,15 +76,13 @@ class Dissemination(AcceleratorWorkflowTask):
 
     def disseminate_by_filter(
         self,
-        filter: DisseminationFilter,
         dissemination_request: DisseminationDescriptor,
     ) -> [DisseminationPayload]:
         """
         Apply the given filter to create a set of documents to be disseminated to a target
-        @param filter: DisseminationFilter that will select documents to disseminate. The internal meaning
-        of the filter is dependent on the particular implementation. This method should return a list of DisseminationPayloads, so each dag run may spawn
-        multiple dissemination tasks.
-        @param dissemination_request: DisseminationRequest that describes the type, version, and other information
-        @return: array of documents as DisseminationPayload
+
+        @param dissemination_request: DisseminationRequest that describes the type, version, and other information. The DisseminationRequest must contain
+        the desired filter information, or an exception will be thrown.
+        @return: array of documents as DisseminationPayload.
         """
         pass
