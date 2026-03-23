@@ -4,4 +4,4 @@ types:
   schema: accel-schema
   collection: dev_accelerator
   temp_collection: dev_accelerator_temp
-  default_version: 1.0.1
+  default_version: 1.0.3

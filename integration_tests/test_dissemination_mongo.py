@@ -21,6 +21,7 @@ from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,
 )
+from utils.data_utils import generate_guid
 
 
 class TestDisseminationMongo(unittest.TestCase):
@@ -105,7 +106,7 @@ class TestDisseminationMongo(unittest.TestCase):
 
             self.assertIsNotNone(dissemination_payload)
 
-    def test_find_one_by_filter(self):
+    def test_find_doc_by_original_source_identifier(self):
         ingest_source_descriptor = IngestSourceDescriptor()
         ingest_source_descriptor.ingest_type = "accelerator"
         ingest_source_descriptor.schema_version = "1.0.3"
@@ -217,6 +218,70 @@ class TestDisseminationMongo(unittest.TestCase):
             )
 
             self.assertIsNotNone(dissemination_payload)
+
+    def test_disseminate_by_filter(self):
+        ingest_source_descriptor = IngestSourceDescriptor()
+        ingest_source_descriptor.ingest_type = "accelerator"
+        ingest_source_descriptor.schema_version = "1.0.3"
+        ingest_source_descriptor.ingest_identifier = "myrunid"
+
+        ingest_source_descriptor.ingest_link = "cedar"
+        ingest_source_descriptor.submitter_name = "mysubmittername"
+        ingest_source_descriptor.submitter_email = "mysubmitteremail"
+        ingest_source_descriptor.use_tempfiles = False
+
+        ingest_result = IngestPayload(ingest_source_descriptor)
+
+        json_path = determine_test_resource_path(
+            "test_corpus.json", "integration_tests"
+        )
+
+        coll = self._accel_db_context.build_collection_reference(
+            self._accel_db_context.db, "accelerator"
+        )
+
+        with open(json_path) as json_data:
+            d = json.load(json_data)
+
+            for doc in d:
+
+                del doc["_id"]
+                coll.insert_one(doc)
+
+        dissemination_payloads = []
+
+        filter = {
+            "technical_metadata.original_source_link": "cedar",
+            "technical_metadata.dissemination_endpoints": {
+                "$not": {"$elemMatch": {"endpoint_type": "cafe"}}
+            },
+        }
+
+        dissemination_request = DisseminationDescriptor()
+        dissemination_request.dissemination_type = "cafe"
+        dissemination_request.temp_collection = False
+        dissemination_request.ingest_type = "accelerator"
+        guid = generate_guid()
+        dissemination_request.run_id = guid
+        dissemination_request.dissemination_identifier = guid
+        dissemination_request.schema_version = "1.0.3"
+        dissemination_request.dissemination_filter = filter
+
+        xcom_props_resolver = DirectXcomPropsResolver(
+            temp_files_supported=False, temp_files_location=""
+        )
+
+        dissemination = DisseminationMongo(
+            self.__class__._accelerator_config,
+            xcom_props_resolver,
+            self.__class__._accel_db_context,
+        )
+
+        dissemination_payloads = dissemination.disseminate_by_filter(
+            dissemination_request
+        )
+
+        self.assertIsNotNone(dissemination_payloads)
 
     def test_dissemination_not_found(self):
         ingest_source_descriptor = IngestSourceDescriptor()

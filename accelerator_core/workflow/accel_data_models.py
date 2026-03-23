@@ -101,20 +101,6 @@ class IngestPayload(Payload):
         return ingest_payload
 
 
-class DisseminationFilter:
-    """
-    Filter for objects in the Accel data store to be passed along for dissemination
-    """
-
-    def filter(self, filter_terms: dict):
-        """
-        Filter requests (that will be targeted to a chosen collection based on the context) to deliver for
-        dissemination
-        :param filter_terms: dict with filtering terms
-        """
-        self.filter_terms = filter_terms
-
-
 class DisseminationDescriptor:
     """
     Describes metadata about a data dissemination, this includes provenance information as well as technical metadata

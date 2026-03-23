@@ -3,7 +3,7 @@ General methods to interact with the mongo database
 """
 
 import logging
-from typing import Optional
+from typing import Optional, List
 
 from bson import ObjectId
 from pymongo.synchronous.client_session import ClientSession
@@ -125,6 +125,45 @@ class AccelDatabaseUtils:
         }
         doc = coll.find_one(query, session=session)
         return doc
+
+    def find_by_filter(
+        self,
+        ingest_type: str,
+        filter: dict,
+        temp_doc: bool = False,
+        session: Optional[ClientSession] = None,
+    ) -> List[dict]:
+        """
+        Find a document based on the given original source link and identifier.
+
+        This method searches for a document in the database using the provided
+        original source link and original source identifier. The optional
+        temp_data parameter determines whether to look in the temporary data
+        storage.
+
+        Parameters:
+        ingest_type: str
+            String identifier of the database collection to search. This is the same as the type matrix entry for the document type.
+        filter: dict with a filter to apply to the query
+        temp_doc: bool, optional
+            Flag indicating whether to search in temporary data storage. Defaults to False.
+
+        Returns:
+        List[dict] with an array of query results
+        """
+
+        db = self.connect_to_db()
+        coll = self.build_collection_reference(ingest_type, temp_doc=temp_doc)
+
+        docs = coll.find(filter, session=session)
+        return_docs = []
+
+        for doc in docs:
+            doc = convert_doc_to_json(doc)
+            logger.debug(f"Found doc {doc['_id']} in collection {ingest_type}")
+            return_docs.append(doc)
+
+        return return_docs
 
     def connect_to_db(self):
         return self.accel_db_context.db
