@@ -2,10 +2,16 @@ import json
 import os
 import shutil
 
+import logging
+import uuid
+
 from airflow.sdk import Variable
 
 
 # from airflow.models import Variable
+
+
+logger = logging.getLogger(__name__)
 
 
 class XcomProperties:
@@ -72,7 +78,8 @@ class AirflowXcomPropsResolver(XcomPropsResolver):
 
 class XcomUtils:
     """
-    Utility class for handling XCOM data, allowing storage of xcom values to temporary file storage
+    Utility class for handling XCOM data, allowing storage of xcom values to temporary file storage. Also provides
+    storage of ephemeral files for general usage
     """
 
     def __init__(self, resolver: XcomPropsResolver = None):
@@ -92,6 +99,90 @@ class XcomUtils:
         @return: the location of the temp files, or None if no temp files supported
         """
         return self.xcom_properties.temp_files_location
+
+    def delete_temp_data(self, file_name):
+        """
+        Deletes a temporary file from the system to free up storage or maintain
+        system cleanliness. Specifically removes the file identified by its name
+        from the temporary storage directory.
+
+        This is just a wrapper around the remove but allows later abstraction of temp file storage
+
+        Args:
+            file_name (str): The name of the temporary file to be deleted. It
+                should include the file extension if applicable.
+
+
+        """
+
+        os.remove(file_name)
+
+    def store_temp_data(self, file_contents_buf) -> str:
+        """
+        Stores temporary data and generates a unique file name for it.
+        This method creates a UUID to uniquely identify a temporary file and then
+        delegates the storage to another method, ensuring that the data is stored
+        with the generated unique name.
+
+        Args:
+            file_contents_buf: The contents of the temporary file to be stored.
+
+        Returns:
+            str: The name of the temporary file in which the data is stored.
+        """
+        myuuid = uuid.uuid4()
+        file_name = str(myuuid)
+        return self.store_temp_data_by_name(file_name, file_contents_buf)
+
+    def store_temp_data_by_name(self, filename, file_contents_buf) -> str:
+        """
+        Stores temporary data in the specified directory. This method ensures the
+        provided directory exists, creates it if necessary, and writes file
+        contents into a temporary file. Additionally, it handles cases where the
+        file already exists by deleting it before writing.
+
+        Parameters:
+            filename: str
+                The name of the file to be created or overwritten in the
+                temporary files directory.
+            file_contents_buf: bytes
+                The binary data to be written to the file.
+
+        Returns:
+            str: The full file path where the data has been stored.
+
+        Raises:
+            Exception: If temporary files are not supported by the system.
+            Exception: If the temporary files directory is not provided or empty.
+        """
+
+        if not self.is_tempfiles_supported():
+            raise Exception("temp files not supported")
+
+        if not self.get_tempfiles_location():
+            raise Exception("temp files dir not provided")
+
+        temp_files_location = self.get_tempfiles_location()
+        if temp_files_location.endswith("/"):
+            temp_files_location = temp_files_location[:-1]
+
+        dirpath = f"{self.xcom_properties.temp_files_location}/cache"
+        if not os.path.exists(dirpath):
+            # if the demo_folder directory is not present
+            # then create it.
+            os.makedirs(dirpath)
+
+        file_path = os.path.join(dirpath, filename)
+
+        if os.path.exists(file_path):
+            "File already exists, delete it"
+            logger.debug(f"File already exists, deleting it: {file_path}")
+            os.remove(file_path)
+
+        with open(file_path, "wb") as binary_file:
+            binary_file.write(file_contents_buf)
+
+        return file_path
 
     def resolve_task_dir(self, runid: str) -> str:
         """
