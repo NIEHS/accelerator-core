@@ -6,6 +6,8 @@ import logging
 from io import UnsupportedOperation
 from typing import List
 
+from accelerator_core.utils.data_utils import generate_guid
+
 from accelerator_core.schema.models.base_model import (
     create_timestamped_log,
 )
@@ -19,7 +21,6 @@ from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.mongo_tools import convert_doc_to_json
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
-from utils.data_utils import generate_guid
 
 logger = logging.getLogger(__name__)
 
