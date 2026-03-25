@@ -4,6 +4,7 @@ Dissemination support concrete implementation for Mongo data store
 
 import logging
 from io import UnsupportedOperation
+from typing import List
 
 from accelerator_core.schema.models.base_model import (
     create_timestamped_log,
@@ -160,7 +161,7 @@ class DisseminationMongo(Dissemination):
     def disseminate_by_filter(
         self,
         dissemination_request: DisseminationDescriptor,
-    ) -> [DisseminationPayload]:
+    ) -> List[DisseminationPayload]:
         """
         Apply the given filter to create a set of documents to be disseminated to a target
         @param filter: DisseminationFilter that will select documents to disseminate. The internal meaning

@@ -5,6 +5,8 @@ dissemination.
 
 """
 
+from typing import List
+
 from accelerator_core.utils.accelerator_config import AcceleratorConfig
 from accelerator_core.utils.xcom_utils import XcomPropsResolver
 from accelerator_core.workflow.accel_data_models import (
@@ -77,7 +79,7 @@ class Dissemination(AcceleratorWorkflowTask):
     def disseminate_by_filter(
         self,
         dissemination_request: DisseminationDescriptor,
-    ) -> [DisseminationPayload]:
+    ) -> List[DisseminationPayload]:
         """
         Apply the given filter to create a set of documents to be disseminated to a target
 
