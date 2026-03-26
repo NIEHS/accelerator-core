@@ -199,7 +199,7 @@ class XcomUtils:
         if temp_files_location.endswith("/"):
             temp_files_location = temp_files_location[:-1]
 
-        dirpath = f"{self.xcom_properties.temp_files_location}/{runid}"
+        dirpath = f"{self.xcom_properties.temp_files_location}"
         if not os.path.exists(dirpath):
             # if the demo_folder directory is not present
             # then create it.
@@ -215,7 +215,8 @@ class XcomUtils:
         @return: the path of the temp file to pass in xcom_properties
         """
 
-        filename = f"{runid}-{key}.json"
+        guid = str(uuid.uuid4())
+        filename = f"{guid}.json"
         filedir = self.resolve_task_dir(runid)
 
         temp_file_path = os.path.join(filedir, filename)
@@ -241,5 +242,5 @@ class XcomUtils:
         if temp_files_location.endswith("/"):
             temp_files_location = temp_files_location[:-1]
 
-        dirpath = f"{self.xcom_properties.temp_files_location}/{runid}"
+        dirpath = f"{self.xcom_properties.temp_files_location}"
         shutil.rmtree(dirpath)
