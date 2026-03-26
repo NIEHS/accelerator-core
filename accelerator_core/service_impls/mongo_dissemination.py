@@ -199,8 +199,9 @@ class DisseminationMongo(Dissemination):
         payloads = []
 
         for doc in docs:
-            guid = generate_guid()
-            dissemination_request.dissemination_item_id = guid
+            dissemination_request.dissemination_item_id = (
+                AccelDatabaseUtils.extract_id_from_doc(doc)
+            )
             dissemination_payload = DisseminationPayload(dissemination_request)
             doc_id = AccelDatabaseUtils.extract_id_from_doc(doc)
             self.report_individual_dissemination(dissemination_payload, doc_id, doc)
