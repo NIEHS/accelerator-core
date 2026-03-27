@@ -202,8 +202,9 @@ class DisseminationMongo(Dissemination):
             dissemination_request.dissemination_item_id = (
                 AccelDatabaseUtils.extract_id_from_doc(doc)
             )
+            logger.info("item_id: " + dissemination_request.dissemination_item_id)
             dissemination_payload = DisseminationPayload(dissemination_request)
-            doc_id = AccelDatabaseUtils.extract_id_from_doc(doc)
+            doc_id = dissemination_request.dissemination_item_id
             self.report_individual_dissemination(dissemination_payload, doc_id, doc)
             dissemination_payload.dissemination_successful = True
             payloads.append(dissemination_payload)
