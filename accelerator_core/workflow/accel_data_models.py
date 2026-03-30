@@ -195,6 +195,8 @@ class DisseminationPayload(Payload):
         super().__init__(payload=[], payload_path=[], payload_inline=True)
         self.dissemination_descriptor = dissemination_descriptor
         self.dissemination_successful = True
+        self.dissemination_message = ""
+        self.dissemination_error_details = ""
 
     def to_dict(self) -> dict:
         serialized = {
@@ -203,6 +205,8 @@ class DisseminationPayload(Payload):
             "payload_path": self.payload_path,
             "payload": self.payload,
             "dissemination_successful": self.dissemination_successful,
+            "dissemination_message": self.dissemination_message,
+            "dissemination_error_details": self.dissemination_error_details,
         }
 
         return serialized
@@ -222,4 +226,10 @@ class DisseminationPayload(Payload):
         dissemination_payload.dissemination_successful = sanitize_boolean(
             input_dict["dissemination_successful"]
         )
+        dissemination_payload.dissemination_message = input_dict[
+            "dissemination_message"
+        ]
+        dissemination_payload.dissemination_error_details = input_dict[
+            "dissemination_error_details"
+        ]
         return dissemination_payload
