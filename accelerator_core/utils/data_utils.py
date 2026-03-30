@@ -4,6 +4,7 @@ Various data handling utilities
 
 import hashlib
 import json
+import uuid
 
 
 def sanitize_boolean(val) -> bool:
@@ -54,3 +55,12 @@ def checksum_data(data) -> str:
     """
     stringified_data = json.dumps(data, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(stringified_data.encode("utf-8")).hexdigest()
+
+
+def generate_guid() -> str:
+    """
+    Generate a GUID for the given data, this is the data portion of a payload
+    This is useful when generating file names for xcom run folders
+    """
+    myuuid = uuid.uuid4()
+    return str(myuuid)

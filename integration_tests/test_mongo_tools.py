@@ -22,7 +22,7 @@ class TestMongoToolsIntegration(unittest.TestCase):
         cls._accel_db_context = accel_db_context
         cls._accelerator_config = config
 
-    def test_drop_db(self):
+    def drop_db(self):
         test_path = resource_utils.determine_test_resource_path(
             "application.properties", "integration_tests"
         )
@@ -30,7 +30,7 @@ class TestMongoToolsIntegration(unittest.TestCase):
         client = mongo_tools.initialize_mongo_client(config)
         mongo_tools.drop_accel_database(client, config.params["mongo.db.name"])
 
-    def test_create_db(self):
+    def create_db(self):
         test_path = resource_utils.determine_test_resource_path(
             "application.properties", "integration_tests"
         )

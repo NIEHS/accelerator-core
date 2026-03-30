@@ -75,6 +75,8 @@ class IngestPayload(Payload):
         super().__init__(payload=[], payload_path=[], payload_inline=True)
         self.ingest_source_descriptor = ingest_source_descriptor
         self.ingest_successful = True
+        self.ingest_message = ""
+        self.ingest_error_details = ""
 
     def to_dict(self) -> dict:
         serialized = {
@@ -82,6 +84,8 @@ class IngestPayload(Payload):
             "payload_inline": self.payload_inline,
             "payload_path": self.payload_path,
             "ingest_successful": self.ingest_successful,
+            "ingest_message": self.ingest_message,
+            "ingest_error_details": self.ingest_error_details,
             "payload": self.payload,
         }
         return serialized
@@ -95,24 +99,12 @@ class IngestPayload(Payload):
         ingest_payload.ingest_successful = sanitize_boolean(
             input_dict["ingest_successful"]
         )
+        ingest_payload.ingest_message = input_dict["ingest_message"]
+        ingest_payload.ingest_error_details = input_dict["ingest_error_details"]
         ingest_payload.payload_inline = sanitize_boolean(input_dict["payload_inline"])
         ingest_payload.payload = input_dict["payload"]
         ingest_payload.payload_path = input_dict["payload_path"]
         return ingest_payload
-
-
-class DisseminationFilter:
-    """
-    Filter for objects in the Accel data store to be passed along for dissemination
-    """
-
-    def filter(self, filter_terms: dict):
-        """
-        Filter requests (that will be targeted to a chosen collection based on the context) to deliver for
-        dissemination
-        :param filter_terms: dict with filtering terms
-        """
-        self.filter_terms = filter_terms
 
 
 class DisseminationDescriptor:

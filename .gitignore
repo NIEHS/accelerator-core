@@ -175,3 +175,4 @@ cython_debug/
 
 # ignore generated files
 tests/test_resources/temp_dirs/*
+*/temp_dirs/cache/*
