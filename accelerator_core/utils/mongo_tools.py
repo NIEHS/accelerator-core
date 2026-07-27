@@ -45,7 +45,7 @@ def is_mongo_direct(accel_config: AcceleratorConfig) -> bool:
 def build_connection_string(accel_config: AcceleratorConfig) -> str:
     """
     Build a mongo connection string from properties
-         mongodb://user:xxxxx@localhost:27017/
+         mongodb://user:xxxxx@localhost:27017/db_name
 
     :param accel_config: AcceleratorConfig
     :return: str with the connection string
@@ -53,21 +53,23 @@ def build_connection_string(accel_config: AcceleratorConfig) -> str:
     """
 
     mongo_direct = is_mongo_direct(accel_config)
-    conn = f'mongodb://{accel_config.params["mongo.user"]}:{accel_config.params["mongo.password"]}@{accel_config.params["mongo.host"]}:{accel_config.params["mongo.port"]}/'
+    db_name = accel_config.params.get("mongo.db.name")
+    if not db_name:
+        db_name = "accelerator"
+        
+    conn = f'mongodb://{accel_config.params["mongo.user"]}:{accel_config.params["mongo.password"]}@{accel_config.params["mongo.host"]}:{accel_config.params["mongo.port"]}/{db_name}'
 
+    options = []
     if accel_config.params.get("mongo.replicaset", None):
         logger.info(f"repl: {accel_config.params['mongo.replicaset']}")
+        options.append(f"replicaSet={accel_config.params['mongo.replicaset']}")
+        options.append(f"authSource={db_name}")
 
-        conn += (
-            f"?replicaSet={accel_config.params['mongo.replicaset']}&authSource=admin"
-        )
+    if mongo_direct:
+        options.append("directConnection=true")
 
-        if mongo_direct:
-            conn += "&directConnection=true"
-
-    else:
-        if mongo_direct:
-            conn += "?directConnection=true"
+    if options:
+        conn += "?" + "&".join(options)
 
     logger.info(f"connection string: {conn}")
 
