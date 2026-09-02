@@ -1,0 +1,2827 @@
+{
+    "$defs": {
+        "AccessRightsEnum": {
+            "description": "",
+            "enum": [
+                "public",
+                "registered_access",
+                "controlled_access",
+                "embargoed",
+                "restricted",
+                "unknown"
+            ],
+            "title": "AccessRightsEnum",
+            "type": "string"
+        },
+        "Agent": {
+            "additionalProperties": false,
+            "description": "A person, organization, group, or software agent associated with a HEW resource, program, project, annotation, funding source, or activity.",
+            "properties": {
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "email": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "Agent",
+            "type": "object"
+        },
+        "AgentAssociation": {
+            "additionalProperties": false,
+            "description": "A role-bearing association between an agent and another HEW entity, such as a project, program, resource, annotation, activity, or funding source.",
+            "properties": {
+                "affiliation_context": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "agent": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "associated_with": {
+                    "description": "CURIE for the program, project, resource, annotation, activity, or funding source.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "contribution_description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "end_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "role": {
+                    "$ref": "#/$defs/AgentRoleEnum"
+                },
+                "source": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "start_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "AgentAssociation",
+            "type": "object"
+        },
+        "AgentRoleEnum": {
+            "description": "",
+            "enum": [
+                "principal_investigator",
+                "co_investigator",
+                "researcher",
+                "curator",
+                "coder",
+                "reviewer",
+                "software_developer",
+                "data_steward",
+                "data_contributor",
+                "project_manager",
+                "program_officer",
+                "scientific_contact",
+                "community_partner",
+                "funder",
+                "sponsor",
+                "author",
+                "corresponding_author",
+                "maintainer",
+                "software_agent",
+                "other"
+            ],
+            "title": "AgentRoleEnum",
+            "type": "string"
+        },
+        "AvailabilityEnum": {
+            "description": "",
+            "enum": [
+                "open_access",
+                "controlled_access",
+                "available_upon_request",
+                "unavailable",
+                "unknown"
+            ],
+            "title": "AvailabilityEnum",
+            "type": "string"
+        },
+        "CodingMethodEnum": {
+            "description": "",
+            "enum": [
+                "human_curated",
+                "laser_ai_generated",
+                "laser_ai_assisted_human_curated",
+                "imported_from_legacy_spreadsheet"
+            ],
+            "title": "CodingMethodEnum",
+            "type": "string"
+        },
+        "CohortResource": {
+            "additionalProperties": false,
+            "description": "A cohort or cohort-derived resource relevant to exposure-health research.",
+            "properties": {
+                "access_rights": {
+                    "$ref": "#/$defs/AccessRightsEnum"
+                },
+                "agent_associations": {
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "annotations": {
+                    "items": {
+                        "$ref": "#/$defs/HEWSystematicReviewAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "data_dictionary": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DataDictionary"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "measured_variables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "produced_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "$ref": "#/$defs/ResourceTypeEnum"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "spatial_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "used_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "CohortResource",
+            "type": "object"
+        },
+        "DataDictionary": {
+            "additionalProperties": false,
+            "description": "A structured description of variables, fields, measures, or data elements.",
+            "properties": {
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "source_resource": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "variables": {
+                    "items": {
+                        "$ref": "#/$defs/Variable"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "DataDictionary",
+            "type": "object"
+        },
+        "DataResourceTypeEnum": {
+            "description": "",
+            "enum": [
+                "cohort",
+                "source_cohort_publication",
+                "dataset",
+                "software_code_library",
+                "survey",
+                "other"
+            ],
+            "title": "DataResourceTypeEnum",
+            "type": "string"
+        },
+        "DataToolMethodAnnotation": {
+            "additionalProperties": false,
+            "description": "Coding of data resource types and model types used, created, or described by a literature resource.",
+            "properties": {
+                "data_resource_types": {
+                    "items": {
+                        "$ref": "#/$defs/DataResourceTypeEnum"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "evidence_text": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "is_not_reported": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "mentioned_resources": {
+                    "items": {
+                        "$ref": "#/$defs/MentionedResource"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "model_types": {
+                    "items": {
+                        "$ref": "#/$defs/ModelTypeEnum"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "DataToolMethodAnnotation",
+            "type": "object"
+        },
+        "DatasetResource": {
+            "additionalProperties": false,
+            "description": "A dataset relevant to health and extreme weather, including health, environmental, exposure, geospatial, survey, cohort, and derived datasets.",
+            "properties": {
+                "access_rights": {
+                    "$ref": "#/$defs/AccessRightsEnum"
+                },
+                "agent_associations": {
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "annotations": {
+                    "items": {
+                        "$ref": "#/$defs/HEWSystematicReviewAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "data_dictionary": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DataDictionary"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "measured_variables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "produced_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "$ref": "#/$defs/ResourceTypeEnum"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "spatial_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "used_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "DatasetResource",
+            "type": "object"
+        },
+        "Distribution": {
+            "additionalProperties": false,
+            "description": "A concrete downloadable, API, service, or object distribution of a dataset or resource.",
+            "properties": {
+                "access_rights": {
+                    "$ref": "#/$defs/AccessRightsEnum"
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "format": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "media_type": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "Distribution",
+            "type": "object"
+        },
+        "ExposureAnnotation": {
+            "additionalProperties": false,
+            "description": "Coding of an exposure pathway by which extreme weather affects health.",
+            "properties": {
+                "coded_concept": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "coding_depth": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "evidence_text": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "is_not_reported": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "parent_concept": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "specified_text": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ExposureAnnotation",
+            "type": "object"
+        },
+        "FundingSource": {
+            "additionalProperties": false,
+            "description": "A funding award, mechanism, contract, cooperative agreement, or sponsor.",
+            "properties": {
+                "award_number": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "end_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "funder": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "funding_mechanism": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "sponsor": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "start_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "FundingSource",
+            "type": "object"
+        },
+        "GeographicFeatureEnum": {
+            "description": "",
+            "enum": [
+                "general_geographic_feature",
+                "built_environment",
+                "desert",
+                "forest",
+                "freshwater",
+                "grassland",
+                "island",
+                "mountain",
+                "ocean_coastal",
+                "polar",
+                "rainforest",
+                "rural",
+                "temperate",
+                "tropical",
+                "urban",
+                "valley",
+                "wetland",
+                "other"
+            ],
+            "title": "GeographicFeatureEnum",
+            "type": "string"
+        },
+        "GeographicLocationEnum": {
+            "description": "",
+            "enum": [
+                "global_or_unspecified_location",
+                "africa",
+                "antarctica",
+                "asia",
+                "australasia",
+                "central_south_america",
+                "europe",
+                "non_us_north_america",
+                "united_states"
+            ],
+            "title": "GeographicLocationEnum",
+            "type": "string"
+        },
+        "GeographyAnnotation": {
+            "additionalProperties": false,
+            "description": "Coding of broad geographic location and geographic feature.",
+            "properties": {
+                "geographic_features": {
+                    "items": {
+                        "$ref": "#/$defs/GeographicFeatureEnum"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "geographic_locations": {
+                    "items": {
+                        "$ref": "#/$defs/GeographicLocationEnum"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "is_global_or_unspecified": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "is_not_reported": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "spatial_text": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "GeographyAnnotation",
+            "type": "object"
+        },
+        "GeospatialResource": {
+            "additionalProperties": false,
+            "description": "A geospatial dataset, layer, raster, vector file, map service, or spatial data product.",
+            "properties": {
+                "access_rights": {
+                    "$ref": "#/$defs/AccessRightsEnum"
+                },
+                "agent_associations": {
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "annotations": {
+                    "items": {
+                        "$ref": "#/$defs/HEWSystematicReviewAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "coordinate_reference_system": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "data_dictionary": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/DataDictionary"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "distributions": {
+                    "items": {
+                        "$ref": "#/$defs/Distribution"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "measured_variables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "produced_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "$ref": "#/$defs/ResourceTypeEnum"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "spatial_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "spatial_resolution": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "temporal_coverage": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "used_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "GeospatialResource",
+            "type": "object"
+        },
+        "HEWResource": {
+            "additionalProperties": false,
+            "description": "A cataloged resource relevant to health and extreme weather.",
+            "properties": {
+                "agent_associations": {
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "annotations": {
+                    "items": {
+                        "$ref": "#/$defs/HEWSystematicReviewAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "produced_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "$ref": "#/$defs/ResourceTypeEnum"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "used_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "HEWResource",
+            "type": "object"
+        },
+        "HEWSystematicReviewAnnotation": {
+            "additionalProperties": false,
+            "description": "A systematic-review coding annotation for a HEW literature resource.",
+            "properties": {
+                "annotation_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "coded_by": {
+                    "description": "Agent identifiers for coders or curation systems that created the annotation.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "coding_method": {
+                    "$ref": "#/$defs/CodingMethodEnum"
+                },
+                "coding_scheme": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "coding_scheme_version": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "confidence": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "data_tool_method_annotations": {
+                    "items": {
+                        "$ref": "#/$defs/DataToolMethodAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "exposure_annotations": {
+                    "items": {
+                        "$ref": "#/$defs/ExposureAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "generated_by": {
+                    "description": "Project, software agent, or activity that generated the annotation.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "geography_annotations": {
+                    "items": {
+                        "$ref": "#/$defs/GeographyAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "health_impact_annotations": {
+                    "items": {
+                        "$ref": "#/$defs/HealthImpactAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "information_source": {
+                    "$ref": "#/$defs/InformationSourceEnum"
+                },
+                "needs_human_review": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "notes": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "part_of_project": {
+                    "description": "Project in which the annotation was produced or reviewed.",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "reference_type": {
+                    "$ref": "#/$defs/ReferenceTypeEnum"
+                },
+                "reviewed_by": {
+                    "description": "Agent identifiers for humans or groups that reviewed the annotation.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "special_topic_annotations": {
+                    "items": {
+                        "$ref": "#/$defs/SpecialTopicAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "study_objective": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "subject": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "id",
+                "subject"
+            ],
+            "title": "HEWSystematicReviewAnnotation",
+            "type": "object"
+        },
+        "HealthImpactAnnotation": {
+            "additionalProperties": false,
+            "description": "Coding of a health impact related to extreme weather exposure.",
+            "properties": {
+                "coded_concept": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "coding_depth": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "evidence_text": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "is_not_reported": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "parent_concept": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "specified_text": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "HealthImpactAnnotation",
+            "type": "object"
+        },
+        "InformationSourceEnum": {
+            "description": "",
+            "enum": [
+                "complete_resource",
+                "abstract_and_title_only"
+            ],
+            "title": "InformationSourceEnum",
+            "type": "string"
+        },
+        "LiteratureResource": {
+            "additionalProperties": false,
+            "description": "A bibliographic resource relevant to health and extreme weather.",
+            "properties": {
+                "abstract": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "agent_associations": {
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "annotations": {
+                    "items": {
+                        "$ref": "#/$defs/HEWSystematicReviewAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "authors": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "citation": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "doi": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "journal": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "pmcid": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "pmid": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "produced_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "publication_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "publication_type": {
+                    "$ref": "#/$defs/ReferenceTypeEnum"
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "$ref": "#/$defs/ResourceTypeEnum"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "study_objective": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "used_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "LiteratureResource",
+            "type": "object"
+        },
+        "MentionedResource": {
+            "additionalProperties": false,
+            "description": "A data, software, model, cohort, survey, or tool resource mentioned in a literature resource.",
+            "properties": {
+                "access_statement": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "availability": {
+                    "$ref": "#/$defs/AvailabilityEnum"
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "relationship_to_literature": {
+                    "$ref": "#/$defs/ResourceRelationshipEnum"
+                },
+                "resource_type": {
+                    "$ref": "#/$defs/ResourceTypeEnum"
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "MentionedResource",
+            "type": "object"
+        },
+        "ModelResource": {
+            "additionalProperties": false,
+            "description": "A computational, exposure, geospatial, statistical, or AI/ML model resource.",
+            "properties": {
+                "agent_associations": {
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "annotations": {
+                    "items": {
+                        "$ref": "#/$defs/HEWSystematicReviewAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "input_variables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "model_type": {
+                    "$ref": "#/$defs/ModelTypeEnum"
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "output_variables": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "produced_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "$ref": "#/$defs/ResourceTypeEnum"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "used_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "ModelResource",
+            "type": "object"
+        },
+        "ModelTypeEnum": {
+            "description": "",
+            "enum": [
+                "artificial_intelligence_machine_learning",
+                "exposure_modeling",
+                "geospatial_modeling",
+                "other"
+            ],
+            "title": "ModelTypeEnum",
+            "type": "string"
+        },
+        "Organization": {
+            "additionalProperties": false,
+            "description": "An organization associated with HEW work, such as a university, NIH institute, agency, funder, center, consortium, healthcare system, or community partner.",
+            "properties": {
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "email": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "members": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "organization_type": {
+                    "$ref": "#/$defs/OrganizationTypeEnum"
+                },
+                "parent_organization": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "ror_id": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "Organization",
+            "type": "object"
+        },
+        "OrganizationTypeEnum": {
+            "description": "",
+            "enum": [
+                "university",
+                "nih_institute_or_center",
+                "federal_agency",
+                "state_agency",
+                "local_agency",
+                "non_governmental_organization",
+                "community_organization",
+                "healthcare_system",
+                "research_institute",
+                "consortium",
+                "private_company",
+                "funder",
+                "other"
+            ],
+            "title": "OrganizationTypeEnum",
+            "type": "string"
+        },
+        "Person": {
+            "additionalProperties": false,
+            "description": "A human agent, such as a researcher, curator, contact, PI, or contributor.",
+            "properties": {
+                "affiliations": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "email": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "family_name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "given_name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "orcid": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "roles": {
+                    "items": {
+                        "$ref": "#/$defs/AgentRoleEnum"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "Person",
+            "type": "object"
+        },
+        "Program": {
+            "additionalProperties": false,
+            "description": "A coordinated HEW initiative, funding program, consortium, center, or strategic activity that may contain projects and produce resources.",
+            "properties": {
+                "agent_associations": {
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contacts": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "end_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "has_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "produces_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "sponsoring_organizations": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "start_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "status": {
+                    "$ref": "#/$defs/ProjectStatusEnum"
+                },
+                "themes": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "Program",
+            "type": "object"
+        },
+        "Project": {
+            "additionalProperties": false,
+            "description": "A bounded HEW research, infrastructure, curation, data generation, software, analysis, translation, or community-engagement effort.",
+            "properties": {
+                "agent_associations": {
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "annotations": {
+                    "items": {
+                        "$ref": "#/$defs/HEWSystematicReviewAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "contributors": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "end_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "funding_sources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "part_of_programs": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "participating_organizations": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "principal_investigators": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "produces_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "start_date": {
+                    "format": "date",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "status": {
+                    "$ref": "#/$defs/ProjectStatusEnum"
+                },
+                "themes": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "uses_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "Project",
+            "type": "object"
+        },
+        "ProjectStatusEnum": {
+            "description": "",
+            "enum": [
+                "planned",
+                "active",
+                "completed",
+                "suspended",
+                "unknown"
+            ],
+            "title": "ProjectStatusEnum",
+            "type": "string"
+        },
+        "ReferenceTypeEnum": {
+            "description": "",
+            "enum": [
+                "research_article",
+                "review_article",
+                "commentary_opinion",
+                "assessment_book_report"
+            ],
+            "title": "ReferenceTypeEnum",
+            "type": "string"
+        },
+        "ResourceRelationshipEnum": {
+            "description": "",
+            "enum": [
+                "uses",
+                "creates",
+                "describes",
+                "evaluates",
+                "deposits",
+                "cites",
+                "derived_from"
+            ],
+            "title": "ResourceRelationshipEnum",
+            "type": "string"
+        },
+        "ResourceTypeEnum": {
+            "description": "",
+            "enum": [
+                "literature",
+                "dataset",
+                "cohort",
+                "source_cohort_publication",
+                "software_code_library",
+                "survey_instrument",
+                "geospatial_dataset",
+                "exposome_dataset",
+                "model",
+                "tool",
+                "tutorial",
+                "notebook",
+                "data_dictionary",
+                "program",
+                "project",
+                "funding_source",
+                "other"
+            ],
+            "title": "ResourceTypeEnum",
+            "type": "string"
+        },
+        "SoftwareAgent": {
+            "additionalProperties": false,
+            "description": "A software system or AI agent that performs curation, extraction, analysis, or annotation.",
+            "properties": {
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "email": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "software_version": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "SoftwareAgent",
+            "type": "object"
+        },
+        "SoftwareResource": {
+            "additionalProperties": false,
+            "description": "Software, code, library, workflow, notebook, or computational tool relevant to HEW.",
+            "properties": {
+                "agent_associations": {
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "annotations": {
+                    "items": {
+                        "$ref": "#/$defs/HEWSystematicReviewAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "license": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "maintainers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "produced_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "programming_language": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "repository": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "$ref": "#/$defs/ResourceTypeEnum"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "software_type": {
+                    "$ref": "#/$defs/SoftwareTypeEnum"
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "used_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "SoftwareResource",
+            "type": "object"
+        },
+        "SoftwareTypeEnum": {
+            "description": "",
+            "enum": [
+                "software_package",
+                "code_library",
+                "workflow",
+                "notebook",
+                "web_tool",
+                "command_line_tool",
+                "other"
+            ],
+            "title": "SoftwareTypeEnum",
+            "type": "string"
+        },
+        "SpecialTopicAnnotation": {
+            "additionalProperties": false,
+            "description": "Coding of a cross-cutting special topic relevant to HEW literature.",
+            "properties": {
+                "coded_concept": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "coding_depth": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "evidence_text": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "is_not_reported": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "parent_concept": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "specified_text": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SpecialTopicAnnotation",
+            "type": "object"
+        },
+        "SurveyInstrument": {
+            "additionalProperties": false,
+            "description": "A survey instrument or questionnaire used to collect HEW-relevant data.",
+            "properties": {
+                "agent_associations": {
+                    "items": {
+                        "$ref": "#/$defs/AgentAssociation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "annotations": {
+                    "items": {
+                        "$ref": "#/$defs/HEWSystematicReviewAnnotation"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "identifiers": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "keywords": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "produced_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "related_resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resource_type": {
+                    "$ref": "#/$defs/ResourceTypeEnum"
+                },
+                "same_as": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "url": {
+                    "format": "uri",
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "used_by_projects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "SurveyInstrument",
+            "type": "object"
+        },
+        "Variable": {
+            "additionalProperties": false,
+            "description": "A variable, field, measure, or data element in a HEW-relevant resource.",
+            "properties": {
+                "data_type": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "mappings": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "title": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "unit": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id"
+            ],
+            "title": "Variable",
+            "type": "object"
+        }
+    },
+    "$id": "https://w3id.org/hew/schema",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": true,
+    "description": "A cataloged resource relevant to health and extreme weather.",
+    "metamodel_version": "1.11.0",
+    "properties": {
+        "agent_associations": {
+            "items": {
+                "$ref": "#/$defs/AgentAssociation"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "annotations": {
+            "items": {
+                "$ref": "#/$defs/HEWSystematicReviewAnnotation"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "description": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "id": {
+            "type": "string"
+        },
+        "identifiers": {
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "keywords": {
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "name": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "produced_by_projects": {
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "related_resources": {
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "resource_type": {
+            "$ref": "#/$defs/ResourceTypeEnum"
+        },
+        "same_as": {
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "title": {
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "url": {
+            "format": "uri",
+            "type": [
+                "string",
+                "null"
+            ]
+        },
+        "used_by_projects": {
+            "items": {
+                "type": "string"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        }
+    },
+    "required": [
+        "id"
+    ],
+    "title": "hew-schema",
+    "type": "object",
+    "version": "1.0.0"
+}
+
