@@ -67,6 +67,7 @@ class Accession(AcceleratorWorkflowTask):
         self,
         ingest_result: IngestPayload,
         temp_doc: bool = False,
+        check_duplicates: bool = True,
     ) -> str:
         """
         Ingest the given document

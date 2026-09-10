@@ -193,7 +193,10 @@ class AccelDatabaseUtils:
 
     @staticmethod
     def extract_id_from_doc(doc: dict) -> str:
-        return str(doc["_id"]["$oid"])
+        document_id = doc["_id"]
+        if isinstance(document_id, dict):
+            return str(document_id["$oid"])
+        return str(document_id)
 
     def log_document_event(
         self,
