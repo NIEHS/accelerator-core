@@ -668,6 +668,15 @@
         "original_source_link": {
           "type": "string"
         },
+        "workflow_status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "reviewed",
+            "published",
+            "archived"
+          ]
+        },
        "additional_data": {
           "type": "array",
           "items": [

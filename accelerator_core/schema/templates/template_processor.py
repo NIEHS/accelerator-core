@@ -1,6 +1,8 @@
 import json
 import logging
 import os
+from collections.abc import Mapping
+from typing import Any
 
 from jinja2 import Environment, FileSystemLoader, Template
 
@@ -34,3 +36,26 @@ class AccelTemplateProcessor:
         """
 
         return self.env.get_template(f"{template_name}-v{template_version}.jinja")
+
+    def render_generic(
+        self,
+        data: Any,
+        submission: Mapping[str, Any] | Any,
+        technical_metadata: Mapping[str, Any] | Any,
+        template_version: str = "1.0.0",
+    ) -> dict[str, Any]:
+        """Render an arbitrary JSON document in the generic Accelerator shape."""
+
+        template = self.retrieve_template("accel-generic", template_version)
+        rendered = template.render(
+            data=data,
+            submission=self._to_dict(submission),
+            technical_metadata=self._to_dict(technical_metadata),
+        )
+        return json.loads(rendered)
+
+    @staticmethod
+    def _to_dict(value: Mapping[str, Any] | Any) -> Any:
+        if hasattr(value, "to_dict"):
+            return value.to_dict()
+        return value

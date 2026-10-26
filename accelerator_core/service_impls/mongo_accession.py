@@ -82,6 +82,7 @@ class AccessionMongo(Accession):
         self,
         ingest_payload: IngestPayload,
         temp_doc: bool = False,
+        check_duplicates: bool = True,
     ) -> str:
         """
         Ingest the given document
@@ -137,13 +138,15 @@ class AccessionMongo(Accession):
             with session.start_transaction():
                 try:
 
-                    stored_doc = self.accel_database_utils.find_doc_by_original_source_identifier(
-                        ingest_payload.ingest_source_descriptor.ingest_type,
-                        ingest_payload.ingest_source_descriptor.ingest_link,
-                        ingest_payload.ingest_source_descriptor.ingest_item_id,
-                        temp_doc=temp_doc,
-                        session=session,
-                    )
+                    stored_doc = None
+                    if check_duplicates:
+                        stored_doc = self.accel_database_utils.find_doc_by_original_source_identifier(
+                            ingest_payload.ingest_source_descriptor.ingest_type,
+                            ingest_payload.ingest_source_descriptor.ingest_link,
+                            ingest_payload.ingest_source_descriptor.ingest_item_id,
+                            temp_doc=temp_doc,
+                            session=session,
+                        )
 
                     if stored_doc:
 

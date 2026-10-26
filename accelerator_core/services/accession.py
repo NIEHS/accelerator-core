@@ -38,6 +38,22 @@ class Accession(AcceleratorWorkflowTask):
         """Validate JSON output from Crosswalk."""
         logger.info(f"validate, based on schema {ingest_source_descriptor}")
 
+        type_matrix_info = self.accelerator_config.find_type_matrix_info_for_type(
+            ingest_source_descriptor.ingest_type
+        )
+        if not type_matrix_info.validate_json:
+            logger.info(
+                "Skipping JSON schema validation for ingest type %s",
+                ingest_source_descriptor.ingest_type,
+            )
+            return SchemaValidationResult(
+                True,
+                ingest_source_descriptor.ingest_type,
+                ingest_source_descriptor.schema_version,
+                json_dict,
+                {},
+            )
+
         schema_tools = SchemaTools(self.accelerator_config)
 
         valid = schema_tools.validate_json_against_schema(
@@ -51,6 +67,7 @@ class Accession(AcceleratorWorkflowTask):
         self,
         ingest_result: IngestPayload,
         temp_doc: bool = False,
+        check_duplicates: bool = True,
     ) -> str:
         """
         Ingest the given document

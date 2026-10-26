@@ -1,6 +1,7 @@
 types:
 - name: accelerator
   schema: accel-schema
+  validate_json: true
   collection: accelerator
   temp_collection: accelerator_temp
   default_version: 1.0.2

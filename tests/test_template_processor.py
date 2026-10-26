@@ -11,3 +11,21 @@ class TestTemplateProcessor(unittest.TestCase):
         templateProcessor = AccelTemplateProcessor()
         actual = templateProcessor.retrieve_template("accel", "1.0.3")
         self.assertIsInstance(actual, Template)
+
+    def test_render_generic_document(self):
+        template_processor = AccelTemplateProcessor()
+        document = {"nested": {"value": "quoted \"text\""}, "items": [1, True]}
+
+        actual = template_processor.render_generic(
+            document,
+            {
+                "submitter_name": "Name",
+                "submitter_email": "name@example.org",
+                "submitter_comment": "",
+            },
+            {"original_source_type": "test", "history": []},
+        )
+
+        self.assertEqual(document, actual["data"])
+        self.assertEqual("Name", actual["submission"]["submitter_name"])
+        self.assertEqual("test", actual["technical_metadata"]["original_source_type"])

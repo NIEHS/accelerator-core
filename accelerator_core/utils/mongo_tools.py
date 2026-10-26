@@ -63,7 +63,8 @@ def build_connection_string(accel_config: AcceleratorConfig) -> str:
     if accel_config.params.get("mongo.replicaset", None):
         logger.info(f"repl: {accel_config.params['mongo.replicaset']}")
         options.append(f"replicaSet={accel_config.params['mongo.replicaset']}")
-        options.append(f"authSource={db_name}")
+        auth_source = accel_config.params.get("mongo.auth.source", db_name)
+        options.append(f"authSource={auth_source}")
 
     if mongo_direct:
         options.append("directConnection=true")
