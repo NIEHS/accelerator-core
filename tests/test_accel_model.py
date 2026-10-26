@@ -18,6 +18,7 @@ from accelerator_core.schema.models.accel_model import build_accel_from_model
 from accelerator_core.schema.models.base_model import (
     SubmissionInfoModel,
     TechnicalMetadataModel,
+    WorkflowStatus,
 )
 from accelerator_core.utils import resource_utils
 from accelerator_core.utils.accelerator_config import (
@@ -127,3 +128,7 @@ class TestAccelModel(unittest.TestCase):
             rendered, "accelerator", "1.0.3"
         )
         self.assertTrue(result.valid)
+        self.assertEqual(
+            rendered["technical_metadata"]["workflow_status"],
+            WorkflowStatus.DRAFT.value,
+        )
