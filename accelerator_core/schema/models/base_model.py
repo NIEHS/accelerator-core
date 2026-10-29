@@ -118,6 +118,14 @@ class TechnicalMetadataModel:
         obj.target_schema_version = dict_obj["target_schema_version"]
         obj.original_source_identifier = dict_obj["original_source_identifier"]
         obj.original_source_type = dict_obj["original_source_type"]
+        obj.workflow_status = dict_obj["workflow_status"]
+        obj.original_source_link = dict_obj["original_source_link"]
+        obj.additional_data = obj["additional data"] = list(dict_obj ["additional data"])
+        obj.history = [TechnicalMetadataHistory.from_dict(h) for h in dict_obj["history"]]
+        obj.dissemination_endpoints = [
+            DisseminationEndpoint.from_dict(d) for d in dict_obj["dissemination_endpoints"]
+        ]
+        return obj
 
 
 class TechnicalMetadataHistory:
