@@ -52,6 +52,12 @@ class AdditionalMetadataItem:
         val["base64_encoded"] = self.base64_encoded
         return val
 
+    @staticmethod
+    def from_dict(dict_obj: dict):
+        obj = AdditionalMetadataItem(dict_obj["key"], dict_obj["value"])
+        obj.base64_encoded = dict_obj["base64_encoded"]
+        return obj
+
 
 class TechnicalMetadataModel:
     """
@@ -121,6 +127,8 @@ class TechnicalMetadataModel:
         obj.workflow_status = dict_obj["workflow_status"]
         obj.original_source_link = dict_obj["original_source_link"]
         obj.additional_data = obj["additional data"] = list(dict_obj ["additional data"])
+        obj.additional_data = obj["additional data"] = [AdditionalMetadataItem.from_dict(h) for h in dict_obj["additional_data"]]
+
         obj.history = [TechnicalMetadataHistory.from_dict(h) for h in dict_obj["history"]]
         obj.dissemination_endpoints = [
             DisseminationEndpoint.from_dict(d) for d in dict_obj["dissemination_endpoints"]
