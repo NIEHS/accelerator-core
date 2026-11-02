@@ -21,7 +21,7 @@ from accelerator_core.workflow.accel_source_ingest import (
     IngestSourceDescriptor,
     IngestPayload,
 )
-from utils.data_utils import generate_guid
+from accelerator_core.utils.data_utils import generate_guid
 
 
 class TestDisseminationMongo(unittest.TestCase):

@@ -1,5 +1,6 @@
 import json
 import unittest
+from pathlib import Path
 
 import accelerator_core
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
@@ -16,6 +17,8 @@ from accelerator_core.workflow.accel_source_ingest import (
     IngestPayload,
 )
 
+TESTS_DIR = str(Path(__file__).resolve().parent)
+TEST_RESOURCES_DIR = TESTS_DIR + "/test_resources"
 
 class TestAccessionMongo(unittest.TestCase):
 
@@ -257,7 +260,7 @@ class TestAccessionMongo(unittest.TestCase):
 
     def test_accession_and_verify_with_no_changes(self):
 
-        json_path = "./test_resources/example2.json"
+        json_path = TEST_RESOURCES_DIR + "/example2.json"
 
         with open(json_path) as json_data:
             ingest_source_descriptor = IngestSourceDescriptor()

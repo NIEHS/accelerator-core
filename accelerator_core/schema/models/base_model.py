@@ -1,4 +1,12 @@
 from datetime import datetime
+from enum import Enum
+
+
+class WorkflowStatus(str, Enum):
+    DRAFT = "draft"
+    REVIEWED = "reviewed"
+    PUBLISHED = "published"
+    ARCHIVED = "archived"
 
 
 class SubmissionInfoModel:
@@ -44,6 +52,12 @@ class AdditionalMetadataItem:
         val["base64_encoded"] = self.base64_encoded
         return val
 
+    @staticmethod
+    def from_dict(dict_obj: dict):
+        obj = AdditionalMetadataItem(dict_obj["key"], dict_obj["value"])
+        obj.base64_encoded = dict_obj["base64_encoded"]
+        return obj
+
 
 class TechnicalMetadataModel:
     """
@@ -73,6 +87,7 @@ class TechnicalMetadataModel:
             # FIXME:// this needs to become the 'type' of the original source, not a link, this maps to the
             # dag that does the accession to the accel database model
         )
+        self.workflow_status = WorkflowStatus.DRAFT
         self.additional_data = (
             []
         )  # object to hold specific additional data e.g. generated embeddings
@@ -91,6 +106,7 @@ class TechnicalMetadataModel:
         val["original_source_identifier"] = self.original_source_identifier
         val["original_source_type"] = self.original_source_type
         val["original_source_link"] = self.original_source_link
+        val["workflow_status"] = WorkflowStatus(self.workflow_status).value
         val["additional_data"] = [a.to_dict() for a in self.additional_data]
         val["history"] = [h.to_dict() for h in self.history]
         val["dissemination_endpoints"] = [
@@ -108,6 +124,16 @@ class TechnicalMetadataModel:
         obj.target_schema_version = dict_obj["target_schema_version"]
         obj.original_source_identifier = dict_obj["original_source_identifier"]
         obj.original_source_type = dict_obj["original_source_type"]
+        obj.workflow_status = dict_obj["workflow_status"]
+        obj.original_source_link = dict_obj["original_source_link"]
+        obj.additional_data = obj["additional data"] = list(dict_obj ["additional data"])
+        obj.additional_data = obj["additional data"] = [AdditionalMetadataItem.from_dict(h) for h in dict_obj["additional_data"]]
+
+        obj.history = [TechnicalMetadataHistory.from_dict(h) for h in dict_obj["history"]]
+        obj.dissemination_endpoints = [
+            DisseminationEndpoint.from_dict(d) for d in dict_obj["dissemination_endpoints"]
+        ]
+        return obj
 
 
 class TechnicalMetadataHistory:

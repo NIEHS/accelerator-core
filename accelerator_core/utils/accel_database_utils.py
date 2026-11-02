@@ -10,6 +10,8 @@ from pymongo.synchronous.client_session import ClientSession
 
 from accelerator_core.schema.models.base_model import (
     TechnicalMetadataHistory,
+    WorkflowStatus,
+    create_timestamped_log,
 )
 from accelerator_core.service_impls.accel_db_context import AccelDbContext
 from accelerator_core.utils.accel_exceptions import AccelDocumentNotFoundException
@@ -193,7 +195,10 @@ class AccelDatabaseUtils:
 
     @staticmethod
     def extract_id_from_doc(doc: dict) -> str:
-        return str(doc["_id"]["$oid"])
+        document_id = doc["_id"]
+        if isinstance(document_id, dict):
+            return str(document_id["$oid"])
+        return str(document_id)
 
     def log_document_event(
         self,
@@ -258,3 +263,30 @@ class AccelDatabaseUtils:
                 except Exception as e:
                     logger.error(f"Transaction failed: {str(e)}")
                     raise  # Re-raise the exception after logging
+
+    def update_workflow_status(
+        self, collection, status: WorkflowStatus | str, document_id: str
+    ):
+        """Update a document's workflow status and append a technical-history event."""
+        workflow_status = WorkflowStatus(status)
+        event = create_timestamped_log(
+            f"Workflow status changed to '{workflow_status.value}'"
+        )
+        result = collection.update_one(
+            {"_id": ObjectId(document_id)},
+            {
+                "$set": {
+                    "technical_metadata.workflow_status": workflow_status.value
+                },
+                "$push": {"technical_metadata.history": event.to_dict()},
+            },
+        )
+        if result.matched_count == 0:
+            raise AccelDocumentNotFoundException(document_id, collection.name, False)
+
+        logger.info(
+            "Updated workflow status for document %s to %s",
+            document_id,
+            workflow_status.value,
+        )
+        return result

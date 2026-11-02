@@ -23,12 +23,14 @@ class TypeMatrix:
         default_schema_version: str,
         collection: str,
         temp_collection: str,
+        validate_json: bool,
     ):
         self.type = type
         self.schema = schema
         self.default_schema_version = default_schema_version
         self.collection = collection
         self.temp_collection = temp_collection
+        self.validate_json = validate_json
 
     def resolve_schema_version(self, version: str = None) -> str:
         """
@@ -57,6 +59,12 @@ def parse_type_matrix(type_matrix_path: Path) -> [TypeMatrix]:
         val = yaml.safe_load(stream)
 
         for type in val["types"]:
+            validate_json = type.get("validate_json")
+            if not isinstance(validate_json, bool):
+                raise ValueError(
+                    f"validate_json must be a boolean for type '{type.get('name')}'"
+                )
+
             matrix.append(
                 TypeMatrix(
                     type["name"],
@@ -64,6 +72,7 @@ def parse_type_matrix(type_matrix_path: Path) -> [TypeMatrix]:
                     type["default_version"],
                     type["collection"],
                     type["temp_collection"],
+                    validate_json,
                 )
             )
 

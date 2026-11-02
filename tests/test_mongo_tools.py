@@ -1,6 +1,9 @@
 import unittest
 
+from bson import ObjectId
+
 from accelerator_core.utils import resource_utils, mongo_tools
+from accelerator_core.utils.accel_database_utils import AccelDatabaseUtils
 from accelerator_core.utils.accelerator_config import (
     config_from_file,
 )
@@ -32,6 +35,13 @@ class TestMongoTools(unittest.TestCase):
         config = self.config
         actual = mongo_tools.is_mongo_direct(config)
         self.assertTrue(actual)
+
+    def test_extract_id_from_native_object_id(self):
+        document_id = ObjectId()
+        self.assertEqual(
+            str(document_id),
+            AccelDatabaseUtils.extract_id_from_doc({"_id": document_id}),
+        )
 
 
 if __name__ == "__main__":

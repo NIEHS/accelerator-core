@@ -1,11 +1,13 @@
 types:
-- name: chords-geo
-  schema: chords-geoexposure
-  collection: chords
-  temp_collection: chords_temp
-  default_version: 1.5.1
+- name: hew-publication
+  schema: hew.schema
+  validate_json: false
+  collection: hew_pub
+  temp_collection: hew_pub_temp
+  default_version: 1.0.0
 - name: accelerator
   schema: accel-schema
+  validate_json: true
   collection: accelerator
   temp_collection: accelerator_temp
   default_version: 1.0.3
